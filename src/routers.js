@@ -17,6 +17,8 @@ import { agentRoutes } from "./modules/agent/agentRoutes";
 import { permissionRoutes } from "./modules/authorization/permissionRoutes";
 import { roleRoutes } from "./modules/authorization/roleRoutes";
 import { packageRoutes } from "./modules/package/packageRoutes";
+import { merchantBankAccountRoutes } from "./modules/merchantBankAccount/merchantBankAccountRoutes";
+import { partnerRoutes } from "./modules/partner/partnerRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -37,7 +39,9 @@ export const routers = createBrowserRouter([
             ...agentRoutes,
             ...permissionRoutes,
             ...roleRoutes,
-            ...packageRoutes
+            ...packageRoutes,
+            ...merchantBankAccountRoutes,
+            ...partnerRoutes
         ]
     },
     {

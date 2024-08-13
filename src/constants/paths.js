@@ -89,4 +89,7 @@ export const paths = {
     permissionDetail: '/permission/:id',
 
     setting: "/setting",
+
+    merchantBankAccount: "/merchant-bank-account",
+    partner: "/partner"
 }

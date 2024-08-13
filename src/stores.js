@@ -14,6 +14,8 @@ import agentSlice from "./modules/agent/agentSlice";
 import permissionSlice from "./modules/authorization/permissionSlice";
 import roleSlice from "./modules/authorization/roleSlice";
 import packageSlice from "./modules/package/packageSlice";
+import merchantBankAccountSlice from "./modules/merchantBankAccount/merchantBankAccountSlice";
+import partnerSlice from "./modules/partner/partnerSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -31,7 +33,9 @@ export const stores = configureStore({
     agent: agentSlice,
     permission: permissionSlice,
     role: roleSlice,
-    package: packageSlice
+    package: packageSlice,
+    merchantBankAccount: merchantBankAccountSlice,
+    partner: partnerSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

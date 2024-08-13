@@ -31,7 +31,7 @@ export const ImageUpload = ({ preview, onSelect }) => {
     return (
         <>
             <div
-                className=" custom-profile"
+                className="custom-profile"
                 onClick={() => {
                     document.getElementById("profile").click();
                 }}

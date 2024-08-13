@@ -9,6 +9,18 @@ export const items = [
         url: "/dashboard"
     },
     {
+        key: "merchant_bank_account",
+        label: "Merchant Bank Account",
+        icon: "pi pi-fw pi-credit-card",
+        url: "/merchant-bank-account"
+    },
+    {
+        key: "partner",
+        label: "Partner",
+        icon: "pi pi-fw pi-user-plus",
+        url: "/partner"
+    },
+    {
         key: 'agent',
         label: 'Agent',
         data: 'Agent',

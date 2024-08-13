@@ -6,16 +6,16 @@ const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 
 export const env = [
     'http://localhost:8000',
-    'https://api.gscexport.com',
+    'https://api.evanglobalmanagement.com',
 ];
 
 export const paginateOptions = {
     rows: 100,
-    rowsPerPageOptions: [10,50,100,150,500,1000],
+    rowsPerPageOptions: [10, 50, 100, 150, 500, 1000],
     total: 0,
     paginatorTemplate: "RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink",
     currentPageReportTemplate: "{first} to {last} of {totalRecords}",
-    paginatorLeft: paginatorLeft, 
+    paginatorLeft: paginatorLeft,
     sortMode: "single",
     resizableColumns: true,
     lazy: true
@@ -28,6 +28,39 @@ export const keys = {
     ROLE: "ROLE",
     LANGUAGE: "LANGUAGE"
 }
+
+export const bankTypes = [
+    {
+        label: "AYA BANK",
+        value: "aya_bank",
+        icon: ""
+    },
+    {
+        label: "CB BANK",
+        value: "cb_bank",
+        icon: ""
+    },
+    {
+        label: "UAB BANK",
+        value: "uab_bank",
+        icon: ""
+    },
+    {
+        label: "KBZ BANK",
+        value: "kbz_bank",
+        icon: ""
+    },
+    {
+        label: "A BANK",
+        value: "a_bank",
+        icon: ""
+    },
+    {
+        label: "MCB BANK",
+        value: "mcb_bank",
+        icon: ""
+    },
+]
 
 /**
  * Notification Options
@@ -46,9 +79,11 @@ export const notificationOptions = {
 
 export const statusOptions = [
     { status: "ACTIVE", color: "chip-success" },
+    { status: "FULL_KYC", color: "chip-success" },
     { status: "DISABLE", color: "chip-default" },
     { status: "DELETED", color: "chip-info" },
     { status: "PENDING", color: "chip-warn" },
+    { status: "CHECKING", color: "chip-warn" },
     { status: "BLOCK", color: "chip-danger" },
     { status: "COMPLETE", color: "chip-success" },
     { status: "MEMBER_WALLET", color: "chip-success" },
@@ -57,7 +92,7 @@ export const statusOptions = [
 ];
 
 export const tooltipOptions = {
-   position: 'top'
+    position: 'top'
 }
 
 export const auditColumns = [
