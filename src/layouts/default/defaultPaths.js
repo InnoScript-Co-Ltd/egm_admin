@@ -9,16 +9,10 @@ export const items = [
         url: "/dashboard"
     },
     {
-        key: "merchant_bank_account",
-        label: "Merchant Bank Account",
-        icon: "pi pi-fw pi-credit-card",
-        url: "/merchant-bank-account"
-    },
-    {
         key: "partner",
         label: "Partner",
         icon: "pi pi-fw pi-user-plus",
-        url: "/partner"
+        url: paths.partner
     },
     {
         key: 'agent',
@@ -33,6 +27,20 @@ export const items = [
         data: 'Package',
         icon: 'pi pi-fw pi-user',
         url: paths.package
+    },
+    {
+        key: "bank_account",
+        label: "Bank Accounts",
+        icon: "pi pi-fw pi-credit-card",
+        url: null,
+        children: [
+            {
+                key: 'merchant_bank_account',
+                label: 'Merechant',
+                icon: 'pi pi-fw pi-list',
+                url: paths.merchantBankAccount
+            },
+        ]
     },
     {
         key: 'menu_role_and_permission',
