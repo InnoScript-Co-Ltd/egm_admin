@@ -16,6 +16,7 @@ import roleSlice from "./modules/authorization/roleSlice";
 import packageSlice from "./modules/package/packageSlice";
 import merchantBankAccountSlice from "./modules/merchantBankAccount/merchantBankAccountSlice";
 import partnerSlice from "./modules/partner/partnerSlice";
+import depositSlice from "./modules/deposit/depositSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -35,7 +36,8 @@ export const stores = configureStore({
     role: roleSlice,
     package: packageSlice,
     merchantBankAccount: merchantBankAccountSlice,
-    partner: partnerSlice
+    partner: partnerSlice,
+    deposit_transcation: depositSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

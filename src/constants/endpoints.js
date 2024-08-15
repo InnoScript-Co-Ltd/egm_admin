@@ -43,5 +43,6 @@ export const endpoints = {
     exportShop : 'export-shop',
     exportUser : 'export-user',
     merchantBankAccount: "merchant-bank-account",
-    partner: "partner"
+    partner: "partner",
+    deposit: "deposit"
 }

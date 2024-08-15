@@ -91,5 +91,6 @@ export const paths = {
     setting: "/setting",
 
     merchantBankAccount: "/merchant-bank-account",
-    partner: "/partner"
+    partner: "/partner",
+    deposit: "deposit"
 }

@@ -19,6 +19,7 @@ import { roleRoutes } from "./modules/authorization/roleRoutes";
 import { packageRoutes } from "./modules/package/packageRoutes";
 import { merchantBankAccountRoutes } from "./modules/merchantBankAccount/merchantBankAccountRoutes";
 import { partnerRoutes } from "./modules/partner/partnerRoutes";
+import { depositRoutes } from "./modules/deposit/depositRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -41,7 +42,8 @@ export const routers = createBrowserRouter([
             ...roleRoutes,
             ...packageRoutes,
             ...merchantBankAccountRoutes,
-            ...partnerRoutes
+            ...partnerRoutes,
+            ...depositRoutes
         ]
     },
     {

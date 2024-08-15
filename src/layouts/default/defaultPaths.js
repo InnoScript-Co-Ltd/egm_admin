@@ -29,6 +29,20 @@ export const items = [
         url: paths.package
     },
     {
+        key: "deposit",
+        label: "Deposit",
+        icon: "pi pi-fw pi-money-bill",
+        url: null,
+        children: [
+            {
+                key: 'deposint_pending',
+                label: 'Pending Deposit',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.deposit}/pending`
+            },
+        ]
+    },
+    {
         key: "bank_account",
         label: "Bank Accounts",
         icon: "pi pi-fw pi-credit-card",
