@@ -31,6 +31,7 @@ export const DepositTableView = () => {
     const total = useRef(0);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const params = useParams()
 
     /**
@@ -83,7 +84,8 @@ export const DepositTableView = () => {
         setLoading(true);
 
         const updateParams = { ...paginateParams };
-        updateParams.status = params.type.toUpperCase();
+        updateParams.filter="status";
+        updateParams.value = params.type.toUpperCase();
 
         const response = await depositService.index(dispatch, updateParams);
         if (response.status === 200) {
@@ -158,13 +160,21 @@ export const DepositTableView = () => {
                     return (
                         <Column
                             key={`category_col_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: col.field === "action" ? "" : "250px" }}
                             field={col.field}
                             header={col.header}
-                            sortable
+                            sortable={col.sortable}
                             body={(value) => {
 
                                 switch (col.field) {
+                                    case "action":
+                                        return(
+                                            <i 
+                                                className="pi pi-folder-open" 
+                                                style={{ cursor: "pointer", fontSize: '1.5rem'}}
+                                                onClick={ () => navigate(`${paths.deposit}/${params.type}/${value.id}`)}
+                                            ></i>
+                                        );
                                     case "agent_account_number":
                                         return (
                                             <NavigateId

@@ -1,4 +1,5 @@
 import { paths } from "../../constants/paths"
+import { DepositDetail } from "./view/DepositDetail"
 import { DepositList } from "./view/DepositList"
 
 export const depositRoutes = [
@@ -10,6 +11,24 @@ export const depositRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
+                    { label: "Pending", url: `${paths.deposit}/pending` },
+                    { label: "Payment Accepted", url: `${paths.deposit}/payment_accepted` },
+                    { label: "Reject", url: `${paths.deposit}/reject` },
+                ],
+                role: ['ADMINISTRATOR']
+            }
+        },
+        
+    },
+    {
+        id: "deposit_detail",
+        path: `${paths.deposit}/:type/:id`,
+        element: <DepositDetail />,
+        loader : () => {
+            return{
+                breadcrumbs: [
+                    { label: "Dashboard", url: paths.dashboard },
+                    { label: "Pending", url: `${paths.deposit}/pending` },
                     { label: "Payment Accepted", url: `${paths.deposit}/payment_accepted` },
                     { label: "Reject", url: `${paths.deposit}/reject` },
                 ],

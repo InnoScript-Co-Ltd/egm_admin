@@ -36,9 +36,21 @@ export const items = [
         children: [
             {
                 key: 'deposint_pending',
-                label: 'Pending Deposit',
+                label: 'Pending',
                 icon: 'pi pi-fw pi-list',
                 url: `${paths.deposit}/pending`
+            },
+            {
+                key: 'deposint_reject',
+                label: 'Reject',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.deposit}/reject`
+            },
+            {
+                key: 'deposint_payment_accepted',
+                label: 'Payment Accepted',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.deposit}/payment_accepted`
             },
         ]
     },

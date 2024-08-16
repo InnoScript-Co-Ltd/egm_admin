@@ -13,12 +13,8 @@ const depositSlice = createSlice({
             state.deposit_transcations = action.payload;
             return state;
         },
-        update: (state, action) => {
-            state.deposit_transcation = action.payload;
-            return state;
-        },
-        show: (state, action) => {
-            state.deposit_transcation = action.payload;
+        setShow: (state, action) => {
+            state.deposit_transcation = {...action.payload};
             return state;
         },
         setPaginate: (state, action) => {
@@ -28,5 +24,5 @@ const depositSlice = createSlice({
     }
 });
 
-export const { index, update, show, setPaginate } = depositSlice.actions;
+export const { index, update, setShow, setPaginate } = depositSlice.actions;
 export default depositSlice.reducer;
