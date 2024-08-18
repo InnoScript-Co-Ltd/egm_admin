@@ -1,6 +1,6 @@
 import { paginateOptions } from "../../constants/config";
 
-export const depositPayload = {
+export const transactionPayload = {
     create: {
         name: "",
         roi_rate: "",

@@ -23,6 +23,16 @@ export const MerchantBankAccountCreate = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const chooseBankTypeHandler = (e) => {
+        const selectBankType = bankTypes.filter(value => value.value === e)[0];
+        const updatePayload = {...payload};
+
+        updatePayload.bank_type_label = selectBankType.value;
+        updatePayload.bank_type = selectBankType.label;
+
+        setPayload(updatePayload);
+    }
+    
     /**
      * Create Merchant Bank Account
      */
@@ -98,19 +108,17 @@ export const MerchantBankAccountCreate = () => {
                             <label htmlFor="role" className='input-label text-black'>{"Bank Type"} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
-                                    id="bank_type"
-                                    name="bank_type"
-                                    value={payload.bank_type}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'bank_type', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
+                                    id="bank_type_label"
+                                    name="bank_type_label"
+                                    value={payload.bank_type_label}
+                                    onChange={(e) => chooseBankTypeHandler(e.value)}
                                     options={bankTypes}
                                     placeholder="Select Bank Type"
                                     disabled={loading}
                                     className="p-inputtext-sm"
                                 />
                             </div>
-                            <ValidationMessage field="bank_type" />
+                            <ValidationMessage field="bank_type_label" />
                         </div>
 
                         <FormMainAction

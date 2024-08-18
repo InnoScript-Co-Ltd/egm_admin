@@ -13,13 +13,12 @@ import { countryRoutes } from "./modules/country/countryRoutes";
 import { regionAndStateRoutes } from "./modules/regionAndState/regionAndStateRoutes";
 import { cityRoutes } from "./modules/city/cityRoutes";
 import { townshipRoutes } from "./modules/township/townshipRoutes";
-import { agentRoutes } from "./modules/agent/agentRoutes";
 import { permissionRoutes } from "./modules/authorization/permissionRoutes";
 import { roleRoutes } from "./modules/authorization/roleRoutes";
 import { packageRoutes } from "./modules/package/packageRoutes";
 import { merchantBankAccountRoutes } from "./modules/merchantBankAccount/merchantBankAccountRoutes";
 import { partnerRoutes } from "./modules/partner/partnerRoutes";
-import { depositRoutes } from "./modules/deposit/depositRoutes";
+import { transactionRoutes } from "./modules/transaction/transactionRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -37,13 +36,12 @@ export const routers = createBrowserRouter([
             ...regionAndStateRoutes,
             ...cityRoutes,
             ...townshipRoutes,
-            ...agentRoutes,
             ...permissionRoutes,
             ...roleRoutes,
             ...packageRoutes,
             ...merchantBankAccountRoutes,
             ...partnerRoutes,
-            ...depositRoutes
+            ...transactionRoutes
         ]
     },
     {

@@ -14,25 +14,25 @@ import { datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
-import { setPaginate } from "../depositSlice";
-import { depositPayload } from "../depositPayload";
-import { depositService } from "../depositService";
+import { setPaginate } from "../transactionSlice";
+import { transactionPayload } from "../transactionPayload";
+import { transactionService } from "../transactionService";
 import numeral from "numeral";
 
 export const DepositTableView = () => {
-    const { deposit_transcations, paginateParams } = useSelector(state => state.deposit_transcation);
+    const { transactions, paginateParams } = useSelector(state => state.transaction);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const columns = useRef(depositPayload.columns);
+    const columns = useRef(transactionPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const params = useParams()
+    const params = useParams();
 
     /**
      * Event - Paginate Page Change
@@ -84,10 +84,10 @@ export const DepositTableView = () => {
         setLoading(true);
 
         const updateParams = { ...paginateParams };
-        updateParams.filter="status";
+        updateParams.filter = "status";
         updateParams.value = params.type.toUpperCase();
 
-        const response = await depositService.index(dispatch, updateParams);
+        const response = await transactionService.index(dispatch, updateParams);
         if (response.status === 200) {
             total.current = response.data.total ? response.data.total : response.data.length;
         }
@@ -108,7 +108,7 @@ export const DepositTableView = () => {
                         icon="pi pi-refresh"
                         size="small"
                         onClick={() => {
-                            dispatch(setPaginate(depositPayload.paginateParams));
+                            dispatch(setPaginate(transactionPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
                     />
@@ -129,8 +129,8 @@ export const DepositTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"Search Package"}
-                    placeholder={"Search package"}
+                    tooltipLabel={"Search Transcation"}
+                    placeholder={"Search Transcation"}
                     onSearch={(e) => onSearchChange(e)}
                     label={"Search"}
                 />
@@ -145,13 +145,13 @@ export const DepositTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={deposit_transcations}
+                value={transactions}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
-                emptyMessage="No deposit transctions found."
-                globalFilterFields={depositPayload.columns}
+                emptyMessage="No Transaction transctions found."
+                globalFilterFields={transactionPayload.columns}
                 sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
@@ -168,24 +168,24 @@ export const DepositTableView = () => {
 
                                 switch (col.field) {
                                     case "action":
-                                        return(
-                                            <i 
-                                                className="pi pi-folder-open" 
-                                                style={{ cursor: "pointer", fontSize: '1.5rem'}}
-                                                onClick={ () => navigate(`${paths.deposit}/${params.type}/${value.id}`)}
+                                        return (
+                                            <i
+                                                className="pi pi-folder-open"
+                                                style={{ cursor: "pointer", fontSize: '1.5rem' }}
+                                                onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
                                             ></i>
                                         );
                                     case "agent_account_number":
                                         return (
                                             <NavigateId
-                                                url={`${paths.deposit}/${value["id"]}`}
+                                                url={`${paths.transaction}/${value["id"]}`}
                                                 value={value[col.field]}
                                             />
                                         );
                                     case "merchant_account_number":
                                         return (
                                             <NavigateId
-                                                url={`${paths.deposit}/${value["id"]}`}
+                                                url={`${paths.transaction}/${value["id"]}`}
                                                 value={value[col.field]}
                                             />
                                         );

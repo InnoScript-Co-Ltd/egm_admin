@@ -28,6 +28,16 @@ export const MerchantBankAccountUpdate = () => {
 
     const { merchantBankAccount } = useSelector(state => state.merchantBankAccount);
 
+    const chooseBankTypeHandler = (e) => {
+        const selectBankType = bankTypes.filter(value => value.value === e)[0];
+        const updatePayload = {...payload};
+
+        updatePayload.bank_type_label = selectBankType.value;
+        updatePayload.bank_type = selectBankType.label;
+
+        setPayload(updatePayload);
+    }
+
     const merchantBankAccountUpdate = async () => {
         setLoading(true);
         await merchantBankAccountService.update(dispatch, payload, params.id);
@@ -122,10 +132,8 @@ export const MerchantBankAccountUpdate = () => {
                                     options={bankTypes}
                                     placeholder="Select Merchant Bank Type"
                                     disabled={loading}
-                                    value={payload.bank_type ? payload.bank_type : ""}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'bank_type', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
+                                    value={payload.bank_type_label ? payload.bank_type_label : ""}
+                                    onChange={(e) => chooseBankTypeHandler(e.value)}
                                 />
                                 <ValidationMessage field={"bank_type"} />
                             </div>

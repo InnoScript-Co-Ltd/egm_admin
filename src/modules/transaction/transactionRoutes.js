@@ -2,18 +2,18 @@ import { paths } from "../../constants/paths"
 import { DepositDetail } from "./view/DepositDetail"
 import { DepositList } from "./view/DepositList"
 
-export const depositRoutes = [
+export const transactionRoutes = [
     {
         id: "deposit",
-        path: `${paths.deposit}/:type`,
+        path: `${paths.transaction}/:type`,
         element: <DepositList />,
         loader : () => {
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Pending", url: `${paths.deposit}/pending` },
-                    { label: "Payment Accepted", url: `${paths.deposit}/payment_accepted` },
-                    { label: "Reject", url: `${paths.deposit}/reject` },
+                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -22,15 +22,15 @@ export const depositRoutes = [
     },
     {
         id: "deposit_detail",
-        path: `${paths.deposit}/:type/:id`,
+        path: `${paths.transaction}/:type/:id`,
         element: <DepositDetail />,
         loader : () => {
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Pending", url: `${paths.deposit}/pending` },
-                    { label: "Payment Accepted", url: `${paths.deposit}/payment_accepted` },
-                    { label: "Reject", url: `${paths.deposit}/reject` },
+                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
                 ],
                 role: ['ADMINISTRATOR']
             }
