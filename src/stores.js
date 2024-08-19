@@ -32,7 +32,7 @@ export const stores = configureStore({
     township: townshipSlice,
     permission: permissionSlice,
     role: roleSlice,
-    package: packageSlice,
+    depositPackage: packageSlice,
     merchantBankAccount: merchantBankAccountSlice,
     partner: partnerSlice,
     transaction: transactionSlice
