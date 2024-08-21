@@ -3,6 +3,8 @@ import { getData } from '../helpers/localstorage';
 import { keys } from './config';
 import { baseURL } from './endpoints';
 
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
 
 const http = axios.create({
     baseURL: `${baseURL}/dashboard`
