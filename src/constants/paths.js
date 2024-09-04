@@ -93,5 +93,7 @@ export const paths = {
     merchantBankAccount: "/merchant-bank-account",
     partner: "/partner",
     deposit: "/deposit",
-    transaction: "/transcation"
+    transaction: "/transcation",
+
+    emailContent: "/email-content",
 }

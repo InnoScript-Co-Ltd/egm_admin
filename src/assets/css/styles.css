@@ -412,6 +412,7 @@ h6 {
 .nav-link {
     color: #fff;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .nav-link:hover {
@@ -780,4 +781,9 @@ input:-webkit-autofill:focus {
 
 input[data-autocompleted] {
     background-color: transparent !important;
+}
+
+
+.p-editor-container {
+    width: 100%;
 }

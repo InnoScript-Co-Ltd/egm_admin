@@ -28,7 +28,7 @@ export const PartnerCreate = () => {
     /**
      * Create Partner Account
      */
-    const partnerCreate = async () => {
+    const partnerCreateRequest = async () => {
         setLoading(true);
         const response = await partnerService.store(payload, dispatch);
         if (response.status === 200) {
@@ -167,7 +167,7 @@ export const PartnerCreate = () => {
                             cancel="Cancel"
                             onCancel={() => navigate(paths.partner)}
                             submit="Create"
-                            onSubmit={partnerCreate}
+                            onSubmit={partnerCreateRequest}
                             loading={loading}
                         />
 

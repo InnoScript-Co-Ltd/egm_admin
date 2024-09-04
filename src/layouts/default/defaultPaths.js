@@ -69,6 +69,34 @@ export const items = [
         ]
     },
     {
+        key: "location",
+        label: "Location",
+        icon: "pi pi-fw pi-location",
+        url: null,
+        children: [
+            {
+                key: 'location.country',
+                label: 'Countries',
+                icon: 'pi pi-fw pi-list',
+                url: paths.country
+            },
+        ]
+    },
+    {
+        key: 'email',
+        label: 'Email',
+        data: 'Email',
+        icon: 'pi pi-fw pi-envelope',
+        children: [
+            {
+                key: 'email_content',
+                label: 'Content',
+                icon: 'pi pi-fw pi-list',
+                url: paths.emailContent
+            },
+        ]
+    },
+    {
         key: 'menu_role_and_permission',
         label: 'Role & Permission',
         icon: 'pi pi-fw pi-lock',
