@@ -4,7 +4,7 @@ import { Tree } from "primereact/tree";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebarToggle } from "../../../shares/shareSlice";
-import logo from "../../../assets/images/logo.jpeg";
+import logo from "../../../assets/images/egm_logo.png";
 import { useState } from "react";
 import { items } from "../defaultPaths";
 
@@ -22,8 +22,6 @@ export const AppSidebar = () => {
     }
     return value;
   });
-
-  const { translate } = useSelector((state) => state.setting);
 
   const [selectedKeys, setSelectedKeys] = useState(null);
 
@@ -45,13 +43,13 @@ export const AppSidebar = () => {
           width="50px"
           height="50px"
           src={logo}
-          alt="GSC Export"
-          title="GSC Export"
+          alt="Evan Global Management"
+          title="Evan Global Management"
         />
   
         <div className="mx-2 sidebar-header">
-          <h3> {translate.sidebar_title} </h3>
-          <small> {translate.sidebar_sub_title} </small>
+          <h3> EGM System </h3>
+          <small> Admininistrator </small>
         </div>
       </div>
     );

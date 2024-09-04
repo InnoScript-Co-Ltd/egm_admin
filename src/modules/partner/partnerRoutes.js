@@ -41,7 +41,6 @@ export const partnerRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "Partner", url: paths.partner },
-                    { label: "Create", url: `${paths.partner}/new` },
                 ],
                 role: ['ADMINISTRATOR']
             }

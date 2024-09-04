@@ -1,6 +1,6 @@
 import { Image } from "primereact/image";
 import { useNavigate } from "react-router-dom"
-import Logo from "../../../assets/images/logo.jpeg"
+import Logo from "../../../assets/images/egm_logo.png";
 
 export const NotFound = () => {
 

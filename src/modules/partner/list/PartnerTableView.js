@@ -139,8 +139,7 @@ export const PartnerTableView = () => {
     return (
       <div className="flex items-center justify-content-between">
         <div>
-          Total Partner Account -
-          <span style={{ color: "#4338CA" }}>{total.current > 0 ? total.current : 0}</span>
+          Total Partner Account - <span>{total.current > 0 ? total.current : 0}</span>
         </div>
         <div className=" flex align-items-center gap-3">
           <Button

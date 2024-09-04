@@ -1,4 +1,4 @@
-import logo from "../../../assets/images/logo.jpeg";
+import logo from "../../../assets/images/egm_logo.png";
 import defaultImage from "../../../assets/images/defaultImage.png";
 import { Toolbar } from "primereact/toolbar"
 import { Image } from "primereact/image"

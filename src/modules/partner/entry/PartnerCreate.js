@@ -37,26 +37,6 @@ export const PartnerCreate = () => {
         setLoading(false);
     }
 
-    const generatePassword = async () => {
-        await msgs.current.clear();
-        const result = await partnerService.generatePassword(dispatch);
-
-        if (result.status === 200) {
-            const updatePayload = { ...payload };
-            updatePayload.password = result.data;
-            setPayload(updatePayload);
-            msgs.current.show({
-                id: '1',
-                sticky: true,
-                severity: 'info',
-                summary: 'Info',
-                detail: `Partner password is genetated . ${result.data} Please copy to other place.`,
-                closable: true
-            }
-            );
-        }
-    }
-
     return (
         <div className="grid">
             <div className="col-12">
@@ -77,7 +57,7 @@ export const PartnerCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="name" className='input-label text-black'>{"Username"} <span>(required*)</span></label>
+                            <label htmlFor="name" className='input-label'>{"Username"} <span>(required*)</span></label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="username"
@@ -89,7 +69,7 @@ export const PartnerCreate = () => {
                                     tooltip="Partner username"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'username', (updateValue) => {
+                                    onChange={(e) => payloadHandler(payload, e.target.value.toLocaleLowerCase(), 'username', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
@@ -98,7 +78,7 @@ export const PartnerCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="email" className='input-label text-black'>{"First Name"} <span>(required*)</span> </label>
+                            <label htmlFor="email" className='input-label'>{"First Name"} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="first_name"
@@ -119,7 +99,7 @@ export const PartnerCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="role" className='input-label text-black'>{"Last Name"} <span>(required*)</span> </label>
+                            <label htmlFor="role" className='input-label'>{"Last Name"} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="last_name"
@@ -128,7 +108,7 @@ export const PartnerCreate = () => {
                                     aria-describedby="last_name-help"
                                     placeholder="Enter last_name"
                                     value={payload.last_name}
-                                    tooltip="Partner's last_name"
+                                    tooltip="Partner's last name"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'last_name', (updateValue) => {
@@ -140,28 +120,47 @@ export const PartnerCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="role" className='input-label text-black'> Password <span>(required*)</span> </label>
+                            <label htmlFor="role" className='input-label'> Email <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
-                                    type="password"
-                                    id="password"
-                                    name="password"
+                                    type="email"
+                                    id="email"
+                                    name="email"
                                     className="p-inputtext-sm"
-                                    aria-describedby="last_name-help"
-                                    placeholder="Enter password"
-                                    value={payload.password}
-                                    tooltip="Partner's password"
+                                    aria-describedby="email-help"
+                                    placeholder="Enter Email Address"
+                                    value={payload.email}
+                                    tooltip="Partner's email address"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
-                                <span className="p-inputgroup-addon generate-password-addon" onClick={generatePassword}>
-                                    <small>  Genetate </small>
-                                </span>
                             </div>
-                            <ValidationMessage field="password" />
+                            <ValidationMessage field="email" />
+                        </div>
+
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label htmlFor="role" className='input-label'> Phone <span>(required*)</span> </label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    type="text"
+                                    id="phone"
+                                    name="phone"
+                                    className="p-inputtext-sm"
+                                    aria-describedby="phone-help"
+                                    placeholder="Enter Phone Number"
+                                    value={payload.phone}
+                                    tooltip="Partner's phone number must be start 9xxxxxxxx"
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                            </div>
+                            <ValidationMessage field="phone" />
                         </div>
 
                         <FormMainAction

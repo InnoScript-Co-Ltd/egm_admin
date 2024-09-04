@@ -2,10 +2,11 @@ import { paginateOptions } from "../../constants/config";
 
 export const partnerPayload = {
     create: {
+        username: "",
         first_name: "",
         last_name: "",
-        username: "",
-        password: ""
+        email: "",
+        phone: ""
     },
     update: {
         first_name: "",
