@@ -22,7 +22,7 @@ export const CountryUpdate = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
-    const { translate } = useSelector(state => state.setting);
+
     const { country } = useSelector(state => state.country);
 
     const submitCountryCreate = async () => {
@@ -36,7 +36,7 @@ export const CountryUpdate = () => {
         setLoading(true);
         await countryService.show(dispatch, params.id);
         setLoading(false);
-    }, [params.id]);
+    }, [dispatch, params.id]);
 
     useEffect(() => {
         lodaingData();
@@ -54,40 +54,30 @@ export const CountryUpdate = () => {
             <div className=' grid'>
 
                 <div className=' col-12'>
-                    <Card
-                        title={translate.country_update}
-
-                    >
+                    <Card title="Update Country" >
 
                         <Loading loading={loading} />
 
-                        <div className=' grid'>
-
-                            <div className=' col-12'>
-
+                        <div className='grid'>
+                            <div className='col-12'>
                                 <Thumbnail
-                                    preview={payload.flag_image ? payload.flag_image.image : null}
-                                    onSelect={(e) => payloadHandler(payload, e, 'flag_image', (updateValue) => {
+                                    preview={payload.flag ? payload.flag : null}
+                                    onSelect={(e) => payloadHandler(payload, e, 'flag', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
-                                <ValidationMessage field={"flag_image"} />
-
+                                <ValidationMessage field={"flag"} />
                             </div>
 
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>{translate.name} (required*)</label>
+                                    <label className='input-label'> Name </label>
                                     <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="name"
-                                        name="name"
-                                        autoComplete='name'
-                                        aria-describedby="name-help"
-                                        tooltip='Region name'
+                                        className="p-inputtext-sm input-label"
+                                        tooltip='Country Name'
                                         tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter region name'
+                                        placeholder='Enter country name'
                                         disabled={loading}
                                         value={payload.name ? payload.name : ""}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
@@ -100,13 +90,9 @@ export const CountryUpdate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="code" className=' text-black'>{translate.country_code} (required*)</label>
+                                    <label className='input-label'> Country Code </label>
                                     <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="code"
-                                        name="code"
-                                        autoComplete='code'
-                                        aria-describedby="code-help"
+                                        className="p-inputtext-sm input-label"
                                         tooltip='Country Code'
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter country code'
@@ -122,13 +108,9 @@ export const CountryUpdate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="mobile_prefix" className=' text-black'>{translate.mobile_prefix} (required*)</label>
+                                    <label className='input-label'> Mobile Prefix </label>
                                     <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="mobile_prefix"
-                                        name="mobile_prefix"
-                                        autoComplete='mobile_prefix'
-                                        aria-describedby="mobile_prefix-help"
+                                        className="p-inputtext-sm input-label"
                                         tooltip='mobile number prefix'
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter mobile prefix'
@@ -143,9 +125,9 @@ export const CountryUpdate = () => {
                             </div>
 
                             <FormMainAction
-                                cancel={translate.cancel}
+                                cancel={"Cancel"}
                                 onCancel={() => navigate(paths.country)}
-                                submit={translate.submit}
+                                submit={"Submit"}
                                 onSubmit={submitCountryCreate}
                                 loading={loading}
                             />

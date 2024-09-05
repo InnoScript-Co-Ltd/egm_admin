@@ -1,12 +1,12 @@
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest, putRequest } from "../../helpers/api"
+import { formBuilderRequest, getRequest, postRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, show, update } from "./countrySlice";
 
 export const countryService = {
     store: async (payload, dispatch) => {
-        const response = await postRequest(endpoints.country, payload);
+        const response = await formBuilderRequest(endpoints.country, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {

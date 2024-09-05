@@ -11,8 +11,6 @@ import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
-import moment from "moment";
-import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
 import { countryPayload } from "../countryPayload";
@@ -23,16 +21,17 @@ import { Avatar } from "primereact/avatar";
 
 export const CountryTableView = () => {
 
-    const dispatch = useDispatch();
-    const { countries, paginateParams } = useSelector(state => state.country);
-    const { translate } = useSelector(state => state.setting);
-
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
-    const columns = useRef(countryPayload.columns);
-    const showColumns = useRef(columns.current.filter(col => col.show === true));
+
+    const { countries, paginateParams } = useSelector(state => state.country);
+
+    const dispatch = useDispatch();
+
     const first = useRef(0);
     const total = useRef(0);
+    const columns = useRef(countryPayload.columns);
+    const showColumns = useRef(columns.current.filter(col => col.show === true));
 
     /**
      * Event - Paginate Page Change
@@ -77,21 +76,6 @@ export const CountryTableView = () => {
         );
     }
 
-    const onFilterByDate = (e) => {
-        let updatePaginateParams = { ...paginateParams };
-
-        if (e.startDate === "" || e.endDate === "") {
-            delete updatePaginateParams.start_date;
-            delete updatePaginateParams.end_date;
-        } else {
-            updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
-            updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-        }
-
-        dispatch(setDateFilter(e));
-        dispatch(setPaginate(updatePaginateParams));
-    };
-
     /**
      * Loading Data
      */
@@ -111,7 +95,7 @@ export const CountryTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div> Total - <span>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -125,7 +109,7 @@ export const CountryTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
-                        label={translate.audit_columns}
+                        label="Show Audit Columns"
                     />
                 </div>
             </div>
@@ -139,14 +123,10 @@ export const CountryTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
-                    placeholder={"Search delivery address"}
+                    tooltipLabel={countryPayload.columns}
+                    placeholder={"Search Contries"}
                     onSearch={(e) => onSearchChange(e)}
-                    label={translate.press_enter_key_to_search}
-                />
-                <FilterByDate
-                    onFilter={(e) => onFilterByDate(e)}
-                    label={translate.filter_by}
+                    label="Search Country"
                 />
             </div>
         )
@@ -161,15 +141,13 @@ export const CountryTableView = () => {
                 className="category-icon"
                 icon="pi pi-image"
                 shape="circle"
-                image={dataSource ? `${endpoints.image}/${dataSource.image}` : null}
+                image={dataSource ? `${endpoints.image}/${dataSource}` : null}
             />
         );
     };
 
     return (
-        <Card
-            title={translate.country}
-        >
+        <Card title="Country">
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -195,14 +173,14 @@ export const CountryTableView = () => {
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "country_code":
                                         return (
                                             <NavigateId
-                                                url={`${paths.country}/${value[col.field]}`}
+                                                url={`${paths.country}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
-                                    case "flag_image":
+                                    case "flag":
                                         return <IconRender dataSource={value[col.field]} />
                                     case "status":
                                         return <Status status={value[col.field]} />;

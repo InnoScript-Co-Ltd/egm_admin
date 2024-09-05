@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
@@ -22,126 +22,105 @@ export const CountryCreate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { translate } = useSelector(state => state.setting);
 
+    /** Create Country */
     const submitCountryCreate = async () => {
         setLoading(true);
         const form = formBuilder(payload, countryPayload.create);
-        const response = await countryService.store(form , dispatch);
-        if(response.data){
-            navigate(`${paths.country}/${response.data.id}`);
+        const response = await countryService.store(form, dispatch);
+
+        if (response.data) {
+            navigate(paths.country);
         }
         setLoading(false);
     }
 
     return (
-        <>
+        <div className=' grid'>
+            <div className=' col-12'>
+                <BreadCrumb />
+            </div>
 
-            <div className=' grid'>
-                <div className=' col-12'>
-                    <BreadCrumb />
-                </div>
+            <div className=' col-12'>
+                <Card title="Create Country" >
 
-                <div className=' col-12'>
-                    <Card
-                        title={translate.country_create}
+                    <Loading loading={loading} />
 
-                    >
+                    <div className='grid'>
+                        <div className='col-12'>
+                            <Thumbnail
+                                preview={payload.flag ? payload.flag.image : null}
+                                onSelect={(e) => payloadHandler(payload, e, 'flag', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                            <ValidationMessage field={"flag"} />
+                        </div>
 
-                        <Loading loading={loading} />
 
-                        <div className=' grid'>
-
-                            <div className=' col-12'>
-
-                                <Thumbnail
-                                    preview={payload.flag_image ? payload.flag_image.image : null}
-                                    onSelect={(e) => payloadHandler(payload, e, 'flag_image', (updateValue) => {
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className="flex flex-column gap-2">
+                                <label className='input-label'> Name <span> (required*)</span></label>
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    tooltip='Region name'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter region name'
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
-                                <ValidationMessage field={"flag_image"} />
-
+                                <ValidationMessage field={"name"} />
                             </div>
-
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>{translate.name} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="name"
-                                        name="name"
-                                        autoComplete='name'
-                                        aria-describedby="name-help"
-                                        tooltip='Region name'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter region name'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"name"} />
-                                </div>
-                            </div>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="code" className=' text-black'>{translate.country_code} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="code"
-                                        name="code"
-                                        autoComplete='code'
-                                        aria-describedby="code-help"
-                                        tooltip='Country Code'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter country code'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'country_code', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"country_code"} />
-                                </div>
-                            </div>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="mobile_prefix" className=' text-black'>{translate.mobile_prefix} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="mobile_prefix"
-                                        name="mobile_prefix"
-                                        autoComplete='mobile_prefix'
-                                        aria-describedby="mobile_prefix-help"
-                                        tooltip='mobile number prefix'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter mobile prefix'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'mobile_prefix', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"mobile_prefix"} />
-                                </div>
-                            </div>
-
-                            <FormMainAction
-                                cancel={translate.cancel}
-                                onCancel={() => navigate(paths.country)}
-                                submit={translate.submit}
-                                onSubmit={submitCountryCreate}
-                                loading={loading}
-                            />
-
                         </div>
 
-                    </Card>
-                </div>
-            </div>
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className="flex flex-column gap-2">
+                                <label className='input-label'> Country Code <span> (required*)</span></label>
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    tooltip='Country Code'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter country code'
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'country_code', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"country_code"} />
+                            </div>
+                        </div>
 
-        </>
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="mobile_prefix" className='input-label'> Mobile Prefix <span> (required*)</span></label>
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    tooltip='mobile number prefix'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter mobile prefix'
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'mobile_prefix', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"mobile_prefix"} />
+                            </div>
+                        </div>
+
+                        <FormMainAction
+                            cancel={"Cancel"}
+                            onCancel={() => navigate(paths.country)}
+                            submit={'Create'}
+                            onSubmit={submitCountryCreate}
+                            loading={loading}
+                        />
+
+                    </div>
+
+                </Card>
+            </div>
+        </div>
     )
 }

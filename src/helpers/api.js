@@ -41,6 +41,25 @@ export const postRequest = async (path, payload) => {
 }
 
 /**
+ * Http post method request for updating process include mutiple files or file
+ * @param {*} path 
+ * @param {*} payload 
+ * @returns 
+ */
+export const formBuilderRequest = async (path, payload) => {
+    try {
+        const result = await http.post(path, payload, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          });
+        return httpResponseHandler(result);
+    } catch (error) {
+        return httpErrorHandler(error);
+    }
+}
+
+/**
  * Http put method request
  * @param {*} path 
  * @param {*} payload 

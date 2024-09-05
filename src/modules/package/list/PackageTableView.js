@@ -20,7 +20,7 @@ import { setPaginate } from "../packageSlice";
 export const PackageTableView = () => {
 
     const dispatch = useDispatch();
-    const { packages, paginateParams } = useSelector(state => state.package);
+    const { packages, paginateParams } = useSelector(state => state.depositPackage);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -175,6 +175,10 @@ export const PackageTableView = () => {
                                     case "duration":
                                         return (
                                             <span> {value[col.field]} {value[col.field] > 1 ? "Years" : "Year"} </span>
+                                        )
+                                    case 'deposit_amount':
+                                        return(
+                                            <span> {value[col.field].toString()} </span>
                                         )
                                     case "status":
                                         return <Status status={value[col.field]} />;

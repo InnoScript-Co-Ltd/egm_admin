@@ -71,7 +71,7 @@ export const items = [
     {
         key: "location",
         label: "Location",
-        icon: "pi pi-fw pi-location",
+        icon: "pi pi-fw pi-map-marker",
         url: null,
         children: [
             {

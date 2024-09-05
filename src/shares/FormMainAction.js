@@ -12,6 +12,7 @@ export const FormMainAction = ({ cancel, onCancel, submit, onSubmit, loading }) 
                     severity="secondary"
                     outlined
                     size='small'
+                    loading={loading}
                     disabled={loading}
                     onClick={onCancel}
                 />
@@ -22,6 +23,7 @@ export const FormMainAction = ({ cancel, onCancel, submit, onSubmit, loading }) 
                     severity="danger"
                     size='small'
                     disabled={loading}
+                    loading={loading}
                     onClick={onSubmit}
                 />
             </div>
