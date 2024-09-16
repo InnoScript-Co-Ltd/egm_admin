@@ -66,6 +66,12 @@ export const items = [
                 icon: 'pi pi-fw pi-list',
                 url: paths.merchantBankAccount
             },
+            {
+                key: 'bank_type',
+                label: 'Bank Type',
+                icon: 'pi pi-fw pi-list',
+                url: paths.bankAccountType
+            },
         ]
     },
     {

@@ -91,6 +91,8 @@ export const paths = {
     setting: "/setting",
 
     merchantBankAccount: "/merchant-bank-account",
+    bankAccountType: "/bank-account-type",
+    
     partner: "/partner",
     deposit: "/deposit",
     transaction: "/transcation",

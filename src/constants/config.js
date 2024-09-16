@@ -46,8 +46,8 @@ export const bankTypes = [
         icon: ""
     },
     {
-        label: "KBZ BANK",
-        value: "kbz_bank",
+        label: "KBZ BANK SPECIAL ACC",
+        value: "kbz_bank_special",
         icon: ""
     },
     {
@@ -60,6 +60,18 @@ export const bankTypes = [
         value: "mcb_bank",
         icon: ""
     },
+
+    {
+        label: "YOMA (Flexi every day)",
+        value: "yoma_bank_flexi",
+        icon: ""
+    },
+    {
+        label: "YOMA (Flexi saving)",
+        value: "yoma_bank_flexi_saving",
+        icon: ""
+    },
+
 ]
 
 /**

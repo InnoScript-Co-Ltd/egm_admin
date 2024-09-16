@@ -20,6 +20,7 @@ import { merchantBankAccountRoutes } from "./modules/merchantBankAccount/merchan
 import { partnerRoutes } from "./modules/partner/partnerRoutes";
 import { transactionRoutes } from "./modules/transaction/transactionRoutes";
 import { emailContentRoutes } from "./modules/emailContent/emailContentRoutes";
+import { bankAccountTypeRoutes } from "./modules/bankAccountType/bankAccountTypeRoutes.";
 
 export const routers = createBrowserRouter([
     {
@@ -41,6 +42,7 @@ export const routers = createBrowserRouter([
             ...roleRoutes,
             ...packageRoutes,
             ...merchantBankAccountRoutes,
+            ...bankAccountTypeRoutes,
             ...partnerRoutes,
             ...transactionRoutes,
             ...emailContentRoutes

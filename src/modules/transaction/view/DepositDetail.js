@@ -20,8 +20,8 @@ export const DepositDetail = () => {
     const { transaction } = useSelector(state => state.transaction);
 
     if(transaction) {
-        console.log(transaction);
     }
+
     const params = useParams();
     const dispatch = useDispatch();
 
@@ -210,7 +210,7 @@ export const DepositDetail = () => {
                     </p>
 
                     <div className="flex flex-row justify-content-end align-items-center mt-3">
-                        <Button className="ml-3" size="small" severity="success" onClick={() => paymentTranscationHandler("PAYMENT_ACCEPTED")}> Approve </Button>
+                    <Button className="ml-3" size="small" severity="success" onClick={() => paymentTranscationHandler("PAYMENT_ACCEPTED")}> Approve </Button>
                         <Button className="ml-3" size="small" severity="danger" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Cancel </Button>
                     </div>
                 </Dialog>
