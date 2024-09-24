@@ -1,19 +1,19 @@
 import { paths } from "../../constants/paths"
-import { DepositDetail } from "./view/DepositDetail"
-import { DepositList } from "./view/DepositList"
+import { TransactionDetail } from "./view/TransactionDetail"
+import { AgentTransactionList } from "./view/AgentTransactionList"
 
 export const transactionRoutes = [
     {
-        id: "deposit",
-        path: `${paths.transaction}/:type`,
-        element: <DepositList />,
+        id: "agent_transcation",
+        path: `${paths.transaction}/agent/:type`,
+        element: <AgentTransactionList />,
         loader : () => {
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
-                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
-                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
+                    { label: "Pending", url: `${paths.transaction}/agent/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/agent/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/agent/DEPOSIT_REJECT` },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -23,7 +23,7 @@ export const transactionRoutes = [
     {
         id: "deposit_detail",
         path: `${paths.transaction}/:type/:id`,
-        element: <DepositDetail />,
+        element: <TransactionDetail />,
         loader : () => {
             return{
                 breadcrumbs: [

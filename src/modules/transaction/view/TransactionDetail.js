@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { BreadCrumb } from "../../../shares/BreadCrumb"
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,8 +10,9 @@ import { endpoints } from "../../../constants/endpoints";
 import { Image } from "primereact/image";
 import { transactionService } from "../transactionService";
 import numeral from "numeral";
+import { paths } from "../../../constants/paths";
 
-export const DepositDetail = () => {
+export const TransactionDetail = () => {
 
     const [loading, setLoading] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
@@ -19,22 +20,23 @@ export const DepositDetail = () => {
 
     const { transaction } = useSelector(state => state.transaction);
 
-    if(transaction) {
-    }
-
     const params = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const depositStatus = useRef(params.type.toUpperCase());
     const transcationId = useRef(params.id);
 
-    const paymentTranscationHandler = async (transactionstatus) => {
+    /** Deposit Transaction Payment Accepted */
+    const paymentTranscationHandler = async () => {
         setLoading(true);
-        await transactionService.makePayment(dispatch, {
-            transaction_id: transcationId.current,
-            status: transactionstatus
-        });
         setOpenConfirmDialog(!openConfirmDialog);
+        const result = await transactionService.makePayment(dispatch, transcationId.current);
+
+        if(result.status === 200) {
+            const backward = transaction.sender_type === 'MAIN_AGENT' || transaction.sender_type === "SUB_AGENT" ? `${paths.transaction}/agent/DEPOSIT_PENDING` : `${paths.transaction}/partner/DEPOSIT_PENDING`;
+            navigate(backward);
+        }
         setLoading(false);
     }
 
@@ -54,18 +56,20 @@ export const DepositDetail = () => {
             <div className="flex flex-row justify-content-between align-items-center">
                 <div className="flex flex-column justify-content-center align-items-start">
                     <h3> Deposit Transcation Information </h3>
-                    <Badge value={depositStatus.current} severity={`${depositStatus.current === 'DEPOSIT_PENDING' ? "warning" : depositStatus.current === "DEPOSIT_REJECT" ? "danger" : "success"}`}></Badge>
+                    <Badge 
+                        className="mt-3"
+                        value={depositStatus.current} 
+                        severity={`${depositStatus.current === 'DEPOSIT_PENDING' ? "warning" : depositStatus.current === "DEPOSIT_REJECT" ? "danger" : "success"}`}
+                    ></Badge>
                 </div>
-
 
                 <div className="flex flex-row justify-content-end align-items-center">
                     {depositStatus.current === "DEPOSIT_PENDING" && (
                         <div>
-                            <Button size="small" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Make Payment Accept </Button>
+                        <Button size="small" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Make Payment Accept </Button>
                             <Button size="small" onClick={() => paymentTranscationHandler("DEPOSIT_REJECT")} severity="danger" className="ml-3"> Reject </Button>
                         </div>
                     )}
-
                 </div>
             </div>
         )
@@ -87,27 +91,27 @@ export const DepositDetail = () => {
                                 <h4 className="py-3"> Agent Bank Account Information </h4>
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Holder Name </small>
-                                    <small> {transaction.agent_account_name} </small>
+                                    <small> {transaction.sender_account_name} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> NRC Number </small>
-                                    <small> {transaction.agent_nrc} </small>
+                                    <small> {transaction.sender_nrc} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Email </small>
-                                    <small> {transaction.agent_email} </small>
+                                    <small> {transaction.sender_email} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Phone </small>
-                                    <small> {transaction.agent_phone} </small>
+                                    <small> {transaction.sender_phone} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Number</small>
-                                    <small> {transaction.agent_account_number} </small>
+                                    <small> {transaction.sender_account_number} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
@@ -117,12 +121,12 @@ export const DepositDetail = () => {
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Branch </small>
-                                    <small> {transaction.agent_bank_branch} </small>
+                                    <small> {transaction.sender_bank_branch} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Branch Address </small>
-                                    <small> {transaction.agent_bank_address} </small>
+                                    <small> {transaction.sender_bank_address} </small>
                                 </div>
                             </div>
 
@@ -210,7 +214,7 @@ export const DepositDetail = () => {
                     </p>
 
                     <div className="flex flex-row justify-content-end align-items-center mt-3">
-                    <Button className="ml-3" size="small" severity="success" onClick={() => paymentTranscationHandler("PAYMENT_ACCEPTED")}> Approve </Button>
+                        <Button className="ml-3" size="small" severity="success" onClick={() => paymentTranscationHandler()}> Approve </Button>
                         <Button className="ml-3" size="small" severity="danger" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Cancel </Button>
                     </div>
                 </Dialog>

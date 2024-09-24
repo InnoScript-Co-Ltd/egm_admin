@@ -1,6 +1,5 @@
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext"
-import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { endpoints } from "../../../constants/endpoints";
@@ -17,6 +16,7 @@ import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { partnerPayload } from "../partnerPayload";
 import { partnerService } from "../partnerService";
 import { Image } from "primereact/image";
+import moment from "moment";
 
 export const PartnerUpdate = () => {
 
@@ -64,7 +64,9 @@ export const PartnerUpdate = () => {
 
     useEffect(() => {
         if (partner) {
-            setPayload(partner);
+            const updatePayload = {...partner};
+            updatePayload.dob = moment(partner.dob).toDate();
+            setPayload(updatePayload);
         }
     }, [partner]);
 
@@ -77,9 +79,7 @@ export const PartnerUpdate = () => {
             <div className="col-12">
                 <Card
                     title="Update Partner Account Information"
-                    subTitle={"Partner account is need to upgrade FULL_KYC"}
                 >
-
                     <Loading loading={loading} />
 
                     <div className="grid">
@@ -160,13 +160,12 @@ export const PartnerUpdate = () => {
                                         setPayload(updateValue);
                                     })}
                                     dateFormat="dd/mm/yy"
-
                                 />
                             </div>
                             <ValidationMessage field="dob" />
                         </div>
 
-                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="username" className='input-label'> Phone </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
@@ -188,7 +187,7 @@ export const PartnerUpdate = () => {
                         </div>
 
 
-                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="email" className='input-label'> email </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
@@ -210,7 +209,7 @@ export const PartnerUpdate = () => {
                         </div>
 
 
-                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="dob" className='input-label'> nrc </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
@@ -231,47 +230,7 @@ export const PartnerUpdate = () => {
                             <ValidationMessage field="nrc" />
                         </div>
 
-
-
-                        <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <div className="flex flex-column gap-2">
-                                <label htmlFor="kyc_status" className='input-label text-black'> KYC Status </label>
-                                <Dropdown
-                                    className="p-inputtext-sm"
-                                    id="kyc_status"
-                                    name="kyc_status"
-                                    options={kycStatus.current}
-                                    placeholder="Select Kyc Status"
-                                    disabled={loading}
-                                    value={payload.kyc_status ? payload.kyc_status : ""}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'kyc_status', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                                <ValidationMessage field={"kyc_status"} />
-                            </div>
-                        </div>
-
-                        <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <div className="flex flex-column gap-2">
-                                <label htmlFor="status" className='input-label text-black'> Status </label>
-                                <Dropdown
-                                    className="p-inputtext-sm"
-                                    inputId="status"
-                                    name="status"
-                                    options={partnerStatus.current}
-                                    placeholder="Select Partner Status"
-                                    disabled={loading}
-                                    value={payload.status ? payload.status : ""}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                                <ValidationMessage field={"status"} />
-                            </div>
-                        </div>
-
-                        <div className="col-12 md:col-9 lg:col-9 py-3">
+                        <div className="col-12 md:col-12 lg:col-12 py-3">
                             <label htmlFor="address" className='input-label'> address </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
@@ -296,7 +255,7 @@ export const PartnerUpdate = () => {
                             <label className='text-black'> NRC Front Preview </label>
                             <Image 
                                 className="my-3"
-                                src={payload.nrc_front ? payload.nrc_front : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
+                                src={payload.nrc_front ? `${endpoints.image}/${payload.nrc_front}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
                                 preview={true}
                                 indicatorIcon={icon}
                                 width="100%"
@@ -307,7 +266,7 @@ export const PartnerUpdate = () => {
                             <label className='text-black'> NRC Back Preview </label>
                             <Image 
                                 className="my-3"
-                                src={payload.nrc_back ? payload.nrc_back : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
+                                src={payload.nrc_back ? `${endpoints.image}/${payload.nrc_back}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
                                 preview={true}
                                 indicatorIcon={icon}
                                 width="100%"

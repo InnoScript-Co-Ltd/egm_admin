@@ -17,8 +17,6 @@ export const partnerPayload = {
         address: "",
         nrc: "",
         dob: "",
-        kyc_status: "",
-        status: ""  
     },
     searchableFields: "first_name,last_name,username,email,phone,nrc,dob,kyc_status,status",
     columns: [

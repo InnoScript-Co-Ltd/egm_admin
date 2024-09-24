@@ -30,15 +30,15 @@ export const items = [
     },
     {
         key: "Transactions",
-        label: "transaction",
+        label: "Transaction",
         icon: "pi pi-fw pi-money-bill",
         url: null,
         children: [
             {
-                key: 'deposit',
-                label: 'Deposit',
+                key: 'agent_deposit',
+                label: 'Agent Deposit',
                 icon: 'pi pi-fw pi-list',
-                url: `${paths.transaction}/deposit`
+                url: `${paths.transaction}/agent/DEPOSIT_PENDING`
             },
             {
                 key: 'deposint_reject',

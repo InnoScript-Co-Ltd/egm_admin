@@ -27,8 +27,8 @@ export const transactionService = {
         return result;
     },
 
-    makePayment: async (dispatch, payload) => {
-        const result = await postRequest(endpoints.deposit, payload);
+    makePayment: async (dispatch, id) => {
+        const result = await postRequest(`${endpoints.transaction}/${id}/make-payment`, null);
         await httpServiceHandler(dispatch, result);
 
         if (result.status === 200) {

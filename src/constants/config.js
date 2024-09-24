@@ -74,13 +74,18 @@ export const bankTypes = [
 
 ]
 
-/**
- * Notification Options
- * serverity ["error" | "success" | "info" | "warn"]
- * sticky [boolean | default -> true ]
- * life [number]
- * closeable [boolean | default -> true]
- */
+
+export const ReferralLinkType = {
+    LEVEL_FOUR_REFERRAL: "LEVEL_FOUR_REFERRAL",
+    CLIENT_REFERRAL: "CLIENT_REFERRAL",
+    COMMISSION_REFERRAL: "COMMISSION_REFERRAL"
+}
+
+export const AgentType = {
+    MAIN_AGENT: "MAIN_AGENT",
+    SUB_AGENT: "SUB_AGENT"
+}
+
 export const notificationOptions = {
     severity: "info",
     sticky: false,

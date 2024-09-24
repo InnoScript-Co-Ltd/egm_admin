@@ -19,6 +19,7 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { setPaginate } from "../partnerSlice";
 import { partnerPayload } from "../partnerPayload";
 import { partnerService } from "../partnerService";
+import moment from "moment";
 
 export const PartnerTableView = () => {
 
@@ -224,6 +225,10 @@ export const PartnerTableView = () => {
                         value={value[col.field]}
                       />
                     );
+                  case "dob":
+                    return (
+                      <span> {moment(value[col.field]).format("DD/MM/YYYY")} </span>
+                    )
                   case "status":
                     return <Status status={value[col.field]} />;
                   case "kyc_status":
