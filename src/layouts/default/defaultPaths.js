@@ -41,16 +41,10 @@ export const items = [
                 url: `${paths.transaction}/agent/DEPOSIT_PENDING`
             },
             {
-                key: 'deposint_reject',
-                label: 'Reject',
+                key: 'partner_deposit',
+                label: 'Partner Deposit',
                 icon: 'pi pi-fw pi-list',
-                url: `${paths.deposit}/reject`
-            },
-            {
-                key: 'deposint_payment_accepted',
-                label: 'Payment Accepted',
-                icon: 'pi pi-fw pi-list',
-                url: `${paths.deposit}/payment_accepted`
+                url: `${paths.transaction}/partner/DEPOSIT_PENDING`
             },
         ]
     },

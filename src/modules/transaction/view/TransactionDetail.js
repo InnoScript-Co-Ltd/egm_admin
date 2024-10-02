@@ -9,8 +9,8 @@ import { Dialog } from 'primereact/dialog';
 import { endpoints } from "../../../constants/endpoints";
 import { Image } from "primereact/image";
 import { transactionService } from "../transactionService";
-import numeral from "numeral";
 import { paths } from "../../../constants/paths";
+import numeral from "numeral";
 
 export const TransactionDetail = () => {
 
@@ -37,6 +37,19 @@ export const TransactionDetail = () => {
             const backward = transaction.sender_type === 'MAIN_AGENT' || transaction.sender_type === "SUB_AGENT" ? `${paths.transaction}/agent/DEPOSIT_PENDING` : `${paths.transaction}/partner/DEPOSIT_PENDING`;
             navigate(backward);
         }
+        setLoading(false);
+    }
+
+    /** Depoist Transaction Reject */
+    const paymentRejectHandler = async () => {
+        setLoading(true);
+        const result = await transactionService.makeReject(dispatch, transaction.current);
+
+        if(result.status === 200) {
+            const backward = transaction.sender_type === 'MAIN_AGENT' || transaction.sender_type === "SUB_AGENT" ? `${paths.transaction}/agent/DEPOSIT_PENDING` : `${paths.transaction}/partner/DEPOSIT_PENDING`;
+            navigate(backward);
+        }
+        
         setLoading(false);
     }
 
@@ -67,7 +80,7 @@ export const TransactionDetail = () => {
                     {depositStatus.current === "DEPOSIT_PENDING" && (
                         <div>
                         <Button size="small" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Make Payment Accept </Button>
-                            <Button size="small" onClick={() => paymentTranscationHandler("DEPOSIT_REJECT")} severity="danger" className="ml-3"> Reject </Button>
+                            <Button size="small" onClick={() => paymentRejectHandler()} severity="danger" className="ml-3"> Reject </Button>
                         </div>
                     )}
                 </div>

@@ -1,6 +1,8 @@
 import { paths } from "../../constants/paths"
 import { TransactionDetail } from "./view/TransactionDetail"
 import { AgentTransactionList } from "./view/AgentTransactionList"
+import { PartnerTransactionTableView } from "./list/PartnerTransactionTableView"
+import { PartnerTransactionList } from "./view/PartnerTransactionList"
 
 export const transactionRoutes = [
     {
@@ -14,6 +16,23 @@ export const transactionRoutes = [
                     { label: "Pending", url: `${paths.transaction}/agent/DEPOSIT_PENDING` },
                     { label: "Payment Accepted", url: `${paths.transaction}/agent/DEPOSIT_PAYMENT_ACCEPTED` },
                     { label: "Reject", url: `${paths.transaction}/agent/DEPOSIT_REJECT` },
+                ],
+                role: ['ADMINISTRATOR']
+            }
+        },
+        
+    },
+    {
+        id: "partner_transcation",
+        path: `${paths.transaction}/partner/:type`,
+        element: <PartnerTransactionList />,
+        loader : () => {
+            return{
+                breadcrumbs: [
+                    { label: "Dashboard", url: paths.dashboard },
+                    { label: "Pending", url: `${paths.transaction}/partner/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/partner/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/partner/DEPOSIT_REJECT` },
                 ],
                 role: ['ADMINISTRATOR']
             }
