@@ -71,6 +71,11 @@ export const bankTypes = [
         value: "yoma_bank_flexi_saving",
         icon: ""
     },
+    {
+        label: "YOMA (Flexi acc)",
+        value: "yoma_bank_flexi_acc",
+        icon: ""
+    },
 
 ]
 
