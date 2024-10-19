@@ -210,12 +210,12 @@ export const EmailContentUpdate = () => {
                                 <label htmlFor="role" className='input-label'>{"Email Content"} </label>
                                 <div className="p-inputgroup mt-2">
                                     <TextEditor
-                                        value={payload ?? ""}
+                                        value={payload ? payload.content : ""}
                                         onChange={(e) => {
-                                            // payloadHandler(payload, e, 'content', (updatePayload) => {
-                                            //     console.log(payload);
-                                            //     setPayload(updatePayload);
-                                            // });
+                                            payloadHandler(payload, e, 'content', (updatePayload) => {
+                                                console.log(payload);
+                                                setPayload(updatePayload);
+                                            });
                                         }}
                                     />
                                 </div>
