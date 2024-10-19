@@ -9,24 +9,39 @@ export const items = [
         url: "/dashboard"
     },
     {
-        key: "partner",
-        label: "Partner",
-        icon: "pi pi-fw pi-user-plus",
-        url: paths.partner
-    },
-    {
-        key: 'agent',
-        label: 'Agent',
-        data: 'Agent',
-        icon: 'pi pi-fw pi-user',
-        url: paths.agent
-    },
-    {
         key: 'package',
         label: 'Package',
         data: 'Package',
         icon: 'pi pi-fw pi-user',
         url: paths.package
+    },
+    {
+        key: "partner",
+        label: "Partner",
+        icon: "pi pi-fw pi-user-plus",
+        url: paths.partner
+    },
+    
+    {
+        key: 'agent',
+        label: 'Agent',
+        data: 'Agent',
+        icon: 'pi pi-fw pi-user',
+        url: null,
+        children: [
+            {
+                key: 'main_agent',
+                label: 'Main Agent',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.agent}/MAIN_AGENT`
+            },
+            {
+                key: 'sub_agent',
+                label: 'Sub Agent',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.transaction}/SUB_AGENT`
+            },
+        ]
     },
     {
         key: "Transactions",
