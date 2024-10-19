@@ -4,11 +4,11 @@ import { getData } from "../helpers/localstorage";
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
-export const digitalOcenToken = {
-    egm_space_access_key: "DO0073VTCE6B7PQT7ZG4",
-    eng_space_secret_key: "BWYxZfW6yTdfJO1s4/xUAz3xCZBia4lhvOFPJDhX1LY",
-    egm_token: "dop_v1_889c18d431e45425bbdae3520a3ecfe22569d1fada2e372ac4c75f3a4bd8c8dd"
-}
+// export const digitalOcenToken = {
+//     egm_space_access_key: "DO0073VTCE6B7PQT7ZG4",
+//     eng_space_secret_key: "BWYxZfW6yTdfJO1s4/xUAz3xCZBia4lhvOFPJDhX1LY",
+//     egm_token: "dop_v1_889c18d431e45425bbdae3520a3ecfe22569d1fada2e372ac4c75f3a4bd8c8dd"
+// }
 
 export const firebaseConfig = {
     apiKey: "AIzaSyC3e9K_RlhPHMQMI_AOoZ71Oqx0CD1mSMA",
