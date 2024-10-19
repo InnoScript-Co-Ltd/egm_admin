@@ -17,6 +17,7 @@ import merchantBankAccountSlice from "./modules/merchantBankAccount/merchantBank
 import partnerSlice from "./modules/partner/partnerSlice";
 import transactionSlice from "./modules/transaction/transactionSlice";
 import emailContentSlice from "./modules/emailContent/emailContentSlice";
+import agentSlice from "./modules/agent/agentSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -37,7 +38,8 @@ export const stores = configureStore({
     merchantBankAccount: merchantBankAccountSlice,
     partner: partnerSlice,
     transaction: transactionSlice,
-    emailContent: emailContentSlice
+    emailContent: emailContentSlice,
+    agent: agentSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

@@ -21,6 +21,7 @@ import { partnerRoutes } from "./modules/partner/partnerRoutes";
 import { transactionRoutes } from "./modules/transaction/transactionRoutes";
 import { emailContentRoutes } from "./modules/emailContent/emailContentRoutes";
 import { bankAccountTypeRoutes } from "./modules/bankAccountType/bankAccountTypeRoutes.";
+import { agentRoutes } from "./modules/agent/agentRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -45,7 +46,8 @@ export const routers = createBrowserRouter([
             ...bankAccountTypeRoutes,
             ...partnerRoutes,
             ...transactionRoutes,
-            ...emailContentRoutes
+            ...emailContentRoutes,
+            ...agentRoutes
         ]
     },
     {
