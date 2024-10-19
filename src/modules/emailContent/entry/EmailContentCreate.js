@@ -39,7 +39,7 @@ export const EmailContentCreate = () => {
         setLoading(true);
 
         const updatePayload = {...payload};
-        updatePayload.country_code = selectedCountry.country_code;
+        updatePayload.country_code = selectedCountry.country_code; 
         
         const response = await emailContentServices.store(updatePayload, dispatch);
         if (response.status === 200) {
