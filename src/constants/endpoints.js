@@ -1,6 +1,6 @@
 import { env } from "./config"
 
-export const baseURL = env[0];
+export const baseURL = env[2];
 
 export const endpoints = {
     login: "auth/login",

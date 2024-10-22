@@ -1,6 +1,7 @@
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext"
 import { Calendar } from 'primereact/calendar';
+import { Dropdown } from 'primereact/dropdown';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { endpoints } from "../../../constants/endpoints";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +18,7 @@ import { Image } from "primereact/image";
 import { agentPayload } from "../agentPayload";
 import { agentServices } from "../agentServices";
 import moment from "moment";
+import { AgentKYCUpdate } from "./AgentKYCUpdate";
 
 export const AgentUpdate = () => {
 
@@ -27,8 +29,8 @@ export const AgentUpdate = () => {
     const navigate = useNavigate();
     const params = useParams();
 
-    const partnerStatus = useRef();
-    const kycStatus = useRef();
+    const agentStatus = useRef([]);
+    const kycStatus = useRef([]);
 
     const icon = (<i className="pi pi-search"></i>)
 
@@ -42,10 +44,10 @@ export const AgentUpdate = () => {
 
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const resultPartner = await getRequest(`${endpoints.status}?type=partner`);
+        const resultAgentStatus = await getRequest(`${endpoints.status}?type=agent`);
 
-        if (resultPartner.status === 200) {
-            partnerStatus.current = resultPartner.data.partner;
+        if (resultAgentStatus.status === 200) {
+            agentStatus.current = resultAgentStatus.data.agent;
         }
 
         const resultKyc = await getRequest(`${endpoints.status}?type=kyc`);
@@ -64,7 +66,7 @@ export const AgentUpdate = () => {
 
     useEffect(() => {
         if (agent) {
-            const updatePayload = {...agent};
+            const updatePayload = { ...agent };
             updatePayload.dob = moment(agent.dob).toDate();
             setPayload(updatePayload);
         }
@@ -78,7 +80,7 @@ export const AgentUpdate = () => {
 
             <div className="col-12">
                 <Card
-                    title="Update Partner Account Information"
+                    title="Update Agent Account Information"
                 >
                     <Loading loading={loading} />
 
@@ -93,7 +95,7 @@ export const AgentUpdate = () => {
                                     placeholder="Enter First Name"
                                     value={payload.first_name ? payload.first_name : ""}
                                     aria-describedby="first_name-help"
-                                    tooltip="Partner Frist Name"
+                                    tooltip="Agent Frist Name"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'first_name', (updateValue) => {
@@ -114,7 +116,7 @@ export const AgentUpdate = () => {
                                     placeholder="Enter Last Name"
                                     value={payload.last_name ? payload.last_name : ""}
                                     aria-describedby="last_name-help"
-                                    tooltip="Partner Last Name"
+                                    tooltip="Agent Last Name"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'last_name', (updateValue) => {
@@ -126,7 +128,7 @@ export const AgentUpdate = () => {
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="username" className='input-label'> username </label>
+                            <label htmlFor="username" className='input-label'> Username </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="username"
@@ -135,7 +137,7 @@ export const AgentUpdate = () => {
                                     placeholder="Enter Username"
                                     value={payload.username ? payload.username : ""}
                                     aria-describedby="username-help"
-                                    tooltip="Partner Username"
+                                    tooltip="Agent Username"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'username', (updateValue) => {
@@ -146,49 +148,9 @@ export const AgentUpdate = () => {
                             <ValidationMessage field="username" />
                         </div>
 
+
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="dob" className='input-label'> dob </label>
-                            <div className="p-inputgroup mt-2">
-                                <Calendar
-                                    className="p-inputtext-sm"
-                                    placeholder="Enter DOB"
-                                    value={payload.dob ? payload.dob : new Date()}
-                                    tooltip="Partner Birthday"
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'dob', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                    dateFormat="dd/mm/yy"
-                                />
-                            </div>
-                            <ValidationMessage field="dob" />
-                        </div>
-
-                        <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="username" className='input-label'> Phone </label>
-                            <div className="p-inputgroup mt-2">
-                                <InputText
-                                    id="phone"
-                                    name="phone"
-                                    className="p-inputtext-sm"
-                                    placeholder="Enter phone number"
-                                    value={payload.phone ? payload.phone : ""}
-                                    aria-describedby="phone-help"
-                                    tooltip="Partner phone"
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                            </div>
-                            <ValidationMessage field="phone" />
-                        </div>
-
-
-                        <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="email" className='input-label'> email </label>
+                            <label htmlFor="email" className='input-label'> Email </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="email"
@@ -197,7 +159,7 @@ export const AgentUpdate = () => {
                                     placeholder="Enter email address"
                                     value={payload.email ? payload.email : ""}
                                     aria-describedby="email-help"
-                                    tooltip="Partner email address"
+                                    tooltip="Agent email address"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
@@ -208,39 +170,17 @@ export const AgentUpdate = () => {
                             <ValidationMessage field="email" />
                         </div>
 
-
-                        <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="dob" className='input-label'> nrc </label>
-                            <div className="p-inputgroup mt-2">
-                                <InputText
-                                    id="nrc"
-                                    name="nrc"
-                                    className="p-inputtext-sm"
-                                    aria-describedby="nrc-help"
-                                    placeholder="Enter nrc number"
-                                    value={payload.nrc ? payload.nrc : ""}
-                                    tooltip="Partner Birthday"
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'nrc', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                            </div>
-                            <ValidationMessage field="nrc" />
-                        </div>
-
-                        <div className="col-12 md:col-12 lg:col-12 py-3">
-                            <label htmlFor="address" className='input-label'> address </label>
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label htmlFor="address" className='input-label'> Address </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="address"
                                     name="address"
                                     className="p-inputtext-sm"
                                     aria-describedby="address-help"
-                                    placeholder="Enteraddress"
+                                    placeholder="Enter address"
                                     value={payload.address ? payload.address : ""}
-                                    tooltip="Partner address"
+                                    tooltip="Agent address"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'address', (updateValue) => {
@@ -251,26 +191,46 @@ export const AgentUpdate = () => {
                             <ValidationMessage field="address" />
                         </div>
 
-                        <div className="col-12 md:col-6 lg:col-6 py-3">
-                            <label className='text-black'> NRC Front Preview </label>
-                            <Image 
-                                className="my-3"
-                                src={payload.nrc_front ? `${endpoints.image}/${payload.nrc_front}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
-                                preview={true}
-                                indicatorIcon={icon}
-                                width="100%"
-                            />
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label className='input-label'> Agent Type </label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    value={payload.agent_type ?? ""}
+                                    tooltip={payload.agent_type ?? ""}
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={true}
+                                    readOnly={true}
+                                />
+                            </div>
                         </div>
 
-                        <div className="col-12 md:col-6 lg:col-6 py-3">
-                            <label className='text-black'> NRC Back Preview </label>
-                            <Image 
-                                className="my-3"
-                                src={payload.nrc_back ? `${endpoints.image}/${payload.nrc_back}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
-                                preview={true}
-                                indicatorIcon={icon}
-                                width="100%"
-                            />
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label className='input-label'> Referral Type </label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    value={payload.referral_type ?? ""}
+                                    tooltip={payload.referral_type ?? ""}
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={true}
+                                    readOnly={true}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label className='input-label'> Commission Rate </label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    className="p-inputtext-sm"
+                                    value={payload.commission ?? ""}
+                                    tooltip={payload.commission ?? ""}
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={true}
+                                    readOnly={true}
+                                />
+                            </div>
                         </div>
 
                         <FormMainAction
@@ -284,6 +244,8 @@ export const AgentUpdate = () => {
                     </div>
                 </Card>
             </div>
+
+            <AgentKYCUpdate />
         </div>
     )
 }

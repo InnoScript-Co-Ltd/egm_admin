@@ -207,7 +207,7 @@ h6 {
     height: 166px;
     color: #000;
     background-color: #fff;
-    border-radius: 25px;
+    border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     overflow: hidden;
 }
@@ -404,7 +404,6 @@ h6 {
 .app-content {
     width: 100%;
     background: #1c1b1b;
-    height: 100vh;
     color: #fff;
 }
 

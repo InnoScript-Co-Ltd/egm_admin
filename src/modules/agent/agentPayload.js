@@ -1,6 +1,12 @@
 import { paginateOptions } from "../../constants/config";
 
 export const agentPayload = {
+    kycUpdate: {
+        dob: "",
+        kyc_status: "",
+        nrc: "",
+        phone: ""
+    },
     create: {
         username: "",
         first_name: "",
@@ -13,12 +19,13 @@ export const agentPayload = {
         last_name: "",
         username: "",
         email: "",
-        phone: "",
         address: "",
-        nrc: "",
-        dob: "",
+        status: "",
+        referral_type: "",
+        commission: "",
+        agent_type: ""
     },
-    searchableFields: "first_name,last_name,username,email,phone,nrc,dob,kyc_status,status",
+    searchableFields: "first_name,last_name,username,email,phone,nrc,dob",
     columns: [
         { field: "name", header: "Name", sortable: true, show: true },
         { field: "email", header: "Email", sortable: true, show: true },
@@ -31,7 +38,7 @@ export const agentPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "first_name,last_name,username,email,phone,nrc,dob,kyc_status,status",
+        columns: "first_name,last_name,username,email,phone,nrc,dob",
         search: "",
         order: "id",
         sort: "DESC",

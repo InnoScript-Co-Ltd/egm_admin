@@ -1,16 +1,13 @@
 import { endpoints } from "../../constants/endpoints";
 import { getRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
-import { countIndex, itemIndex, orderIndex, userIndex } from "./dashboardSlice";
+import { itemIndex, orderIndex, userIndex } from "./dashboardSlice";
 
 
 export const dashboardService = {
     countIndex: async (dispatch) => {
         const response = await getRequest(`${endpoints.count}`);
         await httpServiceHandler(dispatch, response);
-        if(response.status === 200) {
-            dispatch(countIndex(response.data));
-        }
         return response;
     },
     orderIndex: async (dispatch) => {
