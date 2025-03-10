@@ -28,7 +28,6 @@ export const BankAccountTypeCreate = () => {
     const bankAccountTypeCreateRequest = async () => {
             setLoading(true);
             const response = await bankAccountTypeService.store(payload, dispatch);
-            console.log(response,"data")
             if (response.status === 200) {
                 navigate(paths.bankAccountType);
             }
@@ -67,18 +66,17 @@ export const BankAccountTypeCreate = () => {
         accept="image/*"
         disabled={loading}
         onChange={(e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                const updatedPayload = {
-                    ...payload,
-                    logo: file, // Store actual file
-                };
+            payloadHandler(payload, e.target.files[0], 'logo', (updatedPayload) => {
+                console.log(updatedPayload);
                 setPayload(updatedPayload);
-            };
+            })
+            // const file = e.target.files[0];
+            // if (!file) return;
+
+            // const reader = new FileReader();
+            // reader.readAsDataURL(file);
+            // reader.onloadend = () => {
+            // };
         }}
     />
 </div>

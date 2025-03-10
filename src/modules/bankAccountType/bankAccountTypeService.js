@@ -1,12 +1,13 @@
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest, putRequest } from "../../helpers/api"
+import { formBuilderRequest, getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, update } from "./bankAccountTypeSlice";
 
 export const bankAccountTypeService = {
     store: async (payload, dispatch) => {
-        const response = await postRequest(endpoints.bankType, payload);
+        const response = await formBuilderRequest(endpoints.bankType, payload);
+        console.log(payload)
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
