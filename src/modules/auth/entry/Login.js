@@ -37,6 +37,7 @@ export const Login = () => {
     }
 
     return(
+    <div style={{background: "#1c1b1b" , height: "100%"}}>
         <div className="grid">
             <div className="col-12 md:col-4 lg:col-4 md:col-offset-4 my-8">
                 <Card
@@ -97,5 +98,6 @@ export const Login = () => {
                 </Card>
             </div>
         </div>
+    </div>
     )   
 }
