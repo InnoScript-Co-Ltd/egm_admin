@@ -35,7 +35,6 @@ export const BankAccountTypeTableView = () => {
 
 
   const { bankAccountTypes, paginateParams } = useSelector((state) => state.bankAccountType);
-  console.log(bankAccountTypes)
   const dispatch = useDispatch();
 
   /**
@@ -106,7 +105,6 @@ export const BankAccountTypeTableView = () => {
   const loadingData = useCallback(async () => {
     setLoading(true);
     const result = await bankAccountTypeService.index(dispatch, paginateParams);
-    console.log("API Response:", result);
   
     if (result.status === 200) {
       total.current = result.data.total ? result.data.total : result.data.length;
@@ -226,6 +224,13 @@ export const BankAccountTypeTableView = () => {
                   case "bank_type":
                     return (
                       value[col.field]
+                    );
+                  case "logo":
+                    return (
+                      <img
+                        src={`https://api.evanglobalmanagement.com/storage/images/${value[col.field]}`} 
+                        style={{ width: "50px", height: "50px", objectFit: "contain" }}
+                      />
                     );
                   case "status":
                     return <Status status={value[col.field]} />;

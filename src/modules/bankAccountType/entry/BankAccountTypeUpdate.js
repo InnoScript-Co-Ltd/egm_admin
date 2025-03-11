@@ -15,7 +15,6 @@ import { FormMainAction } from "../../../shares/FormMainAction";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { bankAccountTypePayload } from "../bankAccountTypePayload";
 import { bankAccountTypeService } from "../bankAccountTypeService";
-import { Image } from "primereact/image";
 
 export const BankAccountTypeUpdate = () => {
 
@@ -33,9 +32,21 @@ export const BankAccountTypeUpdate = () => {
 
     const { bankAccountType } = useSelector(state => state.bankAccountType);
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(imageUrl);
+            payloadHandler(payload, file, "logo", (updatedPayload) => {
+                setPayload(updatedPayload);
+            });
+        }
+    };
+
     const bankAccountTypeUpdate = async () => {
         setLoading(true);
-        await bankAccountTypeService.update(dispatch, payload, params.id);
+        const response = await bankAccountTypeService.update(dispatch, payload, params.id);
+        console.log(response)
         setLoading(false);
     }
 
@@ -75,57 +86,19 @@ export const BankAccountTypeUpdate = () => {
                     <Loading loading={loading} />
 
                     <div className="grid">
-                    <div className="col-12 md:col-12 lg:col-12 py-3">
-    <label htmlFor="logo" className="input-label">
-        Bank Logo <span>(required*)</span>
-    </label>
-    <div className="p-inputgroup mt-2">
-        <input
-            type="file"
-            id="logo"
-            name="logo"
-            className="p-inputtext-sm"
-            accept="image/*"
-            disabled={loading}
-            onChange={(e) => {
-                const file = e.target.files[0];
-                if (!file) return;
 
-                // Update preview
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setPreview(reader.result);
-                };
-                reader.readAsDataURL(file);
-
-                // Update payload
-                setPayload((prevPayload) => ({
-                    ...prevPayload,
-                    logo: file,
-                }));
-            }}
-        />
-    </div>
-
-    {preview && (
-        <div className="mt-2 text-center">
-            <img
-                src={preview}
-                alt="Bank Logo Preview"
-                style={{
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "2px solid #ccc",
-                }}
-            />
-        </div>
-    )}
-
-    <ValidationMessage field="logo" />
-</div>
-
+                    <div className="col-12 md:col-12 lg:col-12 py-3 text-center">
+                                <img
+                                    src={preview || `https://api.evanglobalmanagement.com/storage/images/${payload.logo}`}
+                                    style={{
+                                        width: "80px",
+                                        height: "80px",
+                                        borderRadius: "50%",
+                                        objectFit: "cover",
+                                        border: "2px solid #ccc",
+                                    }}
+                                />
+                        </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
                             <label htmlFor="bank_name" className='input-label'> Bank Name </label>
@@ -167,6 +140,25 @@ export const BankAccountTypeUpdate = () => {
                                 />
                             </div>
                             <ValidationMessage field="bank_type" />
+                        </div>
+
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label htmlFor="logo" className="input-label">
+                                {"Bank Logo"}
+                            </label>
+                            <div className="p-inputgroup mt-2">
+                                <input
+                                    type="file"
+                                    id="logo"
+                                    name="logo"
+                                    className="p-inputtext-sm"
+                                    accept="image/*"
+                                    disabled={loading}
+                                    onChange={handleImageChange}
+                                />
+                            </div>
+
+                            <ValidationMessage field="logo" />
                         </div>
 
                         <FormMainAction

@@ -1,7 +1,7 @@
-
+import defaultImage from "../../../assets/images/defaultImage.png";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
-import { Messages } from 'primereact/messages';
+import { Messages } from "primereact/messages";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,23 +16,37 @@ import { bankAccountTypePayload } from "../bankAccountTypePayload";
 import { bankAccountTypeService } from "../bankAccountTypeService";
 
 export const BankAccountTypeCreate = () => {
-
     const [payload, setPayload] = useState(bankAccountTypePayload.create);
     const [loading, setLoading] = useState(false);
-    const [preview, setPreview] = useState(null); 
+    const [preview, setPreview] = useState(defaultImage); // Initialize with default image
     const msgs = useRef(null);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const bankAccountTypeCreateRequest = async () => {
-            setLoading(true);
-            const response = await bankAccountTypeService.store(payload, dispatch);
-            if (response.status === 200) {
-                navigate(paths.bankAccountType);
-            }
-            setLoading(false);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setPreview(imageUrl);
+
+            payloadHandler(payload, file, "logo", (updatedPayload) => {
+                setPayload(updatedPayload);
+            });
+        } else {
+            setPreview(defaultImage);
         }
+    };
+
+    const bankAccountTypeCreateRequest = async () => {
+        setLoading(true);
+        const response = await bankAccountTypeService.store(payload, dispatch);
+        if (response.status === 200) {
+            navigate(paths.bankAccountType);
+        }
+        setLoading(false);
+    };
 
     return (
         <div className="grid">
@@ -41,73 +55,31 @@ export const BankAccountTypeCreate = () => {
             </div>
 
             <div className="col-12">
-                <Card
-                    title={"Create Bank Account Type"}
-                >
-
+                <Card title={"Create Bank Account Type"}>
                     <Loading loading={loading} />
 
                     <div className="grid">
-
                         <div className="col-12 md:col-12 lg:col-12 py-3">
                             <Messages ref={msgs} />
                         </div>
 
-                        <div className="col-12 md:col-12 lg:col-12 py-3">
-    <label htmlFor="logo" className="input-label">
-        {"Bank Logo"} <span>(required*)</span>
-    </label>
-    <div className="p-inputgroup mt-2">
-    <input
-        type="file"
-        id="logo"
-        name="logo"
-        className="p-inputtext-sm"
-        accept="image/*"
-        disabled={loading}
-        onChange={(e) => {
-            payloadHandler(payload, e.target.files[0], 'logo', (updatedPayload) => {
-                console.log(updatedPayload);
-                setPayload(updatedPayload);
-            })
-            // const file = e.target.files[0];
-            // if (!file) return;
-
-            // const reader = new FileReader();
-            // reader.readAsDataURL(file);
-            // reader.onloadend = () => {
-            // };
-        }}
-    />
-</div>
-
-
-
-    {preview && (
-        <div className="mt-2 text-center">
-            <img
-                src={preview}
-                alt="Bank Logo Preview"
-                style={{
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "2px solid #ccc",
-                }}
-            />
-        </div>
-    )}
-
-    <ValidationMessage field="logo" />
-</div>
-
-
-
-                        
+                        <div className="col-12 md:col-12 lg:col-12 py-3 text-center">
+                                <img
+                                    src={preview}
+                                    style={{
+                                        width: "80px",
+                                        height: "80px",
+                                        borderRadius: "50%",
+                                        objectFit: "cover",
+                                        border: "2px solid #ccc",
+                                    }}
+                                />
+                        </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="name" className='input-label'>{"Bank Name"} <span>(required*)</span></label>
+                            <label htmlFor="name" className="input-label">
+                                {"Bank Name"} <span>(required*)</span>
+                            </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="bank_name"
@@ -119,16 +91,25 @@ export const BankAccountTypeCreate = () => {
                                     tooltip="Bank Name"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value.toLocaleLowerCase(), 'bank_name', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
+                                    onChange={(e) =>
+                                        payloadHandler(
+                                            payload,
+                                            e.target.value.toLocaleLowerCase(),
+                                            "bank_name",
+                                            (updateValue) => {
+                                                setPayload(updateValue);
+                                            }
+                                        )
+                                    }
                                 />
                             </div>
                             <ValidationMessage field="bank_name" />
                         </div>
 
                         <div className="col-12 md:col-3 lg:col-3 py-3">
-                            <label htmlFor="email" className='input-label'>{"Bank Type"} <span>(required*)</span> </label>
+                            <label htmlFor="email" className="input-label">
+                                {"Bank Type"} <span>(required*)</span>{" "}
+                            </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="bank_type"
@@ -140,12 +121,38 @@ export const BankAccountTypeCreate = () => {
                                     tooltip="Bank Type"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'bank_type', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
+                                    onChange={(e) =>
+                                        payloadHandler(
+                                            payload,
+                                            e.target.value,
+                                            "bank_type",
+                                            (updateValue) => {
+                                                setPayload(updateValue);
+                                            }
+                                        )
+                                    }
                                 />
                             </div>
                             <ValidationMessage field="bank_type" />
+                        </div>
+
+                        <div className="col-12 md:col-3 lg:col-3 py-3">
+                            <label htmlFor="logo" className="input-label">
+                                {"Bank Logo"} <span>(required*)</span>
+                            </label>
+                            <div className="p-inputgroup mt-2">
+                                <input
+                                    type="file"
+                                    id="logo"
+                                    name="logo"
+                                    className="p-inputtext-sm"
+                                    accept="image/*"
+                                    disabled={loading}
+                                    onChange={handleImageChange}
+                                />
+                            </div>
+
+                            <ValidationMessage field="logo" />
                         </div>
 
                         <FormMainAction
@@ -155,10 +162,9 @@ export const BankAccountTypeCreate = () => {
                             onSubmit={bankAccountTypeCreateRequest}
                             loading={loading}
                         />
-
                     </div>
                 </Card>
             </div>
         </div>
-    )
-}
+    );
+};

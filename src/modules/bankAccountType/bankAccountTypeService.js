@@ -32,7 +32,7 @@ export const bankAccountTypeService = {
     },
 
     update: async (dispatch, payload, id) => {
-        const response = await postRequest(`${endpoints.bankType}/${id}`, payload);
+        const response = await formBuilderRequest(`${endpoints.bankType}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
