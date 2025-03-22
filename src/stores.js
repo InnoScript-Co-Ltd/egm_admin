@@ -18,6 +18,7 @@ import partnerSlice from "./modules/partner/partnerSlice";
 import transactionSlice from "./modules/transaction/transactionSlice";
 import emailContentSlice from "./modules/emailContent/emailContentSlice";
 import agentSlice from "./modules/agent/agentSlice";
+import bonusPointSlice from "./modules/bonusPoint/bonusPointSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -39,7 +40,8 @@ export const stores = configureStore({
     partner: partnerSlice,
     transaction: transactionSlice,
     emailContent: emailContentSlice,
-    agent: agentSlice
+    agent: agentSlice,
+    bonusPoint: bonusPointSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

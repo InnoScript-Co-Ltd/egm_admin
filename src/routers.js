@@ -22,6 +22,7 @@ import { transactionRoutes } from "./modules/transaction/transactionRoutes";
 import { emailContentRoutes } from "./modules/emailContent/emailContentRoutes";
 import { bankAccountTypeRoutes } from "./modules/bankAccountType/bankAccountTypeRoutes.";
 import { agentRoutes } from "./modules/agent/agentRoutes";
+import { bonusPointRoutes } from "./modules/bonusPoint/bonusPointRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -47,7 +48,8 @@ export const routers = createBrowserRouter([
             ...partnerRoutes,
             ...transactionRoutes,
             ...emailContentRoutes,
-            ...agentRoutes
+            ...agentRoutes,
+            ...bonusPointRoutes
         ]
     },
     {
