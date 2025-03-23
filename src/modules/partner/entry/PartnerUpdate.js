@@ -17,11 +17,15 @@ import { partnerPayload } from "../partnerPayload";
 import { partnerService } from "../partnerService";
 import { Image } from "primereact/image";
 import moment from "moment";
+import { Button } from "primereact/button";
+import { Dialog } from 'primereact/dialog';
 
 export const PartnerUpdate = () => {
 
     const [payload, setPayload] = useState(partnerPayload.update);
     const [loading, setLoading] = useState(false);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [dialogId, setDialogId] = useState("account");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -58,6 +62,20 @@ export const PartnerUpdate = () => {
         setLoading(false);
     }, [dispatch, params.id]);
 
+    const approveAccount = async () => {
+        setLoading(true);
+        await partnerService.approveAccount(dispatch, params.id);
+        setOpenConfirmDialog(false);
+        setLoading(false);
+    }
+
+    const approveKYC = async () => {
+        setLoading(true);
+        await partnerService.approveKyc(dispatch, params.id);
+        setOpenConfirmDialog(false);
+        setLoading(false);
+    }
+
     useEffect(() => {
         loadingData();
     }, [loadingData]);
@@ -83,6 +101,26 @@ export const PartnerUpdate = () => {
                     <Loading loading={loading} />
 
                     <div className="grid">
+                        <div className="col-12 md:col-12 lg:col-12 py-3">
+                            <div className="flex flex-row justify-content-end align-items-end">
+                                <Button 
+                                    onClick={() => {
+                                        setDialogId('account');
+                                        setOpenConfirmDialog(true)
+                                    }}
+                                > 
+                                    Approve Account 
+                                </Button>
+
+                                <Button className="ml-3" onClick={() => {
+                                    setDialogId('kyc');
+                                    setOpenConfirmDialog(true);
+                                }}> 
+                                    Approve KYC 
+                                </Button>
+                            </div>
+                        </div>
+
                         <div className="col-12 md:col-3 lg:col-3 py-3">
                             <label htmlFor="first_name" className='input-label'> First Name </label>
                             <div className="p-inputgroup mt-2">
@@ -186,7 +224,6 @@ export const PartnerUpdate = () => {
                             <ValidationMessage field="phone" />
                         </div>
 
-
                         <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="email" className='input-label'> email </label>
                             <div className="p-inputgroup mt-2">
@@ -207,7 +244,6 @@ export const PartnerUpdate = () => {
                             </div>
                             <ValidationMessage field="email" />
                         </div>
-
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="dob" className='input-label'> nrc </label>
@@ -252,25 +288,29 @@ export const PartnerUpdate = () => {
                         </div>
 
                         <div className="col-12 md:col-6 lg:col-6 py-3">
-                            <label className='text-black'> NRC Front Preview </label>
-                            <Image 
-                                className="my-3"
-                                src={payload.nrc_front ? `${endpoints.image}/${payload.nrc_front}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
-                                preview={true}
-                                indicatorIcon={icon}
-                                width="100%"
-                            />
+                            <div className="flex flex-column justify-content-start align-items-start">
+                                <label className='text-black'> NRC Front Preview </label>
+                                <Image 
+                                    className="my-3"
+                                    src={payload.nrc_front ? `${endpoints.image}/${payload.nrc_front}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
+                                    preview={true}
+                                    indicatorIcon={icon}
+                                    width="100%"
+                                />
+                            </div>
                         </div>
 
                         <div className="col-12 md:col-6 lg:col-6 py-3">
-                            <label className='text-black'> NRC Back Preview </label>
-                            <Image 
-                                className="my-3"
-                                src={payload.nrc_back ? `${endpoints.image}/${payload.nrc_back}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
-                                preview={true}
-                                indicatorIcon={icon}
-                                width="100%"
-                            />
+                            <div className="flex flex-column justify-content-start align-items-start">
+                                <label className='text-black'> NRC Back Preview </label>
+                                <Image 
+                                    width="100%"
+                                    className="my-3"
+                                    src={payload.nrc_back ? `${endpoints.image}/${payload.nrc_back}` : "https://primefaces.org/cdn/primereact/images/galleria/galleria12.jpg"}
+                                    preview={true}
+                                    indicatorIcon={icon}
+                                />
+                            </div>
                         </div>
 
                         <FormMainAction
@@ -280,10 +320,36 @@ export const PartnerUpdate = () => {
                             onSubmit={partnerAccountUpdate}
                             loading={loading}
                         />
-
                     </div>
                 </Card>
             </div>
+
+            {!loading && openConfirmDialog && (
+                <Dialog
+                    header={dialogId === 'account' ? 'Approve Account Status' : "Approve KYC Status" }
+                    visible={openConfirmDialog}
+                    style={{ width: '50vw' }}
+                    onHide={() => { if (!openConfirmDialog) return; setOpenConfirmDialog(false); }}
+                >
+                    <p className="mb-3">
+                        { dialogId === "account" ? "Are you sure approve ACTIVE status to this account?" : "Are you sure approve FULL_KYC status to this account?"}
+                    </p>
+            
+                    <div className="flex flex-row justify-content-end align-items-center mt-3">
+                        <Button className="ml-3" size="small" severity="success" onClick={() => {
+                            if(dialogId === 'account') {
+                                approveAccount();
+                            } else {
+                                approveKYC();
+                            }
+                        }}> 
+                            Approve 
+                        </Button>
+
+                        <Button className="ml-3" size="small" severity="danger" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Cancel </Button>
+                    </div>
+                </Dialog>
+            )}
         </div>
     )
 }

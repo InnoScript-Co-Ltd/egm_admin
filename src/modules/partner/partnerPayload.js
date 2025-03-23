@@ -8,6 +8,7 @@ export const partnerPayload = {
         email: "",
         phone: ""
     },
+    
     update: {
         first_name: "",
         last_name: "",
@@ -18,6 +19,7 @@ export const partnerPayload = {
         nrc: "",
         dob: "",
     },
+
     searchableFields: "first_name,last_name,username,email,phone,nrc,dob,kyc_status,status",
     columns: [
         { field: "username", header: "Username", sortable: true, show: true },
@@ -27,9 +29,11 @@ export const partnerPayload = {
         { field: "phone", header: "Phone", sortable: true, show: true },
         { field: "nrc", header: "NRC", sortable: true, show: true },
         { field: "dob", header: "DOB", sortable: true, show: true },
+        { field: "address", header: "Address", sortable: true, show: true },
         { field: "kyc_status", header: "KYC Status", sortable: true, show: true },
-        { field: "status", header: "Status", sortable: true, show: true }
+        { field: "status", header: "Status", sortable: true, show: true },
     ],
+
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
