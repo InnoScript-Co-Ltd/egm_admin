@@ -22,7 +22,6 @@ export const firebaseConfig = {
 
 export const env = [
     'http://localhost:8000',
-    'https://uatapi.evanglobalmanagement.com',
     'https://api.evanglobalmanagement.com',
 ];
 

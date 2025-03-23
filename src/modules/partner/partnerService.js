@@ -70,5 +70,33 @@ export const partnerService = {
             }));
         }
         return result;
+    },
+
+    approveAccount: async (dispatch, id) => {
+        const result = await postRequest(`${endpoints.partner}/${id}/approve`);
+        await httpServiceHandler(dispatch, result);
+
+        if(result.status === 200) {
+            dispatch(updateNotification({
+                show: true,
+                summary: "Success",
+                severity: "success",
+                detail: result.message
+            }))
+        }
+    },
+
+    approveKyc: async (dispatch, id) => {
+        const result = await postRequest(`${endpoints.partner}/${id}/approve-kyc`);
+        await httpServiceHandler(dispatch, result);
+
+        if(result.status === 200) {
+            dispatch(updateNotification({
+                show: true,
+                summary: "Success",
+                severity: "success",
+                detail: result.message
+            }))
+        }
     }
 }
