@@ -198,5 +198,6 @@
     "township_list" : "Township List",
     "township_create" : "Township Create",
     "township_update" : "Township Update",
-    "cover_photo": "Cover photo"
+    "cover_photo": "Cover photo",
+    "oneday_amount": "Oneday Amount"
 }

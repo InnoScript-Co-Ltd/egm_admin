@@ -8,58 +8,60 @@ import { Badge } from 'primereact/badge';
 import { Dialog } from 'primereact/dialog';
 import { endpoints } from "../../../constants/endpoints";
 import { Image } from "primereact/image";
-import { transactionService } from "../transactionService";
+import { depositService } from "../depositService";
 import { paths } from "../../../constants/paths";
 import numeral from "numeral";
+import { DataTable } from "primereact/datatable"
+import { Column } from "primereact/column";
 
-export const TransactionDetail = () => {
+export const DepositDetail = () => {
 
-// const [repaymentData, setRepaymentData] = useState([]);
+const [repaymentData, setRepaymentData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
-    const { transaction } = useSelector(state => state.transaction);
+    const { deposit } = useSelector(state => state.deposit);
 
     const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const depositStatus = useRef(params.type.toUpperCase());
-    const transcationId = useRef(params.id);
+    const depositId = useRef(params.id);
 
-    /** Deposit Transaction Payment Accepted */
+    /** Deposit deposit Payment Accepted */
     const paymentTranscationHandler = async () => {
         setLoading(true);
         setOpenConfirmDialog(!openConfirmDialog);
-        const result = await transactionService.makePayment(dispatch, transcationId.current);
+        const result = await depositService.makePayment(dispatch, depositId.current);
 
         if(result.status === 200) {
-            const backward = transaction.sender_type === 'MAIN_AGENT' || transaction.sender_type === "SUB_AGENT" ? `${paths.transaction}/agent/DEPOSIT_PENDING` : `${paths.transaction}/partner/DEPOSIT_PENDING`;
+            const backward = deposit.sender_type === 'MAIN_AGENT' || deposit.sender_type === "SUB_AGENT" ? `${paths.deposit}/agent/DEPOSIT_PENDING` : `${paths.deposit}/partner/DEPOSIT_PENDING`;
             navigate(backward);
         }
         setLoading(false);
     }
 
-    // const fetchRepaymentData = useCallback(async () => {
-    //     setLoading(true);
-    //     const result = await transactionService.getRepayment(dispatch, params.id);
-    //     if (result.status === 200) {
-    //         setRepaymentData(result.data);
-    //     }
-    //     setLoading(false);
-    // }, [dispatch, params.id]);
-    // useEffect(() => {
-    //     fetchRepaymentData();
-    // }, [fetchRepaymentData]);
+    const fetchRepaymentData = useCallback(async () => {
+        setLoading(true);
+        const result = await depositService.getRepayment(dispatch, params.id);
+        if (result.status === 200) {
+            setRepaymentData(result.data);
+        }
+        setLoading(false);
+    }, [dispatch, params.id]);
+    useEffect(() => {
+        fetchRepaymentData();
+    }, [fetchRepaymentData]);
 
-    /** Depoist Transaction Reject */
+    /** Depoist deposit Reject */
     const paymentRejectHandler = async () => {
         setLoading(true);
-        const result = await transactionService.makeReject(dispatch, transaction.current);
+        const result = await depositService.makeReject(dispatch, deposit.current);
 
         if(result.status === 200) {
-            const backward = transaction.sender_type === 'MAIN_AGENT' || transaction.sender_type === "SUB_AGENT" ? `${paths.transaction}/agent/DEPOSIT_PENDING` : `${paths.transaction}/partner/DEPOSIT_PENDING`;
+            const backward = deposit.sender_type === 'MAIN_AGENT' || deposit.sender_type === "SUB_AGENT" ? `${paths.deposit}/agent/DEPOSIT_PENDING` : `${paths.deposit}/partner/DEPOSIT_PENDING`;
             navigate(backward);
         }
         
@@ -68,7 +70,7 @@ export const TransactionDetail = () => {
 
     const initLoading = useCallback(async () => {
         setLoading(true);
-        await transactionService.show(dispatch, params.id);
+        await depositService.show(dispatch, params.id);
         setLoading(false);
     }, [dispatch, params.id]);
 
@@ -108,7 +110,7 @@ export const TransactionDetail = () => {
             </div>
 
             <div className=" col-12">
-                {!loading && transaction && (
+                {!loading && deposit && (
                     <Card
                         title={<CardTitleView />}
                     >
@@ -117,42 +119,42 @@ export const TransactionDetail = () => {
                                 <h4 className="py-3"> Agent Bank Account Information </h4>
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Holder Name </small>
-                                    <small> {transaction.sender_account_name} </small>
+                                    <small> {deposit.sender_account_name} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> NRC Number </small>
-                                    <small> {transaction.sender_nrc} </small>
+                                    <small> {deposit.sender_nrc} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Email </small>
-                                    <small> {transaction.sender_email} </small>
+                                    <small> {deposit.sender_email} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Phone </small>
-                                    <small> {transaction.sender_phone} </small>
+                                    <small> {deposit.sender_phone} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Number</small>
-                                    <small> {transaction.sender_account_number} </small>
+                                    <small> {deposit.sender_account_number} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Type </small>
-                                    <small> {transaction.bank_type} </small>
+                                    <small> {deposit.bank_type} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Branch </small>
-                                    <small> {transaction.sender_bank_branch} </small>
+                                    <small> {deposit.sender_bank_branch} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Branch Address </small>
-                                    <small> {transaction.sender_bank_address} </small>
+                                    <small> {deposit.sender_bank_address} </small>
                                 </div>
                             </div>
 
@@ -160,17 +162,17 @@ export const TransactionDetail = () => {
                                 <h4 className="py-3"> Merchant Bank Account Information </h4>
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Holder Name </small>
-                                    <small> {transaction.merchant_account_name} </small>
+                                    <small> {deposit.merchant_account_name} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Account Number</small>
-                                    <small> {transaction.merchant_account_number} </small>
+                                    <small> {deposit.merchant_account_number} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Bank Type </small>
-                                    <small> {transaction.bank_type} </small>
+                                    <small> {deposit.bank_type} </small>
                                 </div>
                             </div>
 
@@ -179,22 +181,22 @@ export const TransactionDetail = () => {
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Package </small>
-                                    <small> {transaction.package_name} </small>
+                                    <small> {deposit.package_name} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> Duration </small>
-                                    <small> {transaction.package_duration} Months </small>
+                                    <small> {deposit.package_duration} Months </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2">
                                     <small> ROI Rate </small>
-                                    <small> {transaction.package_roi_rate} % </small>
+                                    <small> {deposit.roi_amount} </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Deposit Amount </small>
-                                    <small> <b> {numeral(transaction.package_deposit_amount).format('0,0')} Kyats </b> </small>
+                                    <small> <b> {numeral(deposit.deposit_amount).format('0,0')} Kyats </b> </small>
                                 </div>
 
                                 <Button
@@ -212,7 +214,7 @@ export const TransactionDetail = () => {
                 )}
             </div>
 
-            {!loading && transaction && (
+            {!loading && deposit && (
                 <Dialog
                     header="Transcation Screenshoot"
                     visible={openDialog}
@@ -222,7 +224,7 @@ export const TransactionDetail = () => {
                     <p className="m-0">
                         <Image
                             width="100%"
-                            src={`${endpoints.image}/${transaction.transaction_screenshoot}`}
+                            src={`${endpoints.image}/${deposit.deposit_screenshoot}`}
                         />
                     </p>
                 </Dialog>
@@ -230,13 +232,13 @@ export const TransactionDetail = () => {
 
             {!loading && openConfirmDialog && (
                 <Dialog
-                    header="Apporve Deposit Transaction"
+                    header="Apporve Deposit deposit"
                     visible={openConfirmDialog}
                     style={{ width: '50vw' }}
                     onHide={() => { if (!openConfirmDialog) return; setOpenConfirmDialog(false); }}
                 >
                     <p className="mb-3">
-                        Are you sure to approve this deposit payment transaction?
+                        Are you sure to approve this deposit payment deposit?
                     </p>
 
                     <div className="flex flex-row justify-content-end align-items-center mt-3">
@@ -245,15 +247,47 @@ export const TransactionDetail = () => {
                     </div>
                 </Dialog>
             )}
-            {/* <div className="col-12">
+            <div className="col-12">
     <h4 className="py-3">Repayment History</h4>
-    <DataTable value={repaymentData} paginator rows={5} responsiveLayout="scroll">
-        <Column field="date" header="Date" sortable></Column>
-        <Column field="amount" header="Amount" sortable></Column>
-        <Column field="method" header="Payment Method" sortable></Column>
+    <DataTable value={repaymentData} rows={6}>
+        <Column 
+            header="No" 
+            sortable
+            body={(rowData, { rowIndex }) => rowIndex + 1} 
+        />
+        <Column 
+                header="Date" 
+                sortable
+                body={(rowData) => (
+                    <span 
+                        style={{ cursor: "pointer", textDecoration: "underline" }} 
+                        onClick={() => navigate(`${paths.repayment}/${rowData.id}`)}
+                    >
+                        {rowData.date.split("T")[0]}
+                    </span>
+                )}
+            />
+        <Column 
+            field="amount" 
+            header="Amount" 
+            sortable
+            body={(rowData) => numeral(rowData.amount).format("0,0")}
+        />
+        <Column 
+            field="oneday_amount" 
+            header="Oneday Amount" 
+            sortable
+            body={(rowData) => numeral(rowData.oneday_amount).format("0,0")}
+        />
+        <Column 
+            field="total_amount" 
+            header="Total Amount" 
+            sortable
+            body={(rowData) => numeral(rowData.total_amount).format("0,0")}
+        />
         <Column field="status" header="Status" sortable></Column>
     </DataTable>
-</div> */}
+</div>
         </div>
     )
 }

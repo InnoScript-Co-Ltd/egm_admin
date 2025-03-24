@@ -1,6 +1,6 @@
 import { paginateOptions } from "../../constants/config";
 
-export const transactionPayload = {
+export const depositPayload = {
     create: {
         name: "",
         roi_rate: "",
@@ -15,15 +15,15 @@ export const transactionPayload = {
         status: ""
     },
     columns: [
-        { field: "sender_name", header: "Agent Name", sortable: true, show: true },
-        { field: "sender_account_name", header: "Agent Account Name", sortable: true, show: true },
-        { field: "sender_account_number", header: "Agent Account", sortable: true, show: true },
+        { field: "agent_id", header: "Agent Id", sortable: true, show: true },
+        { field: "agent_id", header: "Agent Account Name", sortable: true, show: true },
+        { field: "agent_id", header: "Agent Account", sortable: true, show: true },
         { field: "bank_type", header: "Bank", sortable: true, show: true },
         { field: "merchant_account_name", header: "Merchant Name", sortable: true, show: true },
         { field: "merchant_account_number", header: "Merchant Account", sortable: true, show: true },
-        { field: "package_deposit_amount", header: "Deposit Amount", sortable: true, show: true },
+        { field: "deposit_amount", header: "Deposit Amount", sortable: true, show: true },
         { field: "package_name", header: "Package Name", sortable: true, show: true },
-        { field: "package_roi_rate", header: "ROI Rate", sortable: true, show: true },
+        { field: "roi_amount", header: "ROI Amount", sortable: true, show: true },
         { field: "package_duration", header: "Duration", sortable: true, show: true },
         { field: "commession", header: "Commession", sortable: true, show: true },
         { field: "sender_phone", header: "Agent Phone", sortable: true, show: true },
