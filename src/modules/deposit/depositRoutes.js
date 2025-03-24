@@ -7,7 +7,7 @@ import { DepositUpdate } from "./entry/DepositUpdate"
 export const depositRoutes = [
     {
         id: "agent_deposit",
-        path: `${paths.deposit}/agent`,
+        path: `${paths.deposit}/:type`,
         element: <AgentDepositList />,
         loader : () => {
             return{

@@ -24,6 +24,7 @@ const [repaymentData, setRepaymentData] = useState([]);
     const { deposit } = useSelector(state => state.deposit);
 
     const params = useParams();
+    console.log(params,"p")
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
