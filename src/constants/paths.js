@@ -98,4 +98,6 @@ export const paths = {
     transaction: "/transcation",
 
     emailContent: "/email-content",
+
+    bonusPoint: "bonus-point"
 }

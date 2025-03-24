@@ -150,10 +150,20 @@ export const items = [
             },
         ]
     },
+    
+    {
+        key: 'bonus-point',
+        label: 'Bonus Point',
+        data: null,
+        icon: 'pi pi-fw pi-ticket',
+        url: paths.bonusPoint,
+    },
+
     {
         key: 'setting',
         url: "/setting",
         label: 'Setting',
         icon: 'pi pi-fw pi-cog'
     },
+
 ];

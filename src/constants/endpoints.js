@@ -1,6 +1,6 @@
 import { bankTypes, env } from "./config"
 
-export const baseURL = env[2];
+export const baseURL = env[1];
 
 export const endpoints = {
     login: "auth/login",
@@ -47,5 +47,6 @@ export const endpoints = {
     deposit: "deposit",
     transaction: "transaction",
     repayment: "repayment",
-    emailContent: "email-content"
+    emailContent: "email-content",
+    bonusPoint: "bonus-point"
 }
