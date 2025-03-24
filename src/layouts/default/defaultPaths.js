@@ -50,16 +50,36 @@ export const items = [
         url: null,
         children: [
             {
+                key: 'agent_transaction',
+                label: 'Agent Transaction',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.transaction}/agent/DEPOSIT_PENDING`
+            },
+            {
+                key: 'partner_transaction',
+                label: 'Partner Transaction',
+                icon: 'pi pi-fw pi-list',
+                url: `${paths.transaction}/partner/DEPOSIT_PENDING`
+            },
+        ]
+    },
+    {
+        key: "Deposit",
+        label: "Deposit",
+        icon: "pi pi-fw pi-money-bill",
+        url: null,
+        children: [
+            {
                 key: 'agent_deposit',
                 label: 'Agent Deposit',
                 icon: 'pi pi-fw pi-list',
-                url: `${paths.transaction}/agent/DEPOSIT_PENDING`
+                url: `${paths.deposit}/agent`
             },
             {
                 key: 'partner_deposit',
                 label: 'Partner Deposit',
                 icon: 'pi pi-fw pi-list',
-                url: `${paths.transaction}/partner/DEPOSIT_PENDING`
+                url: `${paths.deposit}/partner`
             },
         ]
     },

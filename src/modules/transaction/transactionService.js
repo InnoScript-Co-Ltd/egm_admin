@@ -53,7 +53,7 @@ export const transactionService = {
 
         return result;
     },
-
+    
     makeReject: async (dispatch, id) => {
         const result = await postRequest(`${endpoints.transaction}/${id}/make-reject`, null);
         await httpServiceHandler(dispatch, result);

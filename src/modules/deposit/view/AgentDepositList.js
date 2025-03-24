@@ -1,7 +1,7 @@
 import { BreadCrumb } from "../../../shares/BreadCrumb"
-import { DepositTableView } from "../list/DepositTableView"
+import { AgentDepositTableView } from "../list/AgentDepositTableView"
 
-export const DepositList = () => {
+export const AgentDepositList = () => {
 
     return (
         <div className="grid">
@@ -11,9 +11,8 @@ export const DepositList = () => {
             </div>
 
             <div className=" col-12">
-                <DepositTableView />
+                <AgentDepositTableView />
             </div>
-
         </div>
     )
 }

@@ -22,6 +22,16 @@ export const dateFormat = (value, type) => {
   }
 }
 
+export const formatDate = (value, format = "DD/MM/YYYY") => {
+  if (!value) return value;
+
+  // Split date and time if 'T' exists
+  const [datePart] = value.split("T");
+
+  return moment(datePart).format(format);
+};
+
+
 export const dateAge = (value) => {
   const currentYear = moment().get('year');
   const acturalYear = value ? moment(value).get('year') : 0;

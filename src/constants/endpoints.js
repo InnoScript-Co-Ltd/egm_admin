@@ -1,4 +1,4 @@
-import { env } from "./config"
+import { bankTypes, env } from "./config"
 
 export const baseURL = env[1];
 
@@ -17,6 +17,7 @@ export const endpoints = {
     category: "category",
     generalStatus: "general",
     paymentType: "payment_type",
+    bankType: "bank-type",
     item: "item",
     image: `${baseURL}/storage/images`,
     status: "status",
@@ -45,6 +46,7 @@ export const endpoints = {
     partner: "partner",
     deposit: "deposit",
     transaction: "transaction",
+    repayment: "repayment",
     emailContent: "email-content",
     bonusPoint: "bonus-point"
 }

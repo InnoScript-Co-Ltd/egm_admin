@@ -19,6 +19,7 @@ import { packageRoutes } from "./modules/package/packageRoutes";
 import { merchantBankAccountRoutes } from "./modules/merchantBankAccount/merchantBankAccountRoutes";
 import { partnerRoutes } from "./modules/partner/partnerRoutes";
 import { transactionRoutes } from "./modules/transaction/transactionRoutes";
+import { depositRoutes } from "./modules/deposit/depositRoutes";
 import { emailContentRoutes } from "./modules/emailContent/emailContentRoutes";
 import { bankAccountTypeRoutes } from "./modules/bankAccountType/bankAccountTypeRoutes.";
 import { agentRoutes } from "./modules/agent/agentRoutes";
@@ -47,6 +48,7 @@ export const routers = createBrowserRouter([
             ...bankAccountTypeRoutes,
             ...partnerRoutes,
             ...transactionRoutes,
+            ...depositRoutes,
             ...emailContentRoutes,
             ...agentRoutes,
             ...bonusPointRoutes

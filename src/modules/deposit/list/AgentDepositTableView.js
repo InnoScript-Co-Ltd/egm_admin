@@ -14,18 +14,19 @@ import { datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
-import { setPaginate } from "../transactionSlice";
-import { transactionPayload } from "../transactionPayload";
-import { transactionService } from "../transactionService";
+import { setPaginate } from "../depositSlice";
+import { depositPayload } from "../depositPayload";
+import { depositService } from "../depositService";
 import numeral from "numeral";
 
-export const DepositTableView = () => {
-    const { transactions, paginateParams } = useSelector(state => state.transaction);
+export const AgentDepositTableView = () => {
+    const { deposits, paginateParams } = useSelector(state => state.deposit);
+    console.log(deposits)
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const columns = useRef(transactionPayload.columns);
+    const columns = useRef(depositPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
@@ -84,10 +85,10 @@ export const DepositTableView = () => {
         setLoading(true);
 
         const updateParams = { ...paginateParams };
-        updateParams.filter = "status";
-        updateParams.value = params.type.toUpperCase();
+        updateParams.filter = "status,sender_type";
+        updateParams.value = `${params.type?.toUpperCase()},MAIN_AGENT`;
 
-        const response = await transactionService.index(dispatch, updateParams);
+        const response = await depositService.index(dispatch);
         if (response.status === 200) {
             total.current = response.data.total ? response.data.total : response.data.length;
         }
@@ -108,7 +109,7 @@ export const DepositTableView = () => {
                         icon="pi pi-refresh"
                         size="small"
                         onClick={() => {
-                            dispatch(setPaginate(transactionPayload.paginateParams));
+                            dispatch(setPaginate(depositPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
                     />
@@ -140,18 +141,18 @@ export const DepositTableView = () => {
 
     return (
         <Card
-            title={`${params.type.toUpperCase()} Despsit Transcations List`}
+            title={`Agent Deposit - ${params.type?.toUpperCase()}`}
         >
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={transactions}
+                value={deposits}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
-                emptyMessage="No Transaction transctions found."
-                globalFilterFields={transactionPayload.columns}
+                emptyMessage="No Deposit transctions found."
+                globalFilterFields={depositPayload.columns}
                 sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
@@ -172,20 +173,20 @@ export const DepositTableView = () => {
                                             <i
                                                 className="pi pi-folder-open"
                                                 style={{ cursor: "pointer", fontSize: '1.5rem' }}
-                                                onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
+                                                onClick={() => navigate(`${paths.deposit}/${params.type}/${value.id}`)}
                                             ></i>
                                         );
-                                    case "agent_account_number":
+                                    case "agent_id":
                                         return (
                                             <NavigateId
-                                                url={`${paths.transaction}/${value["id"]}`}
+                                                url={`${paths.deposit}/${value["id"]}`}
                                                 value={value[col.field]}
                                             />
                                         );
                                     case "merchant_account_number":
                                         return (
                                             <NavigateId
-                                                url={`${paths.transaction}/${value["id"]}`}
+                                                url={`${paths.deposit}/${value["id"]}`}
                                                 value={value[col.field]}
                                             />
                                         );

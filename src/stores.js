@@ -16,8 +16,10 @@ import packageSlice from "./modules/package/packageSlice";
 import merchantBankAccountSlice from "./modules/merchantBankAccount/merchantBankAccountSlice";
 import partnerSlice from "./modules/partner/partnerSlice";
 import transactionSlice from "./modules/transaction/transactionSlice";
+import depositSlice from "./modules/deposit/depositSlice";
 import emailContentSlice from "./modules/emailContent/emailContentSlice";
 import agentSlice from "./modules/agent/agentSlice";
+import bankAccountTypeSlice from "./modules/bankAccountType/bankAccountTypeSlice";
 import bonusPointSlice from "./modules/bonusPoint/bonusPointSlice";
 
 export const stores = configureStore({
@@ -39,8 +41,10 @@ export const stores = configureStore({
     merchantBankAccount: merchantBankAccountSlice,
     partner: partnerSlice,
     transaction: transactionSlice,
+    deposit: depositSlice,
     emailContent: emailContentSlice,
     agent: agentSlice,
+    bankAccountType: bankAccountTypeSlice,
     bonusPoint: bonusPointSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
