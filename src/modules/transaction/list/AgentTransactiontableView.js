@@ -33,6 +33,7 @@ export const AgentTransactionTableView = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
+    console.log(params,"p")
 
     /**
      * Event - Paginate Page Change

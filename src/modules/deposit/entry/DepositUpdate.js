@@ -24,6 +24,7 @@ export const DepositUpdate = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
+    console.log(params,"new")
     const { translate } = useSelector(state => state.setting);
     const { deposit } = useSelector(state => state.deposit);
 
@@ -160,7 +161,7 @@ export const DepositUpdate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                onCancel={() => navigate(paths.deposit)}
+                                onCancel={() => navigate(`${paths.deposit}/agent`)}
                                 submit={translate.submit}
                                 onSubmit={submitdepositUpdate}
                                 loading={loading}

@@ -2,7 +2,7 @@ import { endpoints } from "../../constants/endpoints"
 import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, setShow } from "./depositSlice";
+import { index, setShow, update } from "./depositSlice";
 
 export const depositService = {
     partnerIndex: async (dispatch, params) => {
@@ -48,6 +48,22 @@ export const depositService = {
 
         return result;
     },
+
+    update: async (dispatch, id, payload) => {
+            const response = await putRequest(`${endpoints.repayment}/${id}`, payload);
+            await httpServiceHandler(dispatch, response);
+    
+            if(response.status === 200) {
+                dispatch(update(response.data));
+                dispatch(updateNotification({
+                    show: true,
+                    summary: "Success",
+                    severity: "success",
+                    detail: response.message
+                }));
+            }
+            return response;
+        },
 
     makePayment: async (dispatch, id) => {
         const result = await postRequest(`${endpoints.deposit}/${id}/make-payment`, null);

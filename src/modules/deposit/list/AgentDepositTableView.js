@@ -86,7 +86,7 @@ export const AgentDepositTableView = () => {
 
         const updateParams = { ...paginateParams };
         updateParams.filter = "status,sender_type";
-        updateParams.value = `${params.type?.toUpperCase()},MAIN_AGENT`;
+        updateParams.value = `${params.type.toUpperCase()}`;
 
         const response = await depositService.index(dispatch);
         if (response.status === 200) {
