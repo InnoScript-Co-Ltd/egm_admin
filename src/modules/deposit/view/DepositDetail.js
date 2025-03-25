@@ -286,6 +286,8 @@ const [repaymentData, setRepaymentData] = useState([]);
             sortable
             body={(rowData) => numeral(rowData.total_amount).format("0,0")}
         />
+        <Column field="count_days" header="Count Day" sortable></Column>
+        <Column field="total_days" header="Total Day" sortable></Column>
         <Column field="status" header="Status" sortable></Column>
     </DataTable>
 </div>
