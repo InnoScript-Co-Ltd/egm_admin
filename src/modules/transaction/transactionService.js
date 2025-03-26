@@ -38,6 +38,10 @@ export const transactionService = {
         return result;
     },
 
+    transactionData: async (dispatch, id) => {
+        const result = await getRequest
+    },
+
     makePayment: async (dispatch, id) => {
         const result = await postRequest(`${endpoints.transaction}/${id}/make-payment`, null);
         await httpServiceHandler(dispatch, result);

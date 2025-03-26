@@ -11,10 +11,12 @@ import { Image } from "primereact/image";
 import { transactionService } from "../transactionService";
 import { paths } from "../../../constants/paths";
 import numeral from "numeral";
+import { DataTable } from "primereact/datatable"
+import { Column } from "primereact/column";
 
 export const TransactionDetail = () => {
 
-// const [repaymentData, setRepaymentData] = useState([]);
+// const [transactionData, setTransactionData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -40,18 +42,6 @@ export const TransactionDetail = () => {
         }
         setLoading(false);
     }
-
-    // const fetchRepaymentData = useCallback(async () => {
-    //     setLoading(true);
-    //     const result = await transactionService.getRepayment(dispatch, params.id);
-    //     if (result.status === 200) {
-    //         setRepaymentData(result.data);
-    //     }
-    //     setLoading(false);
-    // }, [dispatch, params.id]);
-    // useEffect(() => {
-    //     fetchRepaymentData();
-    // }, [fetchRepaymentData]);
 
     /** Depoist Transaction Reject */
     const paymentRejectHandler = async () => {
@@ -245,15 +235,49 @@ export const TransactionDetail = () => {
                     </div>
                 </Dialog>
             )}
-            {/* <div className="col-12">
-    <h4 className="py-3">Repayment History</h4>
-    <DataTable value={repaymentData} paginator rows={5} responsiveLayout="scroll">
-        <Column field="date" header="Date" sortable></Column>
-        <Column field="amount" header="Amount" sortable></Column>
-        <Column field="method" header="Payment Method" sortable></Column>
-        <Column field="status" header="Status" sortable></Column>
-    </DataTable>
-</div> */}
+        <div className="col-12">
+            <h4 className="py-3">Transaction History</h4>
+            <DataTable value={transaction?.repayments} paginator rows={6}>
+                <Column 
+                    header="No" 
+                    sortable
+                    body={(rowData, { rowIndex }) => rowIndex + 1} 
+                />
+                <Column 
+                        header="Date" 
+                        sortable
+                        body={(rowData) => (
+                            <span 
+                                style={{ cursor: "pointer", textDecoration: "underline" }} 
+                                onClick={() => navigate(`${paths.deposit}/agent/${transaction.id}/${paths.repayment}/${rowData.id}`)}
+                            >
+                                {rowData.date.split("T")[0]}
+                            </span>
+                        )}
+                    />
+                <Column 
+                    field="amount" 
+                    header="Amount" 
+                    sortable
+                    body={(rowData) => numeral(rowData.amount).format("0,0")}
+                />
+                <Column 
+                    field="oneday_amount" 
+                    header="Oneday Amount" 
+                    sortable
+                    body={(rowData) => numeral(rowData.oneday_amount).format("0,0")}
+                />
+                <Column 
+                    field="total_amount" 
+                    header="Total Amount" 
+                    sortable
+                    body={(rowData) => numeral(rowData.total_amount).format("0,0")}
+                />
+                <Column field="count_days" header="Count Day" sortable></Column>
+                <Column field="total_days" header="Total Day" sortable></Column>
+                <Column field="status" header="Status" sortable></Column>
+            </DataTable>
+        </div>
         </div>
     )
 }
