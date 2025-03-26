@@ -21,6 +21,14 @@ export const items = [
         icon: "pi pi-fw pi-user-plus",
         url: paths.partner
     },
+
+    {
+        key: 'repayment-list',
+        label: 'Repayment',
+        data: null,
+        icon: 'pi pi-fw pi-ticket',
+        url: paths.repayment,
+    },
     
     {
         key: 'agent',
@@ -150,7 +158,6 @@ export const items = [
             },
         ]
     },
-    
     {
         key: 'bonus-point',
         label: 'Bonus Point',
