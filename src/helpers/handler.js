@@ -12,8 +12,6 @@ import { removeData } from "./localstorage";
 export const payloadHandler = (payload, value, field, fn) => {
   let updatePayload = { ...payload };
   updatePayload[field] = value;
-  console.log(updatePayload);
-  
   fn(updatePayload);
 };
 

@@ -99,5 +99,6 @@ export const paths = {
 
     emailContent: "/email-content",
 
-    bonusPoint: "bonus-point"
+    bonusPoint: "bonus-point",
+    repayment: "repayment"
 }

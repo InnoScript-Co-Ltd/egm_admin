@@ -21,6 +21,7 @@ import emailContentSlice from "./modules/emailContent/emailContentSlice";
 import agentSlice from "./modules/agent/agentSlice";
 import bankAccountTypeSlice from "./modules/bankAccountType/bankAccountTypeSlice";
 import bonusPointSlice from "./modules/bonusPoint/bonusPointSlice";
+import repaymentSlice from "./modules/repayment/repaymentSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -45,7 +46,8 @@ export const stores = configureStore({
     emailContent: emailContentSlice,
     agent: agentSlice,
     bankAccountType: bankAccountTypeSlice,
-    bonusPoint: bonusPointSlice
+    bonusPoint: bonusPointSlice,
+    repayment: repaymentSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false
