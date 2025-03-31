@@ -25,6 +25,7 @@ import { bankAccountTypeRoutes } from "./modules/bankAccountType/bankAccountType
 import { agentRoutes } from "./modules/agent/agentRoutes";
 import { bonusPointRoutes } from "./modules/bonusPoint/bonusPointRoutes";
 import { repaymentRoutes } from "./modules/repayment/repaymentRoutes";
+import { promotionRoutes } from "./modules/promotion/promotionRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -53,7 +54,8 @@ export const routers = createBrowserRouter([
             ...emailContentRoutes,
             ...agentRoutes,
             ...bonusPointRoutes,
-            ...repaymentRoutes
+            ...repaymentRoutes,
+            ...promotionRoutes
         ]
     },
     {

@@ -39,7 +39,7 @@ export const transactionService = {
     },
 
     transactionData: async (dispatch, id) => {
-        const result = await getRequest
+        const result = await getRequest(``)
     },
 
     makePayment: async (dispatch, id) => {

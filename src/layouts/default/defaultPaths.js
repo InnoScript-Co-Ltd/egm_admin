@@ -167,6 +167,14 @@ export const items = [
     },
 
     {
+        key: 'promotion',
+        label: 'Promotion',
+        data: null,
+        icon: 'pi pi-fw pi-ticket',
+        url: paths.promotion,
+    },
+
+    {
         key: 'setting',
         url: "/setting",
         label: 'Setting',
