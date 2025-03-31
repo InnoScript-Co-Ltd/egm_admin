@@ -23,9 +23,9 @@ export const paths = {
     regionAndStateCreate: "/regionAndState/new",
     regionAndStateDetail: "/regionAndState/:id",
 
-    promotion: "/promotion",
-    promotionCreate: "/promotion/new",
-    promotionDetail: "/promotion/:id",
+    // promotion: "/promotion",
+    // promotionCreate: "/promotion/new",
+    // promotionDetail: "/promotion/:id",
 
     memberCard: "/memberCard",
     memberCardCreate: "/memberCard/new",
@@ -100,5 +100,8 @@ export const paths = {
     emailContent: "/email-content",
 
     bonusPoint: "bonus-point",
-    repayment: "repayment"
-}
+    repayment: "repayment",
+    promotion: "/promotion",
+    promotionCreate: "/promotion",
+    promotionUpdate: "/promotion"
+}   

@@ -48,5 +48,6 @@ export const endpoints = {
     transaction: "transaction",
     repayment: "repayment",
     emailContent: "email-content",
-    bonusPoint: "bonus-point"
+    bonusPoint: "bonus-point",
+    promotion: "banner"
 }
