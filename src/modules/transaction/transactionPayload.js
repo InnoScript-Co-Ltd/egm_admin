@@ -15,6 +15,7 @@ export const transactionPayload = {
         status: ""
     },
     columns: [
+        { field: "action", header: "Action", sortable: false, show: true},
         { field: "sender_name", header: "Agent Name", sortable: true, show: true },
         { field: "sender_account_name", header: "Agent Account Name", sortable: true, show: true },
         { field: "sender_account_number", header: "Agent Account", sortable: true, show: true },
@@ -30,8 +31,9 @@ export const transactionPayload = {
         { field: "sender_email", header: "Agent email", sortable: true, show: true },
         { field: "sender_nrc", header: "Agent NRC", sortable: true, show: true },
         { field: "sender_bank_branch", header: "Agent Bank Branch", sortable: true, show: true },
-        { field: "sender_bank_address", header: "Agent Bank Address", sortable: true, show: true },
-        { field: "action", header: "Action", sortable: false, show: true},
+        { field: "status", header: "Status", sortable: true, show: true },
+        { field: "created_at", header: "Deposit Date", sortable: true, show: true },
+        { field: "updated_at", header: "Approve Date", sortable: true, show: true },
     ],
     paginateParams: {
         page: 1,
