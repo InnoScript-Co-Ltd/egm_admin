@@ -29,7 +29,12 @@ export const items = [
         icon: 'pi pi-fw pi-ticket',
         url: paths.repayment,
     },
-    
+    {
+        key: "Transactions",
+        label: "Transaction",
+        icon: "pi pi-fw pi-money-bill",
+        url: `${paths.transaction}/partner/DEPOSIT_PENDING`,
+    },
     {
         key: 'agent',
         label: 'Agent',
@@ -48,26 +53,6 @@ export const items = [
                 label: 'Sub Agent',
                 icon: 'pi pi-fw pi-list',
                 url: `${paths.transaction}/SUB_AGENT`
-            },
-        ]
-    },
-    {
-        key: "Transactions",
-        label: "Transaction",
-        icon: "pi pi-fw pi-money-bill",
-        url: null,
-        children: [
-            {
-                key: 'agent_transaction',
-                label: 'Agent Transaction',
-                icon: 'pi pi-fw pi-list',
-                url: `${paths.transaction}/agent/DEPOSIT_PENDING`
-            },
-            {
-                key: 'partner_transaction',
-                label: 'Partner Transaction',
-                icon: 'pi pi-fw pi-list',
-                url: `${paths.transaction}/partner/DEPOSIT_PENDING`
             },
         ]
     },

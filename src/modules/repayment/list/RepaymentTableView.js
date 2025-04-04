@@ -192,13 +192,6 @@ export const RepaymentTableView = () => {
                                                 value={value[col.field]}
                                             />
                                         );
-                                    case "agent_id":
-                                        return (
-                                            <NavigateId 
-                                                url={`/${paths.agent}/${value['id']}`}
-                                                value={value[col.field]}
-                                            />
-                                        );
                                     case "transaction_id":
                                         return (
                                             <NavigateId 

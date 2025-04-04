@@ -128,7 +128,9 @@ export const statusOptions = [
     { status: "CASH", color: "chip-info" },
     { status: "ONLINE_PAYMENT", color: "chip-warn" },
     { status: "AVAILABLE_WITHDRAW", color: "chip-warn" },
-    { status: "TRANSFER_SUCCESS", color: "chip-success" }
+    { status: "TRANSFER_SUCCESS", color: "chip-success" },
+    { status: "DEPOSIT_PENDING", color: 'chip-warn'},
+    { status: "DEPOSIT_PAYMENT_ACCEPTED", color: "chip-success" }
 ];
 
 export const tooltipOptions = {

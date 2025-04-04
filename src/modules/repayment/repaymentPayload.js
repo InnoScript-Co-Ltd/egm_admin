@@ -1,21 +1,22 @@
 import { paginateOptions } from "../../constants/config";
 
 export const repaymentPayload = {
-    create: {
-        name: "",
-        city_id: ""
-    },
     update: {
-        name : "",
-        status : "",
-        city_id : ""
+        count_days: "",
+        total_days: "",
+        amount: "",
+        oneday_amount: "",
+        total_amount: "",
+        date: "",
+        created_at: "",
+        updated_at: "",
+        status: ""
     },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "transaction_id", header: "Transaction ID", sortable: true, show: true },
         { field: "deposit_id", header: "Deposit ID", sortable: true, show: true },
         { field: "partner_id", header: "Partner ID", sortable: true, show: true },
-        { field: "agent_id", header: "Agent ID", sortable: true, show: true },
         { field: "count_days", header: "Count Days", sortable: true, show: true },
         { field: "total_days", header: "Total Days", sortable: true, show: true },
         { field: "amount", header: "Amount", sortable: true, show: true },

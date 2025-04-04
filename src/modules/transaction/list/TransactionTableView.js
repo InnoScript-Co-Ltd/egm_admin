@@ -18,6 +18,7 @@ import { setPaginate } from "../transactionSlice";
 import { transactionPayload } from "../transactionPayload";
 import { transactionService } from "../transactionService";
 import numeral from "numeral";
+import moment from "moment";
 
 export const TransactionTableView = () => {
     const { transactions, paginateParams } = useSelector(state => state.transaction);
@@ -169,11 +170,18 @@ export const TransactionTableView = () => {
                                 switch (col.field) {
                                     case "action":
                                         return (
-                                            <i
-                                                className="pi pi-folder-open"
-                                                style={{ cursor: "pointer", fontSize: '1.5rem' }}
-                                                onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
-                                            ></i>
+                                            <>
+                                                <i
+                                                    className="pi pi-folder-open"
+                                                    style={{ cursor: "pointer", fontSize: '1.5rem' }}
+                                                    onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
+                                                ></i>
+                                                <i
+                                                    className="pi pi-folder-open"
+                                                    style={{ cursor: "pointer", fontSize: '1.5rem' }}
+                                                    onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
+                                                ></i>
+                                            </>
                                         );
                                     case "agent_account_number":
                                         return (
@@ -194,19 +202,17 @@ export const TransactionTableView = () => {
                                             <span> {numeral(value[col.field]).format('0,0')} </span>
                                         );
                                     case "package_roi_rate":
-                                        return (
-                                            <span> {value[col.field]} % </span>
-                                        )
+                                        return <span> {value[col.field]} % </span>
                                     case "package_duration":
-                                        return (
-                                            <span> {value[col.field]} Months </span>
-                                        )
+                                        return <span> {value[col.field]} Months </span>
                                     case "commession":
-                                        return (
-                                            <span> 1 % </span>
-                                        )
+                                        return <span> {value[col.field]} % </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
+                                    case "created_at":
+                                        return <span> {moment(value[col.field]).format("DD-MM-YYYY hh:mm:ss A")} </span>
+                                    case "updated_at":
+                                        return <span> {moment(value[col.field]).format("DD-MM-YYYY hh:mm:ss A")} </span>
                                     default:
                                         return value[col.field];
                                 }
@@ -214,20 +220,8 @@ export const TransactionTableView = () => {
                         />
                     )
                 })}
-
-                {showAuditColumn && auditColumns.map((col, index) => {
-                    return (
-                        <Column
-                            key={`audit_column_key_${index}`}
-                            style={{ minWidth: "250px" }}
-                            field={col.field}
-                            header={col.header}
-                            sortable
-                            body={(value) => <label> {datetime.long(value[col.field])} </label>}
-                        />
-                    )
-                })}
             </DataTable>
+
             <Paginator
                 first={first.current}
                 rows={paginateParams.per_page}
