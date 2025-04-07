@@ -1,8 +1,8 @@
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest } from "../../helpers/api"
+import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, setShow } from "./transactionSlice";
+import { index, setShow, update } from "./transactionSlice";
 
 export const transactionService = {
     partnerIndex: async (dispatch, params) => {
@@ -25,6 +25,22 @@ export const transactionService = {
         }
         
         return result;
+    },
+
+    update: async (dispatch, id, payload) => {
+        const response = await putRequest(`${endpoints.transaction}/${id}`, payload);
+        await httpServiceHandler(dispatch, response);
+
+        if(response.status === 200) {
+            dispatch(update(response.data));
+            dispatch(updateNotification({
+                show: true,
+                summary: "Success",
+                severity: "success",
+                detail: response.message
+            }));
+        }
+        return response;
     },
 
     show: async (dispatch, id) => {

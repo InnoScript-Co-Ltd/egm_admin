@@ -3,6 +3,7 @@ import { TransactionDetail } from "./view/TransactionDetail"
 import { AgentTransactionList } from "./view/AgentTransactionList"
 import { PartnerTransactionTableView } from "./list/PartnerTransactionTableView"
 import { PartnerTransactionList } from "./view/PartnerTransactionList"
+import { TransactionUpdate } from "./entry/TransactionUpdate"
 
 export const transactionRoutes = [
     {
@@ -43,6 +44,23 @@ export const transactionRoutes = [
         id: "deposit_detail",
         path: `${paths.transaction}/:type/:id`,
         element: <TransactionDetail />,
+        loader : () => {
+            return{
+                breadcrumbs: [
+                    { label: "Dashboard", url: paths.dashboard },
+                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
+                ],
+                role: ['ADMINISTRATOR']
+            }
+        },
+        
+    },
+    {
+        id: "transaction_update",
+        path: `${paths.transactionUpdate}/:id`,
+        element: <TransactionUpdate />,
         loader : () => {
             return{
                 breadcrumbs: [
