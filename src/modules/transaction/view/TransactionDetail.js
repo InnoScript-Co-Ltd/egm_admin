@@ -66,6 +66,11 @@ export const TransactionDetail = () => {
         initLoading();
     }, [initLoading]);
 
+    const handleEditClick = () => {
+        navigate(`/transcation/${transcationId.current}`);
+    };
+    
+
 
     const CardTitleView = () => {
         return (
@@ -86,6 +91,10 @@ export const TransactionDetail = () => {
                             <Button size="small" onClick={() => paymentRejectHandler()} severity="danger" className="ml-3"> Reject </Button>
                         </div>
                     )}
+                </div>
+
+                <div className="flex flex-column justify-content-center align-items-start">
+                    <Button size="small" onClick={handleEditClick}>Edit</Button>
                 </div>
             </div>
         )
@@ -237,7 +246,7 @@ export const TransactionDetail = () => {
             )}
         <div className="col-12">
             <h4 className="py-3">Transaction History</h4>
-            <DataTable value={transaction?.repayments} paginator rows={6}>
+            <DataTable value={transaction?.repayments} paginator rows={10}>
                 <Column 
                     header="No" 
                     sortable
