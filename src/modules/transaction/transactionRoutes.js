@@ -1,8 +1,8 @@
 import { paths } from "../../constants/paths"
 import { TransactionDetail } from "./view/TransactionDetail"
 import { AgentTransactionList } from "./view/AgentTransactionList"
-import { PartnerTransactionTableView } from "./list/PartnerTransactionTableView"
-import { PartnerTransactionList } from "./view/PartnerTransactionList"
+import { TransactionTableView } from "./list/TransactionTableView"
+import { TransactionUpdate } from "./entry/TransactionUpdate"
 
 export const transactionRoutes = [
     {
@@ -23,16 +23,33 @@ export const transactionRoutes = [
         
     },
     {
-        id: "partner_transcation",
-        path: `${paths.transaction}/partner/:type`,
-        element: <PartnerTransactionList />,
+        id: "transcation",
+        path: `${paths.transaction}/:type`,
+        element: <TransactionTableView />,
         loader : () => {
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Pending", url: `${paths.transaction}/partner/DEPOSIT_PENDING` },
-                    { label: "Payment Accepted", url: `${paths.transaction}/partner/DEPOSIT_PAYMENT_ACCEPTED` },
-                    { label: "Reject", url: `${paths.transaction}/partner/DEPOSIT_REJECT` },
+                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
+                ],
+                role: ['ADMINISTRATOR']
+            }
+        },
+        
+    },
+    {
+        id: "transcationUpdate",
+        path: `${paths.transaction}/:type/:id/edit`,
+        element: <TransactionUpdate />,
+        loader : () => {
+            return{
+                breadcrumbs: [
+                    { label: "Dashboard", url: paths.dashboard },
+                    { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+                    { label: "Payment Accepted", url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED` },
+                    { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
                 ],
                 role: ['ADMINISTRATOR']
             }

@@ -1,21 +1,10 @@
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest } from "../../helpers/api"
+import { formBuilderRequest, getRequest, postRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, setShow } from "./transactionSlice";
 
 export const transactionService = {
-    partnerIndex: async (dispatch, params) => {
-        const result = await getRequest(`${endpoints.transaction}/partner`, params);
-        await httpServiceHandler(dispatch, result);
-        
-        if (result.status === 200) {
-            dispatch(index(result.data.data ? result.data.data : result.data));
-        }
-        
-        return result;
-    },
-
     index: async (dispatch, params) => {
         const result = await getRequest(endpoints.transaction, params);
         await httpServiceHandler(dispatch, result);
@@ -38,8 +27,10 @@ export const transactionService = {
         return result;
     },
 
-    transactionData: async (dispatch, id) => {
-        const result = await getRequest(``)
+    update: async (dispatch, id, payload) => {
+        const result = await formBuilderRequest(`${endpoints.transaction}/${id}`, payload);
+        await httpServiceHandler(dispatch, result);
+        return result;
     },
 
     makePayment: async (dispatch, id) => {

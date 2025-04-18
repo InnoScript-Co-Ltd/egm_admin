@@ -1,0 +1,2 @@
+export const seretkey = "gTW0TZaokeWpaZsLphSYyx7N9o6hu8o7rRRzUXAe4t909baEZbqrnpYxDb6wOtCh";
+export const apiKey = "XnhindjIIe4YRnYwPX36ySTjzlI1MwyuXZ4lleU0hftYnXyjpiHUQqFdbZvLIsYL";

@@ -33,7 +33,7 @@ export const items = [
         key: "Transactions",
         label: "Transaction",
         icon: "pi pi-fw pi-money-bill",
-        url: `${paths.transaction}/partner/DEPOSIT_PENDING`,
+        url: `${paths.transaction}/DEPOSIT_PENDING`,
     },
     {
         key: 'agent',
