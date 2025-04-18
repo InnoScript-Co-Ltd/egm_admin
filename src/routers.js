@@ -26,47 +26,49 @@ import { agentRoutes } from "./modules/agent/agentRoutes";
 import { bonusPointRoutes } from "./modules/bonusPoint/bonusPointRoutes";
 import { repaymentRoutes } from "./modules/repayment/repaymentRoutes";
 import { promotionRoutes } from "./modules/promotion/promotionRoutes";
+import { usdtRoutes } from "./modules/USDT/usdtRoutes";
 
 export const routers = createBrowserRouter([
-    {
-        path: "/",
-        element: <DefaultLayout />,
-        errorElement: <NotFound />,
-        children: [
-            ...dashbardRoutes,
-            ...userRoutes,
-            ...adminRoutes,
-            ...regionRoutes,
-            ...authorizationRoutes,
-            ...settingRoutes,
-            ...countryRoutes,
-            ...regionAndStateRoutes,
-            ...cityRoutes,
-            ...townshipRoutes,
-            ...permissionRoutes,
-            ...roleRoutes,
-            ...packageRoutes,
-            ...merchantBankAccountRoutes,
-            ...bankAccountTypeRoutes,
-            ...partnerRoutes,
-            ...transactionRoutes,
-            ...depositRoutes,
-            ...emailContentRoutes,
-            ...agentRoutes,
-            ...bonusPointRoutes,
-            ...repaymentRoutes,
-            ...promotionRoutes
-        ]
-    },
-    {
-        path: "auth",
-        element: <BlankTemplate />,
-        errorElement: <NotFound />,
-        children: [
-            {
-                path: "login",
-                element: <Login />
-            }
-        ]
-    }
-])
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    errorElement: <NotFound />,
+    children: [
+      ...dashbardRoutes,
+      ...userRoutes,
+      ...adminRoutes,
+      ...regionRoutes,
+      ...authorizationRoutes,
+      ...settingRoutes,
+      ...countryRoutes,
+      ...regionAndStateRoutes,
+      ...cityRoutes,
+      ...townshipRoutes,
+      ...permissionRoutes,
+      ...roleRoutes,
+      ...packageRoutes,
+      ...merchantBankAccountRoutes,
+      ...bankAccountTypeRoutes,
+      ...partnerRoutes,
+      ...transactionRoutes,
+      ...depositRoutes,
+      ...emailContentRoutes,
+      ...agentRoutes,
+      ...bonusPointRoutes,
+      ...repaymentRoutes,
+      ...promotionRoutes,
+      ...usdtRoutes,
+    ],
+  },
+  {
+    path: "auth",
+    element: <BlankTemplate />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
+  },
+]);

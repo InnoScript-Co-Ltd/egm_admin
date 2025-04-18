@@ -22,16 +22,17 @@ import agentSlice from "./modules/agent/agentSlice";
 import bankAccountTypeSlice from "./modules/bankAccountType/bankAccountTypeSlice";
 import bonusPointSlice from "./modules/bonusPoint/bonusPointSlice";
 import repaymentSlice from "./modules/repayment/repaymentSlice";
-import promotionSlice from "./modules/promotion/promotionSlice"
+import promotionSlice from "./modules/promotion/promotionSlice";
+import usdtSlice from "./modules/USDT/usdtSlice";
 
 export const stores = configureStore({
-   reducer: {
+  reducer: {
     share: shareSlice,
     admin: adminSlice,
     user: userSlice,
     region: regionSlice,
     dashboard: dashboardSlice,
-    auth : authorizationSlice,
+    auth: authorizationSlice,
     setting: settingSlice,
     country: countrySlice,
     regionAndState: regionAndStateSlice,
@@ -49,10 +50,11 @@ export const stores = configureStore({
     bankAccountType: bankAccountTypeSlice,
     bonusPoint: bonusPointSlice,
     repayment: repaymentSlice,
-    promotion: promotionSlice
-   },
-   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-      serializableCheck: false
-  })
-
-})
+    promotion: promotionSlice,
+    usdt: usdtSlice,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
