@@ -13,6 +13,7 @@ import { paths } from "../../../constants/paths";
 import numeral from "numeral";
 import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column";
+import moment from "moment";
 
 export const TransactionDetail = () => {
 
@@ -87,10 +88,31 @@ export const TransactionDetail = () => {
                 <div className="flex flex-row justify-content-end align-items-center">
                     {depositStatus.current === "DEPOSIT_PENDING" && (
                         <div>
-                        <Button size="small" onClick={() => setOpenConfirmDialog(!openConfirmDialog)}> Make Payment Accept </Button>
-                            <Button size="small" onClick={() => paymentRejectHandler()} severity="danger" className="ml-3"> Reject </Button>
+                            <Button 
+                                className="ml-3"
+                                size="small" 
+                                onClick={() => setOpenConfirmDialog(!openConfirmDialog)}
+                            > 
+                                Make Payment Accept 
+                            </Button>
+
+                            <Button 
+                                size="small" 
+                                className="ml-3"
+                                onClick={() => paymentRejectHandler()} 
+                            > 
+                                Reject 
+                            </Button>
                         </div>
                     )}
+
+                    <Button 
+                        className="ml-3"
+                        size="small"
+                        onClick={() => navigate(`${paths.transaction}/${depositStatus.current}/${transcationId.current}/edit`)}
+                    > 
+                        Edit Transaction 
+                    </Button>
                 </div>
 
                 <div className="flex flex-column justify-content-center align-items-start">
@@ -102,98 +124,108 @@ export const TransactionDetail = () => {
 
     return (
         <div className="grid">
-            <div className=" col-12">
+            <div className="col-12">
                 <BreadCrumb />
             </div>
 
-            <div className=" col-12">
+            <div className="col-12">
                 {!loading && transaction && (
                     <Card
                         title={<CardTitleView />}
                     >
                         <div className="grid">
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <h4 className="py-3"> Agent Bank Account Information </h4>
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <h4 className="py-3" style={{fontSize: "20px"}}> Agent Bank Account Information </h4>
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Account Holder Name </small>
                                     <small> {transaction.sender_account_name} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> NRC Number </small>
                                     <small> {transaction.sender_nrc} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Email </small>
                                     <small> {transaction.sender_email} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Phone </small>
                                     <small> {transaction.sender_phone} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Account Number</small>
                                     <small> {transaction.sender_account_number} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Type </small>
                                     <small> {transaction.bank_type} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Branch </small>
                                     <small> {transaction.sender_bank_branch} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Branch Address </small>
                                     <small> {transaction.sender_bank_address} </small>
                                 </div>
                             </div>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <h4 className="py-3"> Merchant Bank Account Information </h4>
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <h4 className="py-3" style={{fontSize: "20px"}}> Merchant Bank Account Information </h4>
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Account Holder Name </small>
                                     <small> {transaction.merchant_account_name} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Account Number</small>
                                     <small> {transaction.merchant_account_number} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Bank Type </small>
                                     <small> {transaction.bank_type} </small>
                                 </div>
                             </div>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <h4 className="py-3"> Package Information </h4>
+                                <h3 className="py-3" style={{fontSize: "20px"}}> Package Information </h3>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Package </small>
                                     <small> {transaction.package_name} </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Duration </small>
                                     <small> {transaction.package_duration} Months </small>
                                 </div>
 
-                                <div className="w-full flex flex-row align-items-center justify-content-between py-2">
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> ROI Rate </small>
                                     <small> {transaction.package_roi_rate} % </small>
                                 </div>
 
                                 <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
                                     <small> Deposit Amount </small>
-                                    <small> <b> {numeral(transaction.package_deposit_amount).format('0,0')} Kyats </b> </small>
+                                    <small> {numeral(transaction.package_deposit_amount).format('0,0')} Kyats </small>
+                                </div>
+
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
+                                    <small> Deposit Date </small>
+                                    <small> {moment(transaction.created_at).format('DD-MM-YYYY hh:mm:ss A')} </small>
+                                </div>
+
+                                <div className="w-full flex flex-row align-items-center justify-content-between py-2 mb-3">
+                                    <small> Approve Date </small>
+                                    <small> {moment(transaction.updated_at).format('DD-MM-YYYY hh:mm:ss A')} </small>
                                 </div>
 
                                 <Button

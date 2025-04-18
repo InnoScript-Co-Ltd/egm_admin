@@ -24,7 +24,6 @@ export const TransactionTableView = () => {
     const { transactions, paginateParams } = useSelector(state => state.transaction);
 
     const [loading, setLoading] = useState(false);
-    const [showAuditColumn, setShowAuditColumn] = useState(false);
 
     const columns = useRef(transactionPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
@@ -33,7 +32,17 @@ export const TransactionTableView = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const params = useParams();
+
+
+    /**
+     * Navigate Transaction Type
+     * @param {*} type 
+     */
+    const navigateHandler = (type) => {
+        navigate(`${paths.transaction}/${type}`)
+    }
 
     /**
      * Event - Paginate Page Change
@@ -89,10 +98,12 @@ export const TransactionTableView = () => {
         updateParams.value = params.type.toUpperCase();
 
         const response = await transactionService.index(dispatch, updateParams);
+
         if (response.status === 200) {
             total.current = response.data.total ? response.data.total : response.data.length;
         }
         setLoading(false);
+
     }, [dispatch, paginateParams, params.type]);
 
     useEffect(() => {
@@ -101,7 +112,7 @@ export const TransactionTableView = () => {
 
     const FooterRender = () => {
         return (
-            <div className=' flex items-center justify-content-between'>
+            <div className='flex items-center justify-content-between'>
                 <div> Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
@@ -112,11 +123,6 @@ export const TransactionTableView = () => {
                             dispatch(setPaginate(transactionPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
-                    />
-                    <PaginatorRight
-                        show={showAuditColumn}
-                        onHandler={(e) => setShowAuditColumn(e)}
-                        label={"Show Audit Columns"}
                     />
                 </div>
             </div>
@@ -135,13 +141,19 @@ export const TransactionTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                     label={"Search"}
                 />
+                
+                <div className="mt-3">
+                    <Button className="ml-3" onClick={() => navigateHandler("DEPOSIT_PENDING")}> DEPOSIT PENDING </Button>
+                    <Button className="ml-3" onClick={() => navigateHandler("DEPOSIT_PAYMENT_ACCEPTED")}> PAYMENT ACCEPTED </Button>
+                    <Button className="ml-3" onClick={() => navigateHandler("REJECT")}> REJECT </Button>
+                </div>
             </div>
         )
     }
 
     return (
         <Card
-            title={`${params.type.toUpperCase()} Despsit Transcations List`}
+            title={`Transcations List - ${params.type.toUpperCase()}`}
         >
             <DataTable
                 dataKey="id"
@@ -151,7 +163,7 @@ export const TransactionTableView = () => {
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
-                emptyMessage="No Transaction transctions found."
+                emptyMessage="No Transactions Found."
                 globalFilterFields={transactionPayload.columns}
                 sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
@@ -171,11 +183,6 @@ export const TransactionTableView = () => {
                                     case "action":
                                         return (
                                             <>
-                                                <i
-                                                    className="pi pi-folder-open"
-                                                    style={{ cursor: "pointer", fontSize: '1.5rem' }}
-                                                    onClick={() => navigate(`${paths.transaction}/${params.type}/${value.id}`)}
-                                                ></i>
                                                 <i
                                                     className="pi pi-folder-open"
                                                     style={{ cursor: "pointer", fontSize: '1.5rem' }}
