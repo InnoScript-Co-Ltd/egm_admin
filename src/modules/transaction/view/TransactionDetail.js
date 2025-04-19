@@ -114,10 +114,6 @@ export const TransactionDetail = () => {
                         Edit Transaction 
                     </Button>
                 </div>
-
-                <div className="flex flex-column justify-content-center align-items-start">
-                    <Button size="small" onClick={handleEditClick}>Edit</Button>
-                </div>
             </div>
         )
     }
