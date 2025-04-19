@@ -58,6 +58,7 @@ export const TransactionUpdate = () => {
             updateTransaction.created_at = updateTransaction.created_at ? moment(transaction.created_at).toDate() : "";
             updateTransaction.updated_at = updateTransaction.updated_at ? moment(transaction.updated_at).toDate() : "";
             updateTransaction.expired_at = updateTransaction.expired_at ? moment(transaction.expired_at).toDate() : "";
+            updateTransaction.transaction_screenshoot = null;
             setPayload(updateTransaction);
         }
     }, [transaction]);
@@ -566,7 +567,7 @@ export const TransactionUpdate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Transaction Screenshoot'
                                         disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'transaction_screenshoot', (updateValue) => {
+                                        onChange={(e) => payloadHandler(payload, e.target.files[0], 'transaction_screenshoot', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
                                     />
