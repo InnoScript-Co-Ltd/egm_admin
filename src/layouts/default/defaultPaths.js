@@ -158,6 +158,26 @@ export const items = [
     ],
   },
   {
+    key: "digital_ocean",
+    label: "Digital Ocean",
+    data: "Digital Ocean",
+    icon: "pi pi-fw pi-envelope",
+    children: [
+      {
+        key: "balance",
+        label: "Balance",
+        icon: "pi pi-fw pi-list",
+        url: paths.balance,
+      },
+      {
+        key: "invoice",
+        label: "Invoice",
+        icon: "pi pi-fw pi-list",
+        url: paths.invoice,
+      },
+    ],
+  },
+  {
     key: "bonus-point",
     label: "Bonus Point",
     data: null,

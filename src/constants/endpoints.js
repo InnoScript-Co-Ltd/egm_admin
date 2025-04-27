@@ -1,6 +1,6 @@
 import { env } from "./config";
 
-export const baseURL = env[0];
+export const baseURL = env[1];
 
 export const endpoints = {
   login: "auth/login",
@@ -51,4 +51,7 @@ export const endpoints = {
   bonusPoint: "bonus-point",
   promotion: "banner",
   usdt: "wallet/usdt",
+  balance: "/balance",
+  billing: "/billing_history",
+  invoice: "/invoices",
 };

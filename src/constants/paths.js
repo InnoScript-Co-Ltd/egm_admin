@@ -106,4 +106,6 @@ export const paths = {
   promotionUpdate: "/promotion",
 
   usdt: "/usdt",
+  balance: "/balance",
+  invoice: "/invoice-list",
 };
