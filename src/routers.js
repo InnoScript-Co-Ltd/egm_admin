@@ -27,6 +27,8 @@ import { bonusPointRoutes } from "./modules/bonusPoint/bonusPointRoutes";
 import { repaymentRoutes } from "./modules/repayment/repaymentRoutes";
 import { promotionRoutes } from "./modules/promotion/promotionRoutes";
 import { usdtRoutes } from "./modules/USDT/usdtRoutes";
+import { balanceRoutes } from "./modules/balance/balanceRoutes";
+import { invoiceRoutes } from "./modules/invoice/invoiceRoutes";
 
 export const routers = createBrowserRouter([
   {
@@ -58,6 +60,8 @@ export const routers = createBrowserRouter([
       ...repaymentRoutes,
       ...promotionRoutes,
       ...usdtRoutes,
+      ...balanceRoutes,
+      ...invoiceRoutes,
     ],
   },
   {

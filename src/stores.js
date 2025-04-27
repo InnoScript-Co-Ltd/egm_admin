@@ -24,6 +24,8 @@ import bonusPointSlice from "./modules/bonusPoint/bonusPointSlice";
 import repaymentSlice from "./modules/repayment/repaymentSlice";
 import promotionSlice from "./modules/promotion/promotionSlice";
 import usdtSlice from "./modules/USDT/usdtSlice";
+import balanceSlice from "./modules/balance/balanceSlice";
+import invoiceSlice from "./modules/invoice/invoiceSlice";
 
 export const stores = configureStore({
   reducer: {
@@ -52,6 +54,8 @@ export const stores = configureStore({
     repayment: repaymentSlice,
     promotion: promotionSlice,
     usdt: usdtSlice,
+    balance: balanceSlice,
+    invoice: invoiceSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
