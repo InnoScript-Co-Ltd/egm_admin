@@ -2,6 +2,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { Search } from "../../../shares/Search";
 import { auditColumns, paginateOptions } from "../../../constants/config";
 import { Button } from "primereact/button";
@@ -21,7 +22,6 @@ import { setPaginate } from "../merchantBankAccountSlice";
 import { merchantBankAccountService } from "../merchantBankAccountService";
 
 export const MerchantBankAccountTableView = () => {
-
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
@@ -33,9 +33,13 @@ export const MerchantBankAccountTableView = () => {
   const first = useRef(0);
   const generalStatus = useRef([]);
 
-  const { merchantBankAccounts, paginateParams } = useSelector((state) => state.merchantBankAccount);
+  const { merchantBankAccounts, paginateParams } = useSelector(
+    (state) => state.merchantBankAccount
+  );
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
 
   /**
    * Event - Paginate Page Change
@@ -105,7 +109,10 @@ export const MerchantBankAccountTableView = () => {
   const loadingData = useCallback(async () => {
     setLoading(true);
 
-    const result = await merchantBankAccountService.index(dispatch, paginateParams);
+    const result = await merchantBankAccountService.index(
+      dispatch,
+      paginateParams
+    );
     if (result.status === 200) {
       total.current = result.data.total
         ? result.data.total
@@ -123,7 +130,7 @@ export const MerchantBankAccountTableView = () => {
     );
 
     if (generalStatusResponse.status === 200) {
-      generalStatus.current = [...generalStatusResponse.data.general, "ALL"]
+      generalStatus.current = [...generalStatusResponse.data.general, "ALL"];
     }
   }, []);
 
@@ -140,7 +147,9 @@ export const MerchantBankAccountTableView = () => {
       <div className="flex items-center justify-content-between">
         <div>
           Total Merchant Bank Account -
-          <span style={{ color: "#4338CA" }}>{total.current > 0 ? total.current : 0}</span>
+          <span style={{ color: "#4338CA" }}>
+            {total.current > 0 ? total.current : 0}
+          </span>
         </div>
         <div className=" flex align-items-center gap-3">
           <Button
@@ -196,8 +205,8 @@ export const MerchantBankAccountTableView = () => {
           paginateParams.sort === "DESC"
             ? 1
             : paginateParams.sort === "ASC"
-              ? -1
-              : 0
+            ? -1
+            : 0
         }
         onSort={onSort}
         lazy={paginateOptions.lazy}
@@ -227,6 +236,19 @@ export const MerchantBankAccountTableView = () => {
                     );
                   case "status":
                     return <Status status={value[col.field]} />;
+                  case "action":
+                    return (
+                      <Button
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(
+                            `${paths.transactionInMerchantBankAccount}/${value.id}`
+                          )
+                        }
+                      >
+                        View Transaction
+                      </Button>
+                    );
                   default:
                     return value[col.field];
                 }

@@ -1,36 +1,157 @@
 import { paginateOptions } from "../../constants/config";
 
 export const merchantBankAccountPayload = {
-    create: {
-        bank_type: "",
-        holder_name: "",
-        account_number: "",
-        bank_type_label: "",
+  create: {
+    bank_type: "",
+    holder_name: "",
+    account_number: "",
+    bank_type_label: "",
+  },
+  update: {
+    bank_type: "",
+    bank_type_label: "",
+    holder_name: "",
+    account_number: "",
+    status: "",
+  },
+  columns: [
+    { field: "holder_name", header: "Holder Name", sortable: true, show: true },
+    {
+      field: "account_number",
+      header: "Account Number",
+      sortable: true,
+      show: true,
     },
-    update: {
-        bank_type: "",
-        bank_type_label: "",
-        holder_name: "",
-        account_number: "",
-        status: ""  
+    { field: "bank_type", header: "Bank Type", sortable: true, show: true },
+    {
+      field: "bank_type_label",
+      header: "Bank Type Label",
+      sortable: true,
+      show: true,
     },
-    columns: [
-        { field: "holder_name", header: "Holder Name", sortable: true, show: true },
-        { field: "account_number", header: "Account Number", sortable: true, show: true },
-        { field: "bank_type", header: "Bank Type", sortable: true, show: true },
-        { field: "bank_type_label", header: "Bank Type Label", sortable: true, show: true },
-        { field: "status", header: "Status", show: true, sortable: true }
-    ],
-    paginateParams: {
-        page: 1,
-        per_page: paginateOptions.rows,
-        columns: "holder_name,account_number,bank_type_label,bank_type,status",
-        search: "",
-        order: "id",
-        sort: "DESC",
-        filter: "status",
-        value: "",
-        start_date: '',
-        end_date: ''
-    }
-}
+    { field: "status", header: "Status", show: true, sortable: true },
+    { field: "action", header: "Action", sortable: false, show: true },
+  ],
+  columns2: [
+    { field: "sender_id", header: "Sender Id", sortable: true, show: true },
+    {
+      field: "sender_account_id",
+      header: "Sender Account Id",
+      sortable: true,
+      show: true,
+    },
+    {
+      field: "merchant_account_id",
+      header: "Merchant Account Id",
+      sortable: true,
+      show: true,
+    },
+    {
+      field: "package_id",
+      header: "Package Id",
+      sortable: true,
+      show: true,
+    },
+    { field: "sender_name", header: "Sender Name", show: true, sortable: true },
+    {
+      field: "sender_email",
+      header: "Sender Email",
+      sortable: false,
+      show: true,
+    },
+    {
+      field: "sender_phone",
+      header: "Sender Phone",
+      show: true,
+      sortable: true,
+    },
+    { field: "sender_nrc", header: "Sender NRC", show: true, sortable: true },
+    {
+      field: "sender_address",
+      header: "Sender Address",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "sender_account_name",
+      header: "Sender Account Name",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "sender_account_number",
+      header: "Sender Account Number",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "sender_bank_branch",
+      header: "Sender Bank Branch",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "sender_bank_address",
+      header: "Sender Bank Address",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "merchant_account_name",
+      header: "Merchant Account Name",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "merchant_account_number",
+      header: "Merchant Account Number",
+      show: true,
+      sortable: true,
+    },
+    { field: "bank_type", header: "Bank Type", show: true, sortable: true },
+    {
+      field: "package_name",
+      header: "Package Name",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "package_roi_rate",
+      header: "Package ROI Rate",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "package_duration",
+      header: "Package Duration",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "package_deposit_amount",
+      header: "Package Deposit Amount",
+      show: true,
+      sortable: true,
+    },
+    {
+      field: "transaction_type",
+      header: "Transaction Type",
+      show: true,
+      sortable: true,
+    },
+    { field: "sender_type", header: "Sender Type", show: true, sortable: true },
+    { field: "status", header: "Status", show: true, sortable: true },
+  ],
+  paginateParams: {
+    page: 1,
+    per_page: paginateOptions.rows,
+    columns: "holder_name,account_number,bank_type_label,bank_type,status",
+    search: "",
+    order: "id",
+    sort: "DESC",
+    filter: "status",
+    value: "",
+    start_date: "",
+    end_date: "",
+  },
+};
