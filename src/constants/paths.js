@@ -90,6 +90,7 @@ export const paths = {
   setting: "/setting",
 
   merchantBankAccount: "/merchant-bank-account",
+  transactionInMerchantBankAccount: "/transaction-merchant-bank-account",
   bankAccountType: "/bank-account-type",
 
   partner: "/partner",
