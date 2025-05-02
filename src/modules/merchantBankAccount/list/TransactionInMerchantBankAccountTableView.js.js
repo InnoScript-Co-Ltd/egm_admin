@@ -16,6 +16,7 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { merchantBankAccountPayload } from "../merchantBankAccountPayload";
 import { setPaginate } from "../merchantBankAccountSlice";
 import { merchantBankAccountService } from "../merchantBankAccountService";
+import numeral from "numeral";
 
 export const TransactionInMerchantBankAccountTableView = () => {
   const [loading, setLoading] = useState(false);
@@ -124,49 +125,55 @@ export const TransactionInMerchantBankAccountTableView = () => {
    */
 
   return (
-    <div className="grid">
-      <div className="col-12 md:col-6 lg:col-3 flex justify-content-center">
-        <div className="count-card">
-          <div className="h-126 p-3">
-            <div className="flex align-items-center justify-content-between">
-              <div>
-                <h2 className="font-bold text-gray">Total Deposit Amount</h2>
+    <div>
+      <div className="grid">
+        <div className="col-12 md:col-6 lg:col-3 flex justify-content-center">
+          <div className="count-card">
+            <div className="h-126 p-3">
+              <div className="flex align-items-center justify-content-between">
+                <div>
+                  <h2 className="font-bold text-gray">Total Deposit Amount</h2>
+                </div>
+                <div className="count-status count-total"> Total </div>
               </div>
-              <div className="count-status count-total"> Total </div>
-            </div>
-            <div className="h-60 text-gray flex align-items-center justiry-content-start gap-5">
-              <i className="pi pi-users" style={{ fontSize: "3rem" }}></i>
-              <div style={{ fontSize: "2.5rem" }}>
-                {merchantBankAccount?.total_deposit_amount}
+              <div className="h-60 text-gray flex align-items-center justiry-content-start gap-5">
+                <i className="pi pi-users" style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>
+                  {numeral(
+                    merchantBankAccount?.total_deposit_amount || 0
+                  ).format("0,0.00")}
+                </div>
               </div>
             </div>
-          </div>
-          <div className=" mt-auto h-40 count-view total flex align-items-center justify-content-center">
-            View More
+            <div className=" mt-auto h-40 count-view total flex align-items-center justify-content-center">
+              View More
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="col-12 md:col-6 lg:col-3 flex justify-content-center">
-        <div className="count-card">
-          <div className="h-126 p-3">
-            <div className="flex align-items-center justify-content-between">
-              <div>
-                <h2 className="font-bold text-gray">
-                  This Month Deposit Amount
-                </h2>
+        <div className="col-12 md:col-6 lg:col-3 flex justify-content-center">
+          <div className="count-card">
+            <div className="h-126 p-3">
+              <div className="flex align-items-center justify-content-between">
+                <div>
+                  <h2 className="font-bold text-gray">
+                    This Month Deposit Amount
+                  </h2>
+                </div>
+                <div className="count-status count-total"> Total </div>
               </div>
-              <div className="count-status count-total"> Total </div>
-            </div>
-            <div className="h-60 text-gray flex align-items-center justiry-content-start gap-5">
-              <i className="pi pi-users" style={{ fontSize: "3rem" }}></i>
-              <div style={{ fontSize: "2.5rem" }}>
-                {merchantBankAccount?.this_month_deposit_amount}
+              <div className="h-60 text-gray flex align-items-center justiry-content-start gap-5">
+                <i className="pi pi-users" style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>
+                  {numeral(
+                    merchantBankAccount?.this_month_deposit_amount || 0
+                  ).format("0,0.00")}
+                </div>
               </div>
             </div>
-          </div>
-          <div className=" mt-auto h-40 count-view verified total flex align-items-center justify-content-center">
-            View More
+            <div className=" mt-auto h-40 count-view verified total flex align-items-center justify-content-center">
+              View More
+            </div>
           </div>
         </div>
       </div>
