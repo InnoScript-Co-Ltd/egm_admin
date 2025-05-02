@@ -29,6 +29,18 @@ export const merchantBankAccountPayload = {
       sortable: true,
       show: true,
     },
+    {
+      field: "transaction_limit",
+      header: "Transaction Limit",
+      sortable: true,
+      show: true,
+    },
+    {
+      field: "transaction_limit_status",
+      header: "Transaction Limit Status",
+      sortable: true,
+      show: true,
+    },
     { field: "status", header: "Status", show: true, sortable: true },
     { field: "action", header: "Action", sortable: false, show: true },
   ],

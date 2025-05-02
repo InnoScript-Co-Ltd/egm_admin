@@ -234,6 +234,20 @@ export const MerchantBankAccountTableView = () => {
                         value={value[col.field]}
                       />
                     );
+                  case "transaction_limit_status":
+                    return (
+                      <span
+                        style={{ borderRadius: "20px" }}
+                        className={`px-2 py-2 text-white ${
+                          value[col.field] === "LIMIT"
+                            ? "bg-red-500"
+                            : "bg-green-500"
+                        }`}
+                      >
+                        {value[col.field]}
+                      </span>
+                    );
+
                   case "status":
                     return <Status status={value[col.field]} />;
                   case "action":
