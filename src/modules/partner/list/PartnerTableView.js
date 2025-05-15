@@ -20,9 +20,10 @@ import { setPaginate } from "../partnerSlice";
 import { partnerPayload } from "../partnerPayload";
 import { partnerService } from "../partnerService";
 import moment from "moment";
+import { FilterByDay } from "../../../shares/FilterByDay";
+import { FilterByDate } from "../../../shares/FilterByDate";
 
 export const PartnerTableView = () => {
-
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
@@ -37,6 +38,38 @@ export const PartnerTableView = () => {
   const { partners, paginateParams } = useSelector((state) => state.partner);
 
   const dispatch = useDispatch();
+
+  /**
+   * On Change Date Filter
+   * @param {*} range { startDate, endDate }
+   */
+  const onDayFilter = (range) => {
+    const updatePaginateParams = {
+      ...paginateParams,
+      start_date: range.startDate
+        ? moment(range.startDate).format("YYYY-MM-DD")
+        : "",
+      end_date: range.endDate ? moment(range.endDate).format("YYYY-MM-DD") : "",
+    };
+
+    dispatch(setPaginate(updatePaginateParams));
+    dispatch(setDateFilter(range));
+  };
+
+  const onFilterByDate = (e) => {
+    let updatePaginateParams = { ...paginateParams };
+
+    if (e.startDate === "" || e.endDate === "") {
+      delete updatePaginateParams.start_date;
+      delete updatePaginateParams.end_date;
+    } else {
+      updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
+      updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
+    }
+
+    dispatch(setDateFilter(e));
+    dispatch(setPaginate(updatePaginateParams));
+  };
 
   /**
    * Event - Paginate Page Change
@@ -119,12 +152,10 @@ export const PartnerTableView = () => {
    * Loading General Status
    */
   const loadingStatus = useCallback(async () => {
-    const partnerResult = await getRequest(
-      `${endpoints.status}?type=partner`
-    );
+    const partnerResult = await getRequest(`${endpoints.status}?type=partner`);
 
     if (partnerResult.status === 200) {
-      partnerStatus.current = [...partnerResult.data.partner, "ALL"]
+      partnerStatus.current = [...partnerResult.data.partner, "ALL"];
     }
   }, []);
 
@@ -140,7 +171,8 @@ export const PartnerTableView = () => {
     return (
       <div className="flex items-center justify-content-between">
         <div>
-          Total Partner Account - <span>{total.current > 0 ? total.current : 0}</span>
+          Total Partner Account -{" "}
+          <span>{total.current > 0 ? total.current : 0}</span>
         </div>
         <div className=" flex align-items-center gap-3">
           <Button
@@ -181,6 +213,13 @@ export const PartnerTableView = () => {
           onFilter={(e) => onFilter(e)}
           label="Filter By Status"
         />
+
+        <FilterByDay label="Filter By Day" onFilter={(e) => onDayFilter(e)} />
+
+        <FilterByDate
+          onFilter={(e) => onFilterByDate(e)}
+          label="Filter By Date"
+        />
       </div>
     );
   };
@@ -196,8 +235,8 @@ export const PartnerTableView = () => {
           paginateParams.sort === "DESC"
             ? 1
             : paginateParams.sort === "ASC"
-              ? -1
-              : 0
+            ? -1
+            : 0
         }
         onSort={onSort}
         lazy={paginateOptions.lazy}
@@ -227,8 +266,11 @@ export const PartnerTableView = () => {
                     );
                   case "dob":
                     return (
-                      <span> {moment(value[col.field]).format("DD/MM/YYYY")} </span>
-                    )
+                      <span>
+                        {" "}
+                        {moment(value[col.field]).format("DD/MM/YYYY")}{" "}
+                      </span>
+                    );
                   case "status":
                     return <Status status={value[col.field]} />;
                   case "kyc_status":

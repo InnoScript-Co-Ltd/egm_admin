@@ -97,6 +97,7 @@ export const paths = {
   deposit: "/deposit",
   transaction: "/transcation",
   transactionUpdate: "/transcation",
+  transactionCreate: "create",
 
   emailContent: "/email-content",
 
