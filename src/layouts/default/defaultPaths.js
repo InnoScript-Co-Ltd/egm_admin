@@ -56,26 +56,26 @@ export const items = [
       },
     ],
   },
-  {
-    key: "Deposit",
-    label: "Deposit",
-    icon: "pi pi-fw pi-money-bill",
-    url: null,
-    children: [
-      {
-        key: "agent_deposit",
-        label: "Agent Deposit",
-        icon: "pi pi-fw pi-list",
-        url: `${paths.deposit}/agent`,
-      },
-      {
-        key: "partner_deposit",
-        label: "Partner Deposit",
-        icon: "pi pi-fw pi-list",
-        url: `${paths.deposit}/partner`,
-      },
-    ],
-  },
+  // {
+  //   key: "Deposit",
+  //   label: "Deposit",
+  //   icon: "pi pi-fw pi-money-bill",
+  //   url: null,
+  //   children: [
+  //     {
+  //       key: "agent_deposit",
+  //       label: "Agent Deposit",
+  //       icon: "pi pi-fw pi-list",
+  //       url: `${paths.deposit}/agent`,
+  //     },
+  //     {
+  //       key: "partner_deposit",
+  //       label: "Partner Deposit",
+  //       icon: "pi pi-fw pi-list",
+  //       url: `${paths.deposit}/partner`,
+  //     },
+  //   ],
+  // },
   {
     key: "bank_account",
     label: "Bank Accounts",
