@@ -9,7 +9,6 @@ import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
-import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
 import { setPaginate } from "../repaymentSlice";
@@ -17,7 +16,7 @@ import { repaymentPayload } from "../repaymentPayload";
 import { repaymentService } from "../repaymentService";
 import moment from "moment";
 import numeral from "numeral";
-import { FilterByDay } from "../../../shares/FilterByDay";
+import { useParams } from "react-router-dom";
 
 export const RepaymentTableView = () => {
   const [loading, setLoading] = useState(false);
@@ -26,6 +25,7 @@ export const RepaymentTableView = () => {
     (state) => state.repayment
   );
   const dispatch = useDispatch();
+  const params = useParams();
 
   const first = useRef(0);
   const total = useRef(0);
@@ -75,34 +75,6 @@ export const RepaymentTableView = () => {
         order: event.sortField,
       })
     );
-  };
-
-  const onDayFilter = (range) => {
-    const updatePaginateParams = {
-      ...paginateParams,
-      start_date: range.startDate
-        ? moment(range.startDate).format("YYYY-MM-DD")
-        : "",
-      end_date: range.endDate ? moment(range.endDate).format("YYYY-MM-DD") : "",
-    };
-
-    dispatch(setPaginate(updatePaginateParams));
-    dispatch(setDateFilter(range));
-  };
-
-  const onFilterByDate = (e) => {
-    let updatePaginateParams = { ...paginateParams };
-
-    if (e.startDate === "" || e.endDate === "") {
-      delete updatePaginateParams.start_date;
-      delete updatePaginateParams.end_date;
-    } else {
-      updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
-      updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-    }
-
-    dispatch(setDateFilter(e));
-    dispatch(setPaginate(updatePaginateParams));
   };
 
   /**
@@ -164,12 +136,6 @@ export const RepaymentTableView = () => {
           onSearch={(e) => onSearchChange(e)}
           label="Search Repayment"
         />
-        <FilterByDay label="Filter By Day" onFilter={(e) => onDayFilter(e)} />
-
-        <FilterByDate
-          onFilter={(e) => onFilterByDate(e)}
-          label="Filter By Date"
-        />
       </div>
     );
   };
@@ -224,14 +190,7 @@ export const RepaymentTableView = () => {
                     case "transaction_id":
                       return (
                         <NavigateId
-                          url={`/${paths.transaction}/${value["id"]}`}
-                          value={value[col.field]}
-                        />
-                      );
-                    case "deposit_id":
-                      return (
-                        <NavigateId
-                          url={`${paths.deposit}/${value["id"]}`}
+                          url={`${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED/${value["transaction_id"]}`}
                           value={value[col.field]}
                         />
                       );

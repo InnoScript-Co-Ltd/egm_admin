@@ -26,6 +26,7 @@ import { FilterByDate } from "../../../shares/FilterByDate";
 export const PartnerTableView = () => {
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
+  const [dayFilter, setDayFilter] = useState({ startDate: "", endDate: "" });
 
   const columns = useRef(partnerPayload.columns);
   const showColumns = useRef(
@@ -44,6 +45,8 @@ export const PartnerTableView = () => {
    * @param {*} range { startDate, endDate }
    */
   const onDayFilter = (range) => {
+    setDayFilter(range);
+
     const updatePaginateParams = {
       ...paginateParams,
       start_date: range.startDate
@@ -53,7 +56,6 @@ export const PartnerTableView = () => {
     };
 
     dispatch(setPaginate(updatePaginateParams));
-    dispatch(setDateFilter(range));
   };
 
   const onFilterByDate = (e) => {
@@ -257,7 +259,14 @@ export const PartnerTableView = () => {
               sortable
               body={(value) => {
                 switch (col.field) {
-                  case "username":
+                  case "first_name":
+                    return (
+                      <NavigateId
+                        url={`${paths.partner}/${value["id"]}`}
+                        value={value[col.field]}
+                      />
+                    );
+                  case "last_name":
                     return (
                       <NavigateId
                         url={`${paths.partner}/${value["id"]}`}
