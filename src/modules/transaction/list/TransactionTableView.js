@@ -27,6 +27,7 @@ export const TransactionTableView = () => {
   const { transactions, paginateParams } = useSelector(
     (state) => state.transaction
   );
+  const [dayFilter, setDayFilter] = useState({ startDate: "", endDate: "" });
 
   const [loading, setLoading] = useState(false);
 
@@ -43,6 +44,8 @@ export const TransactionTableView = () => {
   const params = useParams();
 
   const onDayFilter = (range) => {
+    setDayFilter(range);
+
     const updatePaginateParams = {
       ...paginateParams,
       start_date: range.startDate
@@ -52,7 +55,6 @@ export const TransactionTableView = () => {
     };
 
     dispatch(setPaginate(updatePaginateParams));
-    dispatch(setDateFilter(range));
   };
 
   const onFilterByDate = (e) => {
