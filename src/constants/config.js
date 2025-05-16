@@ -15,8 +15,8 @@ export const firebaseConfig = {
 };
 
 export const env = [
-  // 'http://localhost:8000',
-  "http://192.168.1.6:8000",
+  'http://localhost:8000',
+  // "http://192.168.1.6:8000",
   "https://api.evanglobalmanagement.com",
 ];
 export const dopURL = "https://api.digitalocean.com/v2/customers/my";
