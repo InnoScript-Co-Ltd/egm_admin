@@ -103,7 +103,7 @@ export const transactionPayload = {
     page: 1,
     per_page: paginateOptions.rows,
     columns:
-      "id,sender_id,sender_name,sender_type,sender_account_name,sender_account_number,bank_type,merchant_account_name,merchant_account_number,package_deposit_amount,package_name,package_roi_rate,package_duration,sender_phone,sender_email,sender_nrc,sender_bank_branch",
+      "id,sender_name,sender_type,sender_account_name,sender_account_number,bank_type,merchant_account_name,merchant_account_number,package_deposit_amount,package_name,package_roi_rate,package_duration,sender_phone,sender_email,sender_nrc,sender_bank_branch",
     search: "",
     order: "id",
     sort: "DESC",
