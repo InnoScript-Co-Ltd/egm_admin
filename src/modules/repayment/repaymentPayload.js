@@ -21,7 +21,12 @@ export const repaymentPayload = {
       show: true,
     },
 
-    { field: "partner_id", header: "Partner Name", sortable: true, show: true },
+    {
+      field: "partner_id",
+      header: "Partner Name",
+      sortable: true,
+      show: true,
+    },
     { field: "count_days", header: "Count Days", sortable: true, show: true },
     { field: "total_days", header: "Total Days", sortable: true, show: true },
     { field: "amount", header: "Amount", sortable: true, show: true },
@@ -41,6 +46,7 @@ export const repaymentPayload = {
     { field: "created_at", header: "Created At", sortable: true, show: true },
     { field: "updated_at", header: "Updated At", sortable: true, show: true },
     { field: "status", header: "Status", show: true },
+    { field: "action", header: "Action", show: true },
   ],
   paginateParams: {
     page: 1,

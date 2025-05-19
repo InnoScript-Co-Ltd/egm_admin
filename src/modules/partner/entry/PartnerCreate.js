@@ -260,6 +260,7 @@ export const PartnerCreate = () => {
                 <Password
                   id="password"
                   name="password"
+                  toggleMask
                   className="p-inputtext-sm"
                   value={payload.password}
                   placeholder="Enter or generate password"
