@@ -17,9 +17,75 @@ import { repaymentService } from "../repaymentService";
 import moment from "moment";
 import numeral from "numeral";
 import { useParams } from "react-router-dom";
+import { Dropdown } from "primereact/dropdown";
 
 export const RepaymentTableView = () => {
   const [loading, setLoading] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedActions, setSelectedActions] = useState({});
+  const [count, setCount] = useState(null);
+
+  const quickOptions = [{ label: "This Month", value: "month" }];
+
+  const onFilterByDate = (e) => {
+    let updatePaginateParams = { ...paginateParams };
+
+    if (e.startDate === "" || e.endDate === "") {
+      delete updatePaginateParams.start_date;
+      delete updatePaginateParams.end_date;
+    } else {
+      updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
+      updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
+    }
+
+    dispatch(setDateFilter(e));
+    dispatch(setPaginate(updatePaginateParams));
+  };
+
+  const actionOptions = [
+    { label: "Available Withdraw", value: "AVAILABLE_WITHDRAW" },
+    { label: "Transfer Success", value: "TRANSFER_SUCCESS" },
+  ];
+
+  const handleActionChange = (rowId, selectedValue) => {
+    setSelectedActions((prev) => ({
+      ...prev,
+      [rowId]: selectedValue,
+    }));
+  };
+  const handleApprove = async (row) => {
+    try {
+      const response = await repaymentService.update(row.id);
+      console.log("Approval successful:", response);
+
+      if (response.status === 200) {
+        loadingData();
+      }
+    } catch (error) {
+      console.error("Approval failed:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const value = e.value;
+    console.log("Selected:", value);
+    setSelectedOption(value);
+
+    let start, end;
+
+    if (value === "month") {
+      const now = new Date();
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    } else {
+      end = new Date();
+      start = new Date();
+      start.setDate(end.getDate() - (value - 1));
+    }
+
+    onFilterByDate({ startDate: start, endDate: end });
+  };
 
   const { repayments, paginateParams } = useSelector(
     (state) => state.repayment
@@ -136,12 +202,41 @@ export const RepaymentTableView = () => {
           onSearch={(e) => onSearchChange(e)}
           label="Search Repayment"
         />
+
+        <div className="form-group flex mt-4">
+          <Dropdown
+            value={selectedOption}
+            options={quickOptions}
+            onChange={handleChange}
+            placeholder="Select Days"
+            disabled={loading}
+            className="p-inputtext-sm w-full"
+          />
+        </div>
       </div>
     );
   };
 
   return (
     <Card title="Repayment List">
+      <div className="col-12 md:col-3" style={{ padding: "20px" }}>
+        <Card className="p-shadow-3 bg-blue-600">
+          <div className="flex align-items-center gap-2">
+            <i className="pi pi-wallet text-3xl text-white" />
+
+            {!loading && (
+              <span className="text-lg font-bold">
+                {numeral(count?.total_deposit_amount).format("0,0")}
+              </span>
+            )}
+          </div>
+
+          <span className="block mt-2 text-sm">
+            {" "}
+            ရင်းနှီးမြုပ်နှံမှုစုစုပေါင်း (EMU)
+          </span>
+        </Card>
+      </div>
       <DataTable
         dataKey="id"
         size="normal"
@@ -183,10 +278,13 @@ export const RepaymentTableView = () => {
                     case "partner_id":
                       return (
                         <NavigateId
-                          url={`/${paths.partner}/${value["id"]}`}
-                          value={value[col.field]}
+                          url={`${paths.partner}/${value["partner_id"]}`}
+                          value={`${value.partner.first_name || ""} ${
+                            value.partner.last_name || ""
+                          }`}
                         />
                       );
+
                     case "transaction_id":
                       return (
                         <NavigateId
@@ -244,6 +342,28 @@ export const RepaymentTableView = () => {
                       );
                     case "status":
                       return <Status status={value[col.field]} />;
+                    case "action":
+                      return (
+                        <div className="flex flex-col gap-2">
+                          <Dropdown
+                            value={selectedActions[value.id] || null}
+                            options={actionOptions}
+                            disabled={value.status === "TRANSFER_SUCCESS"}
+                            onChange={(e) =>
+                              handleActionChange(value.id, e.value)
+                            }
+                            placeholder="Select Action"
+                            className="p-inputtext-sm w-full"
+                          />
+                          <Button
+                            icon="pi pi-check"
+                            className="p-button-sm p-button-success"
+                            disabled={value.status === "TRANSFER_SUCCESS"}
+                            onClick={() => handleApprove(value)}
+                          />
+                        </div>
+                      );
+
                     default:
                       return value[col.field];
                   }

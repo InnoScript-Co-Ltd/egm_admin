@@ -22,6 +22,7 @@ import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { FilterByDay } from "../../../shares/FilterByDay";
 import "primeicons/primeicons.css";
+import { Dropdown } from "primereact/dropdown";
 
 export const TransactionTableView = () => {
   const { transactions, paginateParams } = useSelector(
@@ -30,6 +31,13 @@ export const TransactionTableView = () => {
   const [dayFilter, setDayFilter] = useState({ startDate: "", endDate: "" });
 
   const [loading, setLoading] = useState(false);
+  const [partnerList, setPartnerList] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
+
+  const typeOptions = [
+    { label: "Main Agent", value: "MAIN_AGENT" },
+    { label: "Partner", value: "PARTNER" },
+  ];
 
   const columns = useRef(transactionPayload.columns);
   const showColumns = useRef(
@@ -54,6 +62,46 @@ export const TransactionTableView = () => {
       end_date: range.endDate ? moment(range.endDate).format("YYYY-MM-DD") : "",
     };
 
+    dispatch(setPaginate(updatePaginateParams));
+  };
+  // useEffect(() => {
+  //   if (params.type) {
+  //     const matchedOption = typeOptions.find(
+  //       (opt) => opt.value === params.type.toUpperCase()
+  //     );
+  //     if (matchedOption) {
+  //       setSelectedType(matchedOption.value);
+  //     }
+  //   }
+  // }, [params.type]);
+
+  const partners = useCallback(async () => {
+    const response = await transactionService.index(dispatch);
+    if (response.status === 200) {
+      const partnerOptions = response.data.map((item) => ({
+        label: item.sender_name,
+        value: item.sender_id,
+      }));
+      setPartnerList(partnerOptions);
+    }
+  }, [dispatch]);
+  useEffect(() => {
+    partners();
+  }, [partners]);
+
+  const onFilterByType = (type) => {
+    const updatePaginateParams = {
+      ...paginateParams,
+      page: 1,
+      filter: "status",
+      sender_type: type,
+    };
+
+    delete updatePaginateParams.search;
+
+    console.log("Updated Filter Params:", updatePaginateParams);
+
+    setSelectedType(type);
     dispatch(setPaginate(updatePaginateParams));
   };
 
@@ -129,6 +177,12 @@ export const TransactionTableView = () => {
     setLoading(true);
 
     const updateParams = { ...paginateParams };
+    // if (updateParams.type === "MAIN_AGENT") {
+    //   updateParams.type = "MAIN_AGENT";
+    // } else if (updateParams.type === "PARTNER") {
+    //   updateParams.type = "PARTNER";
+    // }
+    // updateParams.type = params.sender_type;
     updateParams.filter = "status";
     updateParams.value = params.type.toUpperCase();
 
@@ -174,41 +228,90 @@ export const TransactionTableView = () => {
    */
   const HeaderRender = () => {
     return (
-      <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
-        <Search
-          tooltipLabel={"Search Transcation"}
-          placeholder={"Search Transcation"}
-          onSearch={(e) => onSearchChange(e)}
-          label={"Search"}
-        />
+      <div>
+        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-between align-items-start md:align-items-center gap-3">
+          <Search
+            tooltipLabel={"Search Transcation"}
+            placeholder={"Search Transcation"}
+            onSearch={(e) => onSearchChange(e)}
+            label={"Search"}
+          />
 
-        <div className="mt-3">
-          <Button
-            className="ml-3"
-            onClick={() => navigateHandler("DEPOSIT_PENDING")}
-          >
-            {" "}
-            DEPOSIT PENDING{" "}
-          </Button>
-          <Button
-            className="ml-3"
-            onClick={() => navigateHandler("DEPOSIT_PAYMENT_ACCEPTED")}
-          >
-            {" "}
-            PAYMENT ACCEPTED{" "}
-          </Button>
-          <Button className="ml-3" onClick={() => navigateHandler("REJECT")}>
-            {" "}
-            REJECT{" "}
-          </Button>
+          <div className="mt-3">
+            <Button
+              className="ml-3"
+              onClick={() => navigateHandler("DEPOSIT_PENDING")}
+            >
+              {" "}
+              DEPOSIT PENDING{" "}
+            </Button>
+            <Button
+              className="ml-3"
+              onClick={() => navigateHandler("DEPOSIT_PAYMENT_ACCEPTED")}
+            >
+              {" "}
+              PAYMENT ACCEPTED{" "}
+            </Button>
+            <Button className="ml-3" onClick={() => navigateHandler("REJECT")}>
+              {" "}
+              REJECT{" "}
+            </Button>
+          </div>
         </div>
 
-        <FilterByDay label="Filter By Day" onFilter={(e) => onDayFilter(e)} />
+        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-between align-items-start md:align-items-center gap-3 mt-3">
+          <div className="flex align-items-center gap-3">
+            <FilterByDay
+              label="Filter By Day"
+              onFilter={(e) => onDayFilter(e)}
+            />
+            <div className="flex flex-column">
+              <label className="font-medium">Filter By Type</label>
+              <div className="form-group flex mt-1">
+                <Dropdown
+                  className="p-inputtext-sm w-full"
+                  inputId="typeDropdown"
+                  value={selectedType}
+                  onChange={(e) => {
+                    setSelectedType(e.value);
+                    onFilterByType(e.value);
+                  }}
+                  options={typeOptions}
+                  placeholder="Select Type"
+                />
+              </div>
+            </div>
 
-        <FilterByDate
-          onFilter={(e) => onFilterByDate(e)}
-          label="Filter By Date"
-        />
+            <div className="flex flex-column">
+              <label className="font-medium">Filter By Partner</label>
+              <div className="form-group flex mt-1">
+                <Dropdown
+                  inputId="partner"
+                  autoComplete="partner name"
+                  name="partner"
+                  filter
+                  value={paginateParams.sender_id}
+                  onChange={(e) =>
+                    dispatch(
+                      setPaginate({
+                        ...paginateParams,
+                        sender_id: e.value,
+                      })
+                    )
+                  }
+                  options={partnerList}
+                  placeholder="Select a partner"
+                  disabled={loading}
+                  className="p-inputtext-sm w-full"
+                />
+              </div>
+            </div>
+          </div>
+          <FilterByDate
+            onFilter={(e) => onFilterByDate(e)}
+            label="Filter By Date"
+          />
+        </div>
       </div>
     );
   };
