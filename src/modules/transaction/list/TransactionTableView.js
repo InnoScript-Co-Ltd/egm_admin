@@ -51,6 +51,18 @@ export const TransactionTableView = () => {
 
   const params = useParams();
 
+  const handlePartnerChange = (e) => {
+    const updatePaginateParams = {
+      ...paginateParams,
+      page: 1,
+      filter: "status,sender_id",
+      sender_id: e.value,
+    };
+    console.log("Updated Filter Params:", updatePaginateParams);
+    delete updatePaginateParams.search;
+    dispatch(setPaginate(updatePaginateParams));
+    setPartnerList(e.value);
+  };
   const onDayFilter = (range) => {
     setDayFilter(range);
 
@@ -183,8 +195,8 @@ export const TransactionTableView = () => {
     //   updateParams.type = "PARTNER";
     // }
     // updateParams.type = params.sender_type;
-    updateParams.filter = "status";
-    updateParams.value = params.type.toUpperCase();
+    updateParams.filter = "status,sender_id";
+    updateParams.value = `${params.type.toUpperCase()},null`;
 
     const response = await transactionService.index(dispatch, updateParams);
 
@@ -239,6 +251,12 @@ export const TransactionTableView = () => {
 
           <div className="mt-3">
             <Button
+              label="Create Transaction"
+              className="ml-3"
+              icon="pi pi-plus"
+              onClick={() => navigate(paths.transactionCreate)}
+            ></Button>
+            <Button
               className="ml-3"
               onClick={() => navigateHandler("DEPOSIT_PENDING")}
             >
@@ -259,7 +277,7 @@ export const TransactionTableView = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-between align-items-start md:align-items-center gap-3 mt-3">
+        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3 mt-3">
           <div className="flex align-items-center gap-3">
             <FilterByDay
               label="Filter By Day"
@@ -291,14 +309,7 @@ export const TransactionTableView = () => {
                   name="partner"
                   filter
                   value={paginateParams.sender_id}
-                  onChange={(e) =>
-                    dispatch(
-                      setPaginate({
-                        ...paginateParams,
-                        sender_id: e.value,
-                      })
-                    )
-                  }
+                  onChange={handlePartnerChange}
                   options={partnerList}
                   placeholder="Select a partner"
                   disabled={loading}
@@ -318,12 +329,6 @@ export const TransactionTableView = () => {
 
   return (
     <Card title={`Transcations List - ${params.type.toUpperCase()}`}>
-      <Button
-        label="Create Transaction"
-        className="ml-3"
-        icon="pi pi-plus"
-        onClick={() => navigate(paths.transactionCreate)}
-      ></Button>
       <DataTable
         dataKey="id"
         size="normal"
