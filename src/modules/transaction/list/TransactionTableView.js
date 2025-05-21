@@ -33,6 +33,7 @@ export const TransactionTableView = () => {
   const [loading, setLoading] = useState(false);
   const [partnerList, setPartnerList] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
+  const [selectedPartner, setSelectedPartner] = useState(null);
 
   const typeOptions = [
     { label: "Main Agent", value: "MAIN_AGENT" },
@@ -58,10 +59,9 @@ export const TransactionTableView = () => {
       filter: "status,sender_id",
       sender_id: e.value,
     };
-    console.log("Updated Filter Params:", updatePaginateParams);
     delete updatePaginateParams.search;
     dispatch(setPaginate(updatePaginateParams));
-    setPartnerList(e.value);
+    setSelectedPartner(e.value);
   };
   const onDayFilter = (range) => {
     setDayFilter(range);
@@ -94,6 +94,7 @@ export const TransactionTableView = () => {
         label: item.sender_name,
         value: item.sender_id,
       }));
+
       setPartnerList(partnerOptions);
     }
   }, [dispatch]);
@@ -194,10 +195,16 @@ export const TransactionTableView = () => {
     // } else if (updateParams.type === "PARTNER") {
     //   updateParams.type = "PARTNER";
     // }
-    // updateParams.type = params.sender_type;
-    updateParams.filter = "status,sender_id";
-    updateParams.value = `${params.type.toUpperCase()},null`;
 
+    if (selectedType) {
+      updateParams.filter = "status,sender_type";
+      updateParams.value = `${params.type.toUpperCase()},${selectedType}`;
+    } else if (selectedPartner) {
+      updateParams.filter = "status,sender_id";
+      updateParams.value = `${params.type.toUpperCase()},${selectedPartner}`;
+    } else {
+      updateParams.value = `${params.type.toUpperCase()},null`;
+    }
     const response = await transactionService.index(dispatch, updateParams);
 
     if (response.status === 200) {
@@ -308,7 +315,7 @@ export const TransactionTableView = () => {
                   autoComplete="partner name"
                   name="partner"
                   filter
-                  value={paginateParams.sender_id}
+                  value={selectedPartner}
                   onChange={handlePartnerChange}
                   options={partnerList}
                   placeholder="Select a partner"
