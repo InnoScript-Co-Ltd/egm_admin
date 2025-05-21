@@ -22,7 +22,7 @@ export const env = [
 export const dopURL = "https://api.digitalocean.com/v2/customers/my";
 
 export const paginateOptions = {
-  rows: 100,
+  rows: 50,
   rowsPerPageOptions: [10, 50, 100, 150, 500, 1000],
   total: 0,
   paginatorTemplate:

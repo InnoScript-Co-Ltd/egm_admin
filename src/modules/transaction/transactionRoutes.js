@@ -6,6 +6,7 @@ import { PartnerTransactionTableView } from "./list/PartnerTransactionTableView"
 import { PartnerTransactionList } from "./view/PartnerTransactionList";
 import { TransactionUpdate } from "./entry/TransactionUpdate";
 import { TransactionCreate } from "./entry/TransactionCreate";
+import { TransactionPendingList } from "./list/TransactionPendingList";
 
 export const transactionRoutes = [
   {
@@ -32,18 +33,19 @@ export const transactionRoutes = [
   },
   {
     id: "transcation",
-    path: `${paths.transaction}/:type`,
-    element: <TransactionTableView />,
+    path: `${paths.transaction}/pending`,
+    element: <TransactionPendingList />,
     loader: () => {
       return {
         breadcrumbs: [
           { label: "Dashboard", url: paths.dashboard },
-          { label: "Pending", url: `${paths.transaction}/DEPOSIT_PENDING` },
+          { label: "Create Transaction", url: `${paths.transaction}/create` },
+          { label: "Pending", url: `${paths.transaction}/pending` },
           {
             label: "Payment Accepted",
-            url: `${paths.transaction}/DEPOSIT_PAYMENT_ACCEPTED`,
+            url: `${paths.transaction}/payment-accepted`,
           },
-          { label: "Reject", url: `${paths.transaction}/DEPOSIT_REJECT` },
+          { label: "Reject", url: `${paths.transaction}/reject` },
         ],
         role: ["ADMINISTRATOR"],
       };

@@ -2,7 +2,7 @@ import { endpoints } from "../../constants/endpoints"
 import { formBuilderRequest, getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, setShow, update } from "./transactionSlice";
+import { setIndex, setShow, update } from "./transactionSlice";
 
 export const transactionService = {
     index: async (dispatch, params) => {
@@ -10,7 +10,7 @@ export const transactionService = {
         await httpServiceHandler(dispatch, result);
 
         if (result.status === 200) {
-            dispatch(index(result.data.data ? result.data.data : result.data));
+            dispatch(setIndex(result.data));
         }
         
         return result;

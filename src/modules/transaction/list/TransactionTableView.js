@@ -2,27 +2,24 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Search } from "../../../shares/Search";
 import { Button } from "primereact/button";
-import { auditColumns, paginateOptions } from "../../../constants/config";
+import { paginateOptions } from "../../../constants/config";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { PaginatorRight } from "../../../shares/PaginatorRight";
 import { useDispatch, useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
-import { datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
 import { setPaginate } from "../transactionSlice";
 import { transactionPayload } from "../transactionPayload";
 import { transactionService } from "../transactionService";
-import numeral from "numeral";
-import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { FilterByDay } from "../../../shares/FilterByDay";
-import "primeicons/primeicons.css";
 import { Dropdown } from "primereact/dropdown";
+import numeral from "numeral";
+import moment from "moment";
 
 export const TransactionTableView = () => {
   const { transactions, paginateParams } = useSelector(
@@ -33,11 +30,6 @@ export const TransactionTableView = () => {
   const [loading, setLoading] = useState(false);
   const [partnerList, setPartnerList] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
-
-  const typeOptions = [
-    { label: "Main Agent", value: "MAIN_AGENT" },
-    { label: "Partner", value: "PARTNER" },
-  ];
 
   const columns = useRef(transactionPayload.columns);
   const showColumns = useRef(
@@ -56,7 +48,6 @@ export const TransactionTableView = () => {
       ...paginateParams,
       page: 1,
       filter: "status,sender_id",
-      sender_id: e.value,
     };
     console.log("Updated Filter Params:", updatePaginateParams);
     delete updatePaginateParams.search;
@@ -76,16 +67,6 @@ export const TransactionTableView = () => {
 
     dispatch(setPaginate(updatePaginateParams));
   };
-  // useEffect(() => {
-  //   if (params.type) {
-  //     const matchedOption = typeOptions.find(
-  //       (opt) => opt.value === params.type.toUpperCase()
-  //     );
-  //     if (matchedOption) {
-  //       setSelectedType(matchedOption.value);
-  //     }
-  //   }
-  // }, [params.type]);
 
   const partners = useCallback(async () => {
     const response = await transactionService.index(dispatch);
@@ -97,25 +78,10 @@ export const TransactionTableView = () => {
       setPartnerList(partnerOptions);
     }
   }, [dispatch]);
+
   useEffect(() => {
     partners();
   }, [partners]);
-
-  const onFilterByType = (type) => {
-    const updatePaginateParams = {
-      ...paginateParams,
-      page: 1,
-      filter: "status",
-      sender_type: type,
-    };
-
-    delete updatePaginateParams.search;
-
-    console.log("Updated Filter Params:", updatePaginateParams);
-
-    setSelectedType(type);
-    dispatch(setPaginate(updatePaginateParams));
-  };
 
   const onFilterByDate = (e) => {
     let updatePaginateParams = { ...paginateParams };
@@ -189,14 +155,9 @@ export const TransactionTableView = () => {
     setLoading(true);
 
     const updateParams = { ...paginateParams };
-    // if (updateParams.type === "MAIN_AGENT") {
-    //   updateParams.type = "MAIN_AGENT";
-    // } else if (updateParams.type === "PARTNER") {
-    //   updateParams.type = "PARTNER";
-    // }
-    // updateParams.type = params.sender_type;
-    updateParams.filter = "status,sender_id";
-    updateParams.value = `${params.type.toUpperCase()},null`;
+
+    updateParams.filter = "status";
+    updateParams.value = `${params.type.toUpperCase()}`;
 
     const response = await transactionService.index(dispatch, updateParams);
 
@@ -240,39 +201,38 @@ export const TransactionTableView = () => {
    */
   const HeaderRender = () => {
     return (
-      <div>
-        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-between align-items-start md:align-items-center gap-3">
+      <>
+        <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-between align-items-start md:align-items-start gap-3">
           <Search
             tooltipLabel={"Search Transcation"}
             placeholder={"Search Transcation"}
             onSearch={(e) => onSearchChange(e)}
-            label={"Search"}
           />
 
-          <div className="mt-3">
+          <div>
             <Button
               label="Create Transaction"
               className="ml-3"
               icon="pi pi-plus"
               onClick={() => navigate(paths.transactionCreate)}
-            ></Button>
+            />
+
             <Button
               className="ml-3"
               onClick={() => navigateHandler("DEPOSIT_PENDING")}
             >
-              {" "}
-              DEPOSIT PENDING{" "}
+              DEPOSIT PENDING
             </Button>
+
             <Button
               className="ml-3"
               onClick={() => navigateHandler("DEPOSIT_PAYMENT_ACCEPTED")}
             >
-              {" "}
-              PAYMENT ACCEPTED{" "}
+              PAYMENT ACCEPTED
             </Button>
+
             <Button className="ml-3" onClick={() => navigateHandler("REJECT")}>
-              {" "}
-              REJECT{" "}
+              REJECT
             </Button>
           </div>
         </div>
@@ -283,23 +243,6 @@ export const TransactionTableView = () => {
               label="Filter By Day"
               onFilter={(e) => onDayFilter(e)}
             />
-            <div className="flex flex-column">
-              <label className="font-medium">Filter By Type</label>
-              <div className="form-group flex mt-1">
-                <Dropdown
-                  className="p-inputtext-sm w-full"
-                  inputId="typeDropdown"
-                  value={selectedType}
-                  onChange={(e) => {
-                    setSelectedType(e.value);
-                    onFilterByType(e.value);
-                  }}
-                  options={typeOptions}
-                  placeholder="Select Type"
-                />
-              </div>
-            </div>
-
             <div className="flex flex-column">
               <label className="font-medium">Filter By Partner</label>
               <div className="form-group flex mt-1">
@@ -323,7 +266,7 @@ export const TransactionTableView = () => {
             label="Filter By Date"
           />
         </div>
-      </div>
+      </>
     );
   };
 

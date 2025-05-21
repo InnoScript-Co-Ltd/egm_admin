@@ -12,13 +12,11 @@ export const FilterByDay = ({ id, onFilter, label, disabled }) => {
   ];
 
   const handleChange = (e) => {
-    const days = e.value;
-    console.log("Selected days:", days);
-    setSelectedOption(days);
+    setSelectedOption(e.value);
 
     const end = new Date();
     const start = new Date();
-    start.setDate(end.getDate() - (days - 1));
+    start.setDate(end.getDate() - (e.value - 1));
 
     onFilter({ startDate: start, endDate: end });
   };

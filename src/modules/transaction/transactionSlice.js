@@ -6,11 +6,13 @@ const transactionSlice = createSlice({
     initialState: {
         transactions: [],
         transaction: null,
-        paginateParams: transactionPayload.paginateParams
+        paginateParams: transactionPayload.paginateParams,
+        total: 0
     },
     reducers: {
-        index: (state, action) => {
-            state.transactions = action.payload;
+        setIndex: (state, action) => {
+            state.transactions = action.payload.data.data ? action.payload.data.data : action.payload.data;
+            state.total = action.payload.data.data ? action.data.total : action.payload.data.length;
             return state;
         },
         setShow: (state, action) => {
@@ -24,5 +26,5 @@ const transactionSlice = createSlice({
     }
 });
 
-export const { index, update, setShow, setPaginate } = transactionSlice.actions;
+export const { setIndex, update, setShow, setPaginate } = transactionSlice.actions;
 export default transactionSlice.reducer;
