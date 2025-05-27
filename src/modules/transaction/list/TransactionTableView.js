@@ -28,11 +28,13 @@ export const TransactionTableView = () => {
   const { transactions, paginateParams } = useSelector(
     (state) => state.transaction
   );
+  console.log("Transaction Table View", paginateParams);
   const [dayFilter, setDayFilter] = useState({ startDate: "", endDate: "" });
 
   const [loading, setLoading] = useState(false);
   const [partnerList, setPartnerList] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
+  const [selectedPartner, setSelectedPartner] = useState(null);
 
   const typeOptions = [
     { label: "Main Agent", value: "MAIN_AGENT" },
@@ -61,7 +63,7 @@ export const TransactionTableView = () => {
     console.log("Updated Filter Params:", updatePaginateParams);
     delete updatePaginateParams.search;
     dispatch(setPaginate(updatePaginateParams));
-    setPartnerList(e.value);
+    setSelectedPartner(e.value);
   };
   const onDayFilter = (range) => {
     setDayFilter(range);
@@ -86,20 +88,6 @@ export const TransactionTableView = () => {
   //     }
   //   }
   // }, [params.type]);
-
-  const partners = useCallback(async () => {
-    const response = await transactionService.index(dispatch);
-    if (response.status === 200) {
-      const partnerOptions = response.data.map((item) => ({
-        label: item.sender_name,
-        value: item.sender_id,
-      }));
-      setPartnerList(partnerOptions);
-    }
-  }, [dispatch]);
-  useEffect(() => {
-    partners();
-  }, [partners]);
 
   const onFilterByType = (type) => {
     const updatePaginateParams = {
@@ -189,14 +177,18 @@ export const TransactionTableView = () => {
     setLoading(true);
 
     const updateParams = { ...paginateParams };
-    // if (updateParams.type === "MAIN_AGENT") {
-    //   updateParams.type = "MAIN_AGENT";
-    // } else if (updateParams.type === "PARTNER") {
-    //   updateParams.type = "PARTNER";
-    // }
-    // updateParams.type = params.sender_type;
-    updateParams.filter = "status,sender_id";
-    updateParams.value = `${params.type.toUpperCase()},null`;
+    console.log(updateParams);
+
+    if (selectedType) {
+      updateParams.filter = "status,sender_type";
+      updateParams.value = `${params.type.toUpperCase()},${selectedType}`;
+    } else if (selectedPartner) {
+      updateParams.filter = "status,sender_id";
+      updateParams.value = `${params.type.toUpperCase()},${selectedPartner}`;
+    } else {
+      updateParams.filter = "status";
+      updateParams.value = `${params.type.toUpperCase()}`;
+    }
 
     const response = await transactionService.index(dispatch, updateParams);
 
@@ -211,6 +203,24 @@ export const TransactionTableView = () => {
   useEffect(() => {
     loadingData();
   }, [loadingData]);
+
+  const partners = useCallback(async () => {
+    const updateParams = { ...paginateParams };
+    updateParams.filter = "status";
+    updateParams.value = `${params.type.toUpperCase()}`;
+    const response = await transactionService.index(dispatch, updateParams);
+    console.log("Partners Response:", response);
+    if (response.status === 200) {
+      const partnerOptions = response.data.data.map((item) => ({
+        label: item.sender_name,
+        value: item.sender_id,
+      }));
+      setPartnerList(partnerOptions);
+    }
+  }, [dispatch, paginateParams, params.type]);
+  useEffect(() => {
+    partners();
+  }, [partners]);
 
   const FooterRender = () => {
     return (
@@ -308,7 +318,7 @@ export const TransactionTableView = () => {
                   autoComplete="partner name"
                   name="partner"
                   filter
-                  value={paginateParams.sender_id}
+                  value={selectedPartner}
                   onChange={handlePartnerChange}
                   options={partnerList}
                   placeholder="Select a partner"

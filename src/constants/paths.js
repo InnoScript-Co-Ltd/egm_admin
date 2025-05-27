@@ -103,6 +103,8 @@ export const paths = {
 
   bonusPoint: "bonus-point",
   repayment: "repayment",
+  repaymentCreate: "new",
+  repaymentUpdate: "repayment",
   promotion: "/promotion",
   promotionCreate: "/promotion",
   promotionUpdate: "/promotion",

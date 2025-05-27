@@ -95,6 +95,7 @@ export const transactionPayload = {
       sortable: true,
       show: true,
     },
+    { field: "note", header: "Note", sortable: true, show: true },
     { field: "status", header: "Status", sortable: true, show: true },
     { field: "created_at", header: "Deposit Date", sortable: true, show: true },
     { field: "updated_at", header: "Approve Date", sortable: true, show: true },
