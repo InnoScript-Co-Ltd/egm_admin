@@ -4,6 +4,7 @@ import { Button } from "primereact/button";
 
 export const FilterByDay = ({ id, onFilter, label, disabled }) => {
   const [selectedOption, setSelectedOption] = useState(null);
+  console.log("Selected option:", selectedOption);
 
   const quickOptions = [
     { label: "1 Day", value: 1 },

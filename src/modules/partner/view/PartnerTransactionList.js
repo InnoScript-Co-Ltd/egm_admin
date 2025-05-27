@@ -1,7 +1,7 @@
 import { BreadCrumb } from "../../../shares/BreadCrumb";
-import { PartnerTableView } from "../list/PartnerTableView";
+import { PartnerTransactionTableView } from "../list/PartnerTransactionTableView";
 
-export const PartnerList = () => {
+export const PartnerTransactionList = () => {
   return (
     <div className="grid">
       <div className="col-12">
@@ -9,7 +9,7 @@ export const PartnerList = () => {
       </div>
 
       <div className="col-12">
-        <PartnerTableView />
+        <PartnerTransactionTableView />
       </div>
     </div>
   );

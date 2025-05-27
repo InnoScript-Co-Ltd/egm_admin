@@ -1,6 +1,17 @@
 import { paginateOptions } from "../../constants/config";
 
 export const repaymentPayload = {
+  create: {
+    transaction_id: "",
+    partner_id: "",
+    count_days: "",
+    total_days: "",
+    amount: "",
+    oneday_amount: "",
+    total_amount: "",
+    date: "",
+    created_at: "",
+  },
   update: {
     count_days: "",
     total_days: "",
