@@ -33,22 +33,11 @@ export const transactionPayload = {
     sender_type: "",
   },
   columns: [
-    { field: "action", header: "Action", sortable: false, show: true },
-    { field: "sender_name", header: "Name", sortable: true, show: true },
-    { field: "sender_type", header: "Type", sortable: true, show: true },
-    {
-      field: "sender_account_name",
-      header: "Account Name",
-      sortable: true,
-      show: true,
-    },
-    {
-      field: "sender_account_number",
-      header: "Account No.",
-      sortable: true,
-      show: true,
-    },
+    { field: "id", header: "ID", sortable: true, show: true },
+    { field: "sender_account_name", header: "Account Name", sortable: true, show: true },
+    { field: "sender_account_number", header: "Account No.", sortable: true, show: true },
     { field: "bank_type", header: "Bank", sortable: true, show: true },
+
     {
       field: "merchant_account_name",
       header: "Merchant Name",
@@ -96,6 +85,8 @@ export const transactionPayload = {
       show: true,
     },
     { field: "note", header: "Note", sortable: true, show: true },
+    { field: "package_deposit_amount", header: "Deposit Amount", sortable: true, show: true },
+    { field: "package_roi_rate", header: "ROI Rate", sortable: true, show: true },
     { field: "status", header: "Status", sortable: true, show: true },
     { field: "created_at", header: "Deposit Date", sortable: true, show: true },
     { field: "updated_at", header: "Approve Date", sortable: true, show: true },
@@ -103,10 +94,11 @@ export const transactionPayload = {
   paginateParams: {
     page: 1,
     per_page: paginateOptions.rows,
-    columns:
-      "id,sender_name,sender_type,sender_account_name,sender_account_number,bank_type,merchant_account_name,merchant_account_number,package_deposit_amount,package_name,package_roi_rate,package_duration,sender_phone,sender_email,sender_nrc,sender_bank_branch",
+    columns: "id,sender_name,sender_type,sender_account_name,sender_account_number,bank_type,package_deposit_amount,package_roi_rate,sender_phone",
     search: "",
     order: "id",
     sort: "DESC",
+    filter: "status",
+    value: "",
   },
 };

@@ -34,6 +34,14 @@ export const items = [
     label: "Transaction",
     icon: "pi pi-fw pi-money-bill",
     url: `${paths.transaction}/DEPOSIT_PENDING`,
+    children: [
+      {
+        key: "deposit_pending_transaction",
+        label: "PENDING",
+        icon: "pi pi-fw pi-list",
+        url: `${paths.transaction}/pending`
+      }
+    ]
   },
   {
     key: "agent",

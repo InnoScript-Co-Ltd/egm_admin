@@ -15,14 +15,14 @@ export const firebaseConfig = {
 };
 
 export const env = [
-  // "http://localhost:8000",
-  // "http://192.168.1.5:8000",
+  'http://localhost:8000',
   "https://api.evanglobalmanagement.com",
 ];
+
 export const dopURL = "https://api.digitalocean.com/v2/customers/my";
 
 export const paginateOptions = {
-  rows: 100,
+  rows: 50,
   rowsPerPageOptions: [10, 50, 100, 150, 500, 1000],
   total: 0,
   paginatorTemplate:
