@@ -15,7 +15,7 @@ export const firebaseConfig = {
 };
 
 export const env = [
-  'http://localhost:8000',
+  "http://localhost:8000",
   "https://api.evanglobalmanagement.com",
 ];
 
@@ -48,48 +48,48 @@ export const bankTypes = [
   {
     label: "AYA BANK",
     value: "aya_bank",
-    icon: "",
+    icon: require("../assets/images/AyaBankLogo.png"),
   },
   {
     label: "CB BANK",
     value: "cb_bank",
-    icon: "",
+    icon: require("../assets/images/CBBankLogo.png"),
   },
   {
     label: "UAB BANK",
     value: "uab_bank",
-    icon: "",
+    icon: require("../assets/images/UABBankLogo.png"),
   },
   {
     label: "KBZ BANK SPECIAL ACC",
     value: "kbz_bank_special",
-    icon: "",
+    icon: require("../assets/images/KBZBankLogo.png"),
   },
   {
     label: "A BANK",
     value: "a_bank",
-    icon: "",
+    icon: require("../assets/images/ABankLogo.png"),
   },
   {
     label: "MCB BANK",
     value: "mcb_bank",
-    icon: "",
+    icon: require("../assets/images/MCBBankLogo.png"),
   },
 
   {
     label: "YOMA (Flexi every day)",
     value: "yoma_bank_flexi",
-    icon: "",
+    icon: require("../assets/images/YoMaBankLogo.png"),
   },
   {
     label: "YOMA (Flexi saving)",
     value: "yoma_bank_flexi_saving",
-    icon: "",
+    icon: require("../assets/images/YoMaBankLogo.png"),
   },
   {
     label: "YOMA (Flexi acc)",
     value: "yoma_bank_flexi_acc",
-    icon: "",
+    icon: require("../assets/images/YoMaBankLogo.png"),
   },
 ];
 

@@ -85,21 +85,21 @@ export const TransactionTableView = () => {
     setSelectedType(type);
     dispatch(setPaginate(updatePaginateParams));
   };
-  
-  const partners = useCallback(async () => {
-    const response = await transactionService.index(dispatch);
-    if (response.status === 200) {
-      const partnerOptions = response.data.map((item) => ({
-        label: item.sender_name,
-        value: item.sender_id,
-      }));
-      setPartnerList(partnerOptions);
-    }
-  }, [dispatch]);
 
-  useEffect(() => {
-    partners();
-  }, [partners]);
+  // const partners = useCallback(async () => {
+  //   const response = await transactionService.index(dispatch);
+  //   if (response.status === 200) {
+  //     const partnerOptions = response.data.map((item) => ({
+  //       label: item.sender_name,
+  //       value: item.sender_id,
+  //     }));
+  //     setPartnerList(partnerOptions);
+  //   }
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   partners();
+  // }, [partners]);
 
   const onFilterByDate = (e) => {
     let updatePaginateParams = { ...paginateParams };
