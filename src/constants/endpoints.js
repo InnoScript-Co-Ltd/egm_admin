@@ -54,4 +54,5 @@ export const endpoints = {
   balance: "/balance",
   billing: "/billing_history",
   invoice: "/invoices",
+  history: "history",
 };

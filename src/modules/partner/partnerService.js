@@ -22,6 +22,25 @@ export const partnerService = {
     return response;
   },
 
+  updatePassword: async (dispatch, id) => {
+    const response = await postRequest(`${endpoints.partner}/reset-password`, {
+      partner_id: id,
+    });
+    await httpServiceHandler(dispatch, response);
+
+    if (response.status === 200) {
+      dispatch(
+        updateNotification({
+          show: true,
+          summary: "Success",
+          severity: "success",
+          detail: response.message,
+        })
+      );
+    }
+    return response;
+  },
+
   partnerTransaction: async (dispatch, id, params) => {
     const response = await getRequest(
       `${endpoints.transaction}/partner/${id}`,

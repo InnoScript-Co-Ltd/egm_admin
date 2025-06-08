@@ -68,6 +68,20 @@ export const PartnerUpdate = () => {
     setLoading(false);
   };
 
+  const resetPassword = async () => {
+    setLoading(true);
+    try {
+      await partnerService.updatePassword(dispatch, params.id);
+      // Optionally show a success message (example: using toast or Swal)
+      alert("Password has been reset to 'password'.");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to reset password.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const approveKYC = async () => {
     setLoading(true);
     await partnerService.approveKyc(dispatch, params.id);
@@ -127,6 +141,14 @@ export const PartnerUpdate = () => {
                   onClick={() => navigate(`transactions`)}
                 >
                   View Transaction
+                </Button>
+
+                <Button
+                  className="ml-3"
+                  severity="warning"
+                  onClick={resetPassword}
+                >
+                  Reset Password
                 </Button>
               </div>
             </div>

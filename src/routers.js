@@ -29,6 +29,7 @@ import { promotionRoutes } from "./modules/promotion/promotionRoutes";
 import { usdtRoutes } from "./modules/USDT/usdtRoutes";
 import { balanceRoutes } from "./modules/balance/balanceRoutes";
 import { invoiceRoutes } from "./modules/invoice/invoiceRoutes";
+import { historyRoutes } from "./modules/history/historyRoutes";
 
 export const routers = createBrowserRouter([
   {
@@ -62,6 +63,7 @@ export const routers = createBrowserRouter([
       ...usdtRoutes,
       ...balanceRoutes,
       ...invoiceRoutes,
+      ...historyRoutes,
     ],
   },
   {

@@ -96,6 +96,7 @@ export const paths = {
   partner: "/partner",
   deposit: "/deposit",
   transaction: "/transcation",
+  transaction_history: "transcation-history",
   transactionUpdate: "/transcation",
   transactionCreate: "create",
 
@@ -103,6 +104,7 @@ export const paths = {
 
   bonusPoint: "bonus-point",
   repayment: "repayment",
+  repayment_history: "repayment-history",
   repaymentCreate: "new",
   repaymentUpdate: "repayment",
   promotion: "/promotion",
@@ -112,4 +114,6 @@ export const paths = {
   usdt: "/usdt",
   balance: "/balance",
   invoice: "/invoice-list",
+
+  with_draw: "withdraw-history",
 };
