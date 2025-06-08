@@ -39,9 +39,36 @@ export const items = [
         key: "deposit_pending_transaction",
         label: "PENDING",
         icon: "pi pi-fw pi-list",
-        url: `${paths.transaction}/pending`
-      }
-    ]
+        url: `${paths.transaction}/pending`,
+      },
+    ],
+  },
+  {
+    key: "history",
+    label: "History",
+    data: "History",
+    icon: "pi pi-fw pi-history",
+    url: null,
+    children: [
+      {
+        key: "transaction_history",
+        label: "Transaction History",
+        icon: "pi pi-fw pi-list",
+        url: paths.transaction_history,
+      },
+      {
+        key: "withdraw_history",
+        label: "Withdraw History",
+        icon: "pi pi-fw pi-list",
+        url: paths.with_draw,
+      },
+      {
+        key: "repayment_history",
+        label: "Repayment History",
+        icon: "pi pi-fw pi-list",
+        url: paths.repayment_history,
+      },
+    ],
   },
   {
     key: "agent",
